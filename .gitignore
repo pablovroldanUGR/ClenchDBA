@@ -22,3 +22,21 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# --- Editores (VS Code e IntelliJ) ---
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.history/
+
+#Netbeans Java
+**/nbproject/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+manifest*
+build*
