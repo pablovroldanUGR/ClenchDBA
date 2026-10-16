@@ -54,7 +54,7 @@ curl -i -H "Authorization: Bearer $DBA_TOKEN" \
 
 curl -i -X POST -H "Authorization: Bearer $DBA_TOKEN" \
   -H "Content-Type: application/json" \
-  --data "{\"challengeId\":$DBA_CHALLENGE_ID}" \
+  --data "{\"challengeId\":$DBA_CHALLENGE_ID}" \  
   "$DBA_LAB_URL/api/v1/runs"
 
 curl -i -X POST -H "Authorization: Bearer $DBA_TOKEN" \
