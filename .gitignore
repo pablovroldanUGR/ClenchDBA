@@ -31,14 +31,16 @@ replay_pid*
 .history/
 
 #Netbeans Java
-**/nbproject/
+# Ignorar solo la configuración local y de usuario de NetBeans
+nbproject/private/
+nbproject/project.single.properties
+nbproject/build-impl.xml-template
+
+# Ignorar carpetas de compilación
 build/
-nbbuild/
 dist/
-nbdist/
-.nb-gradle/
-manifest*
-build*
+
 JADE/lib/*.txt
 APDescription.txt
 MTPs-Main-Container.txt
+/P2/P2A/termostato/nbproject/private/
