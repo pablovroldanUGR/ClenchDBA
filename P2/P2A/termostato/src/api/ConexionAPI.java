@@ -8,8 +8,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /**
  *
@@ -88,14 +89,26 @@ public class ConexionAPI {
                 .build();
 
         HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
-        Pattern pattern = Pattern.compile(
-                "\"value\"\\s*:\\s*\\{[^{}]*?\"" + Pattern.quote(limite)
-                + "\"\\s*:\\s*(-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?)");
-        Matcher matcher = pattern.matcher(response.body());
-        if (!matcher.find()) {
+        JsonElement json;
+        try {
+            json = JsonParser.parseString(response.body());
+        } catch (com.google.gson.JsonParseException e) {
+            throw new java.io.IOException("La respuesta del sensor no es JSON válido", e);
+        }
+
+        if (!json.isJsonObject()) {
+            throw new java.io.IOException("La respuesta del sensor no es un objeto JSON");
+        }
+        JsonObject root = json.getAsJsonObject();
+        JsonElement value = root.get("value");
+        if (value == null || !value.isJsonObject()) {
+            throw new java.io.IOException("La respuesta del sensor no contiene un objeto value");
+        }
+        JsonElement bound = value.getAsJsonObject().get(limite);
+        if (bound == null || !bound.isJsonPrimitive() || !bound.getAsJsonPrimitive().isNumber()) {
             throw new java.io.IOException("La respuesta no contiene value." + limite + " numérico");
         }
-        return matcher.group(1);
+        return bound.getAsString();
     }
 
     String obtenerTermperaturaObjetivo (String runId) throws java.io.IOException, InterruptedException {
