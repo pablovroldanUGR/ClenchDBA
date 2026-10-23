@@ -35,17 +35,18 @@ public class Main {
             String inicioJson = api.startChallenge();
             System.out.println(inicioJson);
             
-            // Extraer el runId del JSON para usarlo en el resto de peticiones
+            // Extraer el runId del JSON y asignarlo a la instancia de ConexionAPI
             JsonObject jsonObject = JsonParser.parseString(inicioJson).getAsJsonObject();
             String runId = jsonObject.getAsJsonObject("control").get("runId").getAsString();
             System.out.println("\n[Run ID extraído: " + runId + "]");
             
             System.out.println("\n3. Obteniendo temperatura:");
-            System.out.println(api.getTemperature());
+            double temp = api.getTemperature();
+            System.out.println("Temperatura actual: " + temp + " ºC");
             
             System.out.println("\n4. Obteniendo límites permitidos:");
-            System.out.println("Límite Mínimo: " + api.getMaximumLimit());
-            System.out.println("Límite Máximo: " + api.getMinimumLimit());
+            System.out.println("Límite Mínimo: " + api.getMinimumLimit());
+            System.out.println("Límite Máximo: " + api.getMaximumLimit());
             
             System.out.println("\n5. Obteniendo temperatura objetivo:");
             System.out.println(api.getObjectiveTemperature());

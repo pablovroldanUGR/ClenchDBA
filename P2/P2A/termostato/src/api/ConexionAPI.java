@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package api;
 
 import java.net.URI;
@@ -17,8 +13,16 @@ import com.google.gson.JsonParser;
  * @author pablo
  */
 public class ConexionAPI {
-    
+
     private String runID;
+
+    public String getRunID() {
+        return this.runID;
+    }
+
+    public void setRunId(String runID) {
+        this.runID = runID;
+    }
 
     public String getChallenges() throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
@@ -31,9 +35,7 @@ public class ConexionAPI {
                 .GET()
                 .build();
         HttpResponse<String> found = http.send(discovery, HttpResponse.BodyHandlers.ofString());
-        int discoveryStatus = found.statusCode();
-        String discoveryJson = found.body();
-        return discoveryJson;
+        return found.body();
     }
 
     public String startChallenge() throws java.io.IOException, InterruptedException {
@@ -42,7 +44,7 @@ public class ConexionAPI {
         String token = System.getenv("DBA_TOKEN");
         long challengeId = Long.parseLong(System.getenv("DBA_CHALLENGE_ID"));
         String body = "{\"challengeId\":" + challengeId + "}";
-        
+
         HttpRequest start = HttpRequest.newBuilder()
                 .uri(URI.create(api + "/runs"))
                 .header("Authorization", "Bearer " + token)
@@ -51,19 +53,15 @@ public class ConexionAPI {
                 .build();
         HttpResponse<String> started = http.send(start, HttpResponse.BodyHandlers.ofString());
         String startJson = started.body();
-        
-        // Parsear el JSON para extraer el runId y guardarlo en la variable privada
+
+        // Extraer y guardar el runId automáticamente
         JsonObject json = JsonParser.parseString(startJson).getAsJsonObject();
         this.runID = json.getAsJsonObject("control").get("runId").getAsString();
-        
+
         return startJson;
     }
 
-    public String getRunID() {
-        return this.runID;
-    }
-    
-    public String getTemperature() throws java.io.IOException, InterruptedException {
+    public double getTemperature() throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -76,18 +74,35 @@ public class ConexionAPI {
                 .build();
 
         HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
-        return response.body();
+
+        JsonElement json = JsonParser.parseString(response.body());
+        if (!json.isJsonObject()) {
+            throw new java.io.IOException("La respuesta del sensor no es un objeto JSON");
+        }
+
+        JsonObject root = json.getAsJsonObject();
+        JsonElement value = root.get("value");
+        if (value == null || !value.isJsonObject()) {
+            throw new java.io.IOException("La respuesta del sensor no contiene un objeto 'value'");
+        }
+
+        JsonElement celsius = value.getAsJsonObject().get("celsius");
+        if (celsius == null || !celsius.isJsonPrimitive() || !celsius.getAsJsonPrimitive().isNumber()) {
+            throw new java.io.IOException("La respuesta no contiene el campo 'value.celsius' numérico");
+        }
+
+        return celsius.getAsDouble();
     }
 
-    public String getMaximumLimit () throws java.io.IOException, InterruptedException {
+    public double getMaximumLimit() throws java.io.IOException, InterruptedException {
         return getLimit("upper");
     }
 
-    public String getMinimumLimit () throws java.io.IOException, InterruptedException {
+    public double getMinimumLimit() throws java.io.IOException, InterruptedException {
         return getLimit("lower");
     }
 
-    private String getLimit(String limite) throws java.io.IOException, InterruptedException {
+    private double getLimit(String limite) throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -119,10 +134,10 @@ public class ConexionAPI {
         if (bound == null || !bound.isJsonPrimitive() || !bound.getAsJsonPrimitive().isNumber()) {
             throw new java.io.IOException("La respuesta no contiene value." + limite + " numérico");
         }
-        return bound.getAsString();
+        return bound.getAsDouble();
     }
 
-    public String getObjectiveTemperature () throws java.io.IOException, InterruptedException {
+    public double getObjectiveTemperature() throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -135,9 +150,9 @@ public class ConexionAPI {
                 .build();
 
         HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
-        
+
         JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
-        return json.getAsJsonObject("value").get("celsius").getAsString();
+        return json.getAsJsonObject("value").get("celsius").getAsDouble();
     }
 
     public String activateRefrigeration() throws java.io.IOException, InterruptedException {
@@ -155,7 +170,7 @@ public class ConexionAPI {
                 .build();
 
         HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
-        
+
         JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
         return json.get("actionStatus").getAsString();
     }
@@ -175,9 +190,8 @@ public class ConexionAPI {
                 .build();
 
         HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
-        
+
         JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
         return json.get("actionStatus").getAsString();
     }
-
 }
