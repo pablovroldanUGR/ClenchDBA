@@ -124,7 +124,9 @@ public class ConexionAPI {
                 .build();
 
         HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
-        return response.body();
+        
+        JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
+        return json.getAsJsonObject("value").get("celsius").getAsString();
     }
 
     public String activarRefrigeracion(String runId) throws java.io.IOException, InterruptedException {
@@ -142,7 +144,9 @@ public class ConexionAPI {
                 .build();
 
         HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
-        return response.body();
+        
+        JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
+        return json.get("actionStatus").getAsString();
     }
 
     public String desactivarRefrigeracion(String runId) throws java.io.IOException, InterruptedException {
@@ -160,7 +164,9 @@ public class ConexionAPI {
                 .build();
 
         HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
-        return response.body();
+        
+        JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
+        return json.get("actionStatus").getAsString();
     }
 
 }
