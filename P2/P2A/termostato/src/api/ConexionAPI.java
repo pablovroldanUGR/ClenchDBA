@@ -101,12 +101,14 @@ public class ConexionAPI {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
-        String actuatorId = "thermostat.refrigeration.on";
+        String actionCode = "thermostat.refrigeration.on";
+        String body = "{\"actionCode\":\"" + actionCode + "\"}";
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(api + "/runs/" + runId + "/actuators/" + actuatorId))
+                .uri(URI.create(api + "/runs/" + runId + "/actions"))
                 .header("Authorization", "Bearer " + token)
-                .POST(HttpRequest.BodyPublishers.noBody())
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(body))
                 .build();
 
         HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
@@ -117,12 +119,14 @@ public class ConexionAPI {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
-        String actuatorId = "thermostat.refrigeration.off";
+        String actionCode = "thermostat.refrigeration.off";
+        String body = "{\"actionCode\":\"" + actionCode + "\"}";
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(api + "/runs/" + runId + "/actuators/" + actuatorId))
+                .uri(URI.create(api + "/runs/" + runId + "/actions"))
                 .header("Authorization", "Bearer " + token)
-                .DELETE()
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(body))
                 .build();
 
         HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
