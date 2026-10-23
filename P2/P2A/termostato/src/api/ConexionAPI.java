@@ -93,6 +93,24 @@ public class ConexionAPI {
 
         return celsius.getAsDouble();
     }
+    
+    public String getControl() throws java.io.IOException, InterruptedException {
+        HttpClient http = HttpClient.newHttpClient();
+        String api = System.getenv("DBA_LAB_URL") + "/api/v1";
+        String token = System.getenv("DBA_TOKEN");
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(api + "/runs/" + this.runID))
+                .header("Authorization", "Bearer " + token)
+                .GET()
+                .build();
+
+        HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        // Parseamos el JSON para extraer y devolver únicamente la parte de "control"
+        JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
+        return json.getAsJsonObject("control").toString();
+    }
 
     public double getMaximumLimit() throws java.io.IOException, InterruptedException {
         return getLimit("upper");
