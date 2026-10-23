@@ -18,7 +18,7 @@ import com.google.gson.JsonParser;
  */
 public class ConexionAPI {
 
-    public String obtenerRetos() throws java.io.IOException, InterruptedException {
+    public String getChallenges() throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -34,7 +34,7 @@ public class ConexionAPI {
         return discoveryJson;
     }
 
-    public String iniciarReto() throws java.io.IOException, InterruptedException {
+    public String startChallenge() throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -52,7 +52,7 @@ public class ConexionAPI {
         return startJson;
     }
 
-    public String obtenerTemperatura(String runId) throws java.io.IOException, InterruptedException {
+    public String getTemperature(String runId) throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -68,15 +68,15 @@ public class ConexionAPI {
         return response.body();
     }
 
-    public String obtenerLimiteMaximo (String runId) throws java.io.IOException, InterruptedException {
-        return obtenerLimite(runId, "upper");
+    public String getMaximumLimit (String runId) throws java.io.IOException, InterruptedException {
+        return getLimit(runId, "upper");
     }
 
-    public String obtenerLimiteMinimo (String runId) throws java.io.IOException, InterruptedException {
-        return obtenerLimite(runId, "lower");
+    public String getMinimumLimit (String runId) throws java.io.IOException, InterruptedException {
+        return getLimit(runId, "lower");
     }
 
-    private String obtenerLimite(String runId, String limite) throws java.io.IOException, InterruptedException {
+    private String getLimit(String runId, String limite) throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -111,7 +111,7 @@ public class ConexionAPI {
         return bound.getAsString();
     }
 
-    public String obtenerTermperaturaObjetivo (String runId) throws java.io.IOException, InterruptedException {
+    public String getObjectiveTemperature (String runId) throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -129,7 +129,7 @@ public class ConexionAPI {
         return json.getAsJsonObject("value").get("celsius").getAsString();
     }
 
-    public String activarRefrigeracion(String runId) throws java.io.IOException, InterruptedException {
+    public String activateRefrigeration(String runId) throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -149,7 +149,7 @@ public class ConexionAPI {
         return json.get("actionStatus").getAsString();
     }
 
-    public String desactivarRefrigeracion(String runId) throws java.io.IOException, InterruptedException {
+    public String disableRefrigeration(String runId) throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
