@@ -8,6 +8,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -66,10 +68,18 @@ public class ConexionAPI {
     }
 
     String obtenerLimiteMaximo (String runId) throws java.io.IOException, InterruptedException {
+        return obtenerLimite(runId, "upper");
+    }
+
+    String obtenerLimiteMinimo (String runId) throws java.io.IOException, InterruptedException {
+        return obtenerLimite(runId, "lower");
+    }
+
+    private String obtenerLimite(String runId, String limite) throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
-        String sensorId = "thermostat.maxTemperature";
+        String sensorId = "thermostat.limits";
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(api + "/runs/" + runId + "/perceptions/" + sensorId))
@@ -78,14 +88,21 @@ public class ConexionAPI {
                 .build();
 
         HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
-        return response.body();
+        Pattern pattern = Pattern.compile(
+                "\"value\"\\s*:\\s*\\{[^{}]*?\"" + Pattern.quote(limite)
+                + "\"\\s*:\\s*(-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?)");
+        Matcher matcher = pattern.matcher(response.body());
+        if (!matcher.find()) {
+            throw new java.io.IOException("La respuesta no contiene value." + limite + " numérico");
+        }
+        return matcher.group(1);
     }
 
-    String obtenerLimiteMinimo (String runId) throws java.io.IOException, InterruptedException {
+    String obtenerTermperaturaObjetivo (String runId) throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
-        String sensorId = "thermostat.minTemperature";
+        String sensorId = "thermostat.target";
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(api + "/runs/" + runId + "/perceptions/" + sensorId))
