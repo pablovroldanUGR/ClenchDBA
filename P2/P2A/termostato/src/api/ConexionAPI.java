@@ -17,6 +17,8 @@ import com.google.gson.JsonParser;
  * @author pablo
  */
 public class ConexionAPI {
+    
+    private String runID;
 
     public String getChallenges() throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
@@ -40,6 +42,7 @@ public class ConexionAPI {
         String token = System.getenv("DBA_TOKEN");
         long challengeId = Long.parseLong(System.getenv("DBA_CHALLENGE_ID"));
         String body = "{\"challengeId\":" + challengeId + "}";
+        
         HttpRequest start = HttpRequest.newBuilder()
                 .uri(URI.create(api + "/runs"))
                 .header("Authorization", "Bearer " + token)
@@ -47,19 +50,27 @@ public class ConexionAPI {
                 .POST(HttpRequest.BodyPublishers.ofString(body))
                 .build();
         HttpResponse<String> started = http.send(start, HttpResponse.BodyHandlers.ofString());
-        int startStatus = started.statusCode();
         String startJson = started.body();
+        
+        // Parsear el JSON para extraer el runId y guardarlo en la variable privada
+        JsonObject json = JsonParser.parseString(startJson).getAsJsonObject();
+        this.runID = json.getAsJsonObject("control").get("runId").getAsString();
+        
         return startJson;
     }
 
-    public String getTemperature(String runId) throws java.io.IOException, InterruptedException {
+    public String getRunID() {
+        return this.runID;
+    }
+    
+    public String getTemperature() throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
         String sensorId = "thermostat.temperature";
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(api + "/runs/" + runId + "/perceptions/" + sensorId))
+                .uri(URI.create(api + "/runs/" + this.runID + "/perceptions/" + sensorId))
                 .header("Authorization", "Bearer " + token)
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
@@ -68,22 +79,22 @@ public class ConexionAPI {
         return response.body();
     }
 
-    public String getMaximumLimit (String runId) throws java.io.IOException, InterruptedException {
-        return getLimit(runId, "upper");
+    public String getMaximumLimit () throws java.io.IOException, InterruptedException {
+        return getLimit("upper");
     }
 
-    public String getMinimumLimit (String runId) throws java.io.IOException, InterruptedException {
-        return getLimit(runId, "lower");
+    public String getMinimumLimit () throws java.io.IOException, InterruptedException {
+        return getLimit("lower");
     }
 
-    private String getLimit(String runId, String limite) throws java.io.IOException, InterruptedException {
+    private String getLimit(String limite) throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
         String sensorId = "thermostat.limits";
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(api + "/runs/" + runId + "/perceptions/" + sensorId))
+                .uri(URI.create(api + "/runs/" + this.runID + "/perceptions/" + sensorId))
                 .header("Authorization", "Bearer " + token)
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
@@ -111,14 +122,14 @@ public class ConexionAPI {
         return bound.getAsString();
     }
 
-    public String getObjectiveTemperature (String runId) throws java.io.IOException, InterruptedException {
+    public String getObjectiveTemperature () throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
         String sensorId = "thermostat.target";
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(api + "/runs/" + runId + "/perceptions/" + sensorId))
+                .uri(URI.create(api + "/runs/" + this.runID + "/perceptions/" + sensorId))
                 .header("Authorization", "Bearer " + token)
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
@@ -129,7 +140,7 @@ public class ConexionAPI {
         return json.getAsJsonObject("value").get("celsius").getAsString();
     }
 
-    public String activateRefrigeration(String runId) throws java.io.IOException, InterruptedException {
+    public String activateRefrigeration() throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -137,7 +148,7 @@ public class ConexionAPI {
         String body = "{\"actionCode\":\"" + actionCode + "\"}";
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(api + "/runs/" + runId + "/actions"))
+                .uri(URI.create(api + "/runs/" + this.runID + "/actions"))
                 .header("Authorization", "Bearer " + token)
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(body))
@@ -149,7 +160,7 @@ public class ConexionAPI {
         return json.get("actionStatus").getAsString();
     }
 
-    public String disableRefrigeration(String runId) throws java.io.IOException, InterruptedException {
+    public String disableRefrigeration() throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -157,7 +168,7 @@ public class ConexionAPI {
         String body = "{\"actionCode\":\"" + actionCode + "\"}";
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(api + "/runs/" + runId + "/actions"))
+                .uri(URI.create(api + "/runs/" + this.runID + "/actions"))
                 .header("Authorization", "Bearer " + token)
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(body))

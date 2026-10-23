@@ -29,10 +29,10 @@ public class Main {
             ConexionAPI api = new ConexionAPI();
             
             System.out.println("\n1. Obteniendo retos disponibles:");
-            System.out.println(api.obtenerRetos());
+            System.out.println(api.getChallenges());
             
             System.out.println("\n2. Iniciando reto " + challengeId + ":");
-            String inicioJson = api.iniciarReto();
+            String inicioJson = api.startChallenge();
             System.out.println(inicioJson);
             
             // Extraer el runId del JSON para usarlo en el resto de peticiones
@@ -41,17 +41,17 @@ public class Main {
             System.out.println("\n[Run ID extraído: " + runId + "]");
             
             System.out.println("\n3. Obteniendo temperatura:");
-            System.out.println(api.obtenerTemperatura(runId));
+            System.out.println(api.getTemperature());
             
             System.out.println("\n4. Obteniendo límites permitidos:");
-            System.out.println("Límite Mínimo: " + api.obtenerLimiteMinimo(runId));
-            System.out.println("Límite Máximo: " + api.obtenerLimiteMaximo(runId));
+            System.out.println("Límite Mínimo: " + api.getMaximumLimit());
+            System.out.println("Límite Máximo: " + api.getMinimumLimit());
             
             System.out.println("\n5. Obteniendo temperatura objetivo:");
-            System.out.println(api.obtenerTermperaturaObjetivo(runId));
+            System.out.println(api.getObjectiveTemperature());
             
             System.out.println("\n6. Probando acción (Activar refrigeración):");
-            System.out.println(api.activarRefrigeracion(runId));
+            System.out.println(api.activateRefrigeration());
 
         } catch (Exception e) {
             System.err.println("Error en la prueba de conexión:");
