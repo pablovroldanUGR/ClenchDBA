@@ -65,4 +65,68 @@ public class ConexionAPI {
         return response.body();
     }
 
+    String obtenerLimiteMaximo (String runId) throws java.io.IOException, InterruptedException {
+        HttpClient http = HttpClient.newHttpClient();
+        String api = System.getenv("DBA_LAB_URL") + "/api/v1";
+        String token = System.getenv("DBA_TOKEN");
+        String sensorId = "thermostat.maxTemperature";
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(api + "/runs/" + runId + "/perceptions/" + sensorId))
+                .header("Authorization", "Bearer " + token)
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+
+        HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
+        return response.body();
+    }
+
+    String obtenerLimiteMinimo (String runId) throws java.io.IOException, InterruptedException {
+        HttpClient http = HttpClient.newHttpClient();
+        String api = System.getenv("DBA_LAB_URL") + "/api/v1";
+        String token = System.getenv("DBA_TOKEN");
+        String sensorId = "thermostat.minTemperature";
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(api + "/runs/" + runId + "/perceptions/" + sensorId))
+                .header("Authorization", "Bearer " + token)
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+
+        HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
+        return response.body();
+    }
+
+    String activarRefrigeracion(String runId) throws java.io.IOException, InterruptedException {
+        HttpClient http = HttpClient.newHttpClient();
+        String api = System.getenv("DBA_LAB_URL") + "/api/v1";
+        String token = System.getenv("DBA_TOKEN");
+        String actuatorId = "thermostat.cooling";
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(api + "/runs/" + runId + "/actuators/" + actuatorId))
+                .header("Authorization", "Bearer " + token)
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+
+        HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
+        return response.body();
+    }
+
+    String desactivarRefrigeracion(String runId) throws java.io.IOException, InterruptedException {
+        HttpClient http = HttpClient.newHttpClient();
+        String api = System.getenv("DBA_LAB_URL") + "/api/v1";
+        String token = System.getenv("DBA_TOKEN");
+        String actuatorId = "thermostat.cooling";
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(api + "/runs/" + runId + "/actuators/" + actuatorId))
+                .header("Authorization", "Bearer " + token)
+                .DELETE()
+                .build();
+
+        HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
+        return response.body();
+    }
+
 }
