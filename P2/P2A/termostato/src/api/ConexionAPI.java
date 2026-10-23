@@ -101,7 +101,7 @@ public class ConexionAPI {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
-        String actuatorId = "thermostat.cooling";
+        String actuatorId = "thermostat.refrigeration.on";
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(api + "/runs/" + runId + "/actuators/" + actuatorId))
@@ -117,7 +117,7 @@ public class ConexionAPI {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
-        String actuatorId = "thermostat.cooling";
+        String actuatorId = "thermostat.refrigeration.off";
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(api + "/runs/" + runId + "/actuators/" + actuatorId))
