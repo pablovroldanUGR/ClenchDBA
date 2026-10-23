@@ -23,43 +23,43 @@ public class Main {
             System.exit(1);
         }
 
-        // --- BLOQUE DE PRUEBA TEMPORAL ---
-        System.out.println("Probando conexión con DBA Lab y métodos de API...");
-        try {
-            ConexionAPI api = new ConexionAPI();
-            
-            System.out.println("\n1. Obteniendo retos disponibles:");
-            System.out.println(api.getChallenges());
-            
-            System.out.println("\n2. Iniciando reto " + challengeId + ":");
-            String inicioJson = api.startChallenge();
-            System.out.println(inicioJson);
-            
-            // Extraer el runId del JSON y asignarlo a la instancia de ConexionAPI
-            JsonObject jsonObject = JsonParser.parseString(inicioJson).getAsJsonObject();
-            String runId = jsonObject.getAsJsonObject("control").get("runId").getAsString();
-            System.out.println("\n[Run ID extraído: " + runId + "]");
-            
-            System.out.println("\n3. Obteniendo temperatura:");
-            double temp = api.getTemperature();
-            System.out.println("Temperatura actual: " + temp + " ºC");
-            
-            System.out.println("\n4. Obteniendo límites permitidos:");
-            System.out.println("Límite Mínimo: " + api.getMinimumLimit());
-            System.out.println("Límite Máximo: " + api.getMaximumLimit());
-            
-            System.out.println("\n5. Obteniendo temperatura objetivo:");
-            System.out.println(api.getObjectiveTemperature());
-            
-            System.out.println("\n6. Probando acción (Activar refrigeración):");
-            System.out.println(api.activateRefrigeration());
-
-        } catch (Exception e) {
-            System.err.println("Error en la prueba de conexión:");
-            e.printStackTrace();
-        }
-        System.out.println("\n-----------------------------------");
-        // --- FIN DEL BLOQUE DE PRUEBA ---
+//        // --- BLOQUE DE PRUEBA TEMPORAL ---
+//        System.out.println("Probando conexión con DBA Lab y métodos de API...");
+//        try {
+//            ConexionAPI api = new ConexionAPI();
+//            
+//            System.out.println("\n1. Obteniendo retos disponibles:");
+//            System.out.println(api.getChallenges());
+//            
+//            System.out.println("\n2. Iniciando reto " + challengeId + ":");
+//            String inicioJson = api.startChallenge();
+//            System.out.println(inicioJson);
+//            
+//            // Extraer el runId del JSON y asignarlo a la instancia de ConexionAPI
+//            JsonObject jsonObject = JsonParser.parseString(inicioJson).getAsJsonObject();
+//            String runId = jsonObject.getAsJsonObject("control").get("runId").getAsString();
+//            System.out.println("\n[Run ID extraído: " + runId + "]");
+//            
+//            System.out.println("\n3. Obteniendo temperatura:");
+//            double temp = api.getTemperature();
+//            System.out.println("Temperatura actual: " + temp + " ºC");
+//            
+//            System.out.println("\n4. Obteniendo límites permitidos:");
+//            System.out.println("Límite Mínimo: " + api.getMinimumLimit());
+//            System.out.println("Límite Máximo: " + api.getMaximumLimit());
+//            
+//            System.out.println("\n5. Obteniendo temperatura objetivo:");
+//            System.out.println(api.getObjectiveTemperature());
+//            
+//            System.out.println("\n6. Probando acción (Activar refrigeración):");
+//            System.out.println(api.activateRefrigeration());
+//
+//        } catch (Exception e) {
+//            System.err.println("Error en la prueba de conexión:");
+//            e.printStackTrace();
+//        }
+//        System.out.println("\n-----------------------------------");
+//        // --- FIN DEL BLOQUE DE PRUEBA ---
         
         Runtime rt = Runtime.instance();
         rt.setCloseVM(true); // Cerramos JVM auto al terminar
@@ -73,10 +73,13 @@ public class Main {
         try{
             AgentContainer mainContainer = rt.createMainContainer(profile);
             
-            Object[] agentArgs = new Object[]{url, token, "THERMOSTAT"};
+            ConexionAPI api = new ConexionAPI();
+            
+            // 2. Pasamos el objeto 'api' como el primer argumento (índice 0)
+            Object[] agentArgs = new Object[]{ api };
             
             AgentController termostatoAgent = mainContainer.createNewAgent
-            ("Termostato", "dba.thermostat.ThermostatAgent", agentArgs);
+            ("Termostato", "termostato.Agente", agentArgs);
             
             termostatoAgent.start();
             System.err.println("Agente Termostato lanzado");
