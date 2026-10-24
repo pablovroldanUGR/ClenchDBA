@@ -7,7 +7,7 @@ import jade.core.behaviours.*;
 public class AgentTemp extends Agent {
     
     // Para imprimir mensajes
-    private String name = "[TERMOSTATO]: ";
+    private String name = "[THERMOSTAT]: ";
     
     // Conexion a la API
     private ConexionAPI thermo;
