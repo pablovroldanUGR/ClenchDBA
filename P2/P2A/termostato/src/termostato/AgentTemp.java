@@ -5,26 +5,45 @@ import jade.core.Agent;
 import jade.core.behaviours.*;
 
 public class AgentTemp extends Agent {
-
+    
+    // Para imprimir mensajes
     private String name = "[TERMOSTATO]: ";
-
-    private ConexionAPI termostato;
+    
+    // Conexion a la API
+    private ConexionAPI thermo;
+    
+    // Estado del entorno
     private double limit_inf;
     private double limit_sup;
     private double target;
     private double current_temp;
+    
+    // Id del desafio
+    private int challenge_id = 0;
+    
+    // Id de la run
+    private String run_id = "";
 
     @Override
     protected void setup() {
         Object[] args = getArguments();
 
         if (args != null && args.length > 0) {
-            this.termostato = (ConexionAPI) args[0];
+            this.thermo = (ConexionAPI) args[0];
 
             try {
-                this.limit_inf = this.termostato.getMaximumLimit();
-                this.limit_sup = this.termostato.getMinimumLimit();
-                this.target = this.termostato.getObjectiveTemperature();
+                this.thermo.startChallenge();
+                
+                this.challenge_id = Integer.parseInt(System.getenv("DBA_CHALLENGE_ID"));
+                this.run_id = this.thermo.getRunID();
+                
+                ImprimirMensaje("Reto iniciado. Run ID: " + this.run_id);
+                
+                this.limit_inf = this.thermo.getMaximumLimit();
+                this.limit_sup = this.thermo.getMinimumLimit();
+                this.target = this.thermo.getObjectiveTemperature();
+                
+                ImprimirMensaje("Estado inicial -> Objetivo: " + this.target + " | Limites: [" + this.limit_inf + ", " + limit_sup + "]");
 
             } catch (Exception e) {
                 System.err.println("Error al comunicarse con la API durante el setup: " + e.getMessage());
@@ -42,7 +61,15 @@ public class AgentTemp extends Agent {
     }
 
     public ConexionAPI getApi() {
-        return this.termostato;
+        return this.thermo;
+    }
+    
+    public int getChallengeId() {
+        return this.challenge_id;
+    }
+    
+    public String getRunId() {
+        return this.run_id;
     }
 
 }

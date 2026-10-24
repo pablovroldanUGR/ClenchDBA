@@ -75,7 +75,6 @@ public class Main {
             
             ConexionAPI api = new ConexionAPI();
             
-            // 2. Pasamos el objeto 'api' como el primer argumento (índice 0)
             Object[] agentArgs = new Object[]{ api };
             
             AgentController termostatoAgent = mainContainer.createNewAgent
