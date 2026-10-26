@@ -62,23 +62,23 @@ public class Main {
 //        // --- FIN DEL BLOQUE DE PRUEBA ---
         
         Runtime rt = Runtime.instance();
-        rt.setCloseVM(true); // Cerramos JVM auto al terminar
+        //rt.setCloseVM(true); // Cerramos JVM auto al terminar
         
         // Perfil del contenedor
         Profile profile = new ProfileImpl();
         profile.setParameter(Profile.MAIN_HOST, "localhost");
-        profile.setParameter(Profile.MAIN_PORT, "1099");
-        profile.setParameter(Profile.GUI, "false");
+        //profile.setParameter(Profile.MAIN_PORT, "1099");
+        profile.setParameter(Profile.CONTAINER_NAME, "termostato");
         
         try{
-            AgentContainer mainContainer = rt.createMainContainer(profile);
+            AgentContainer agentContainer = rt.createAgentContainer(profile);
             
             ConexAPI api = new ConexAPI();
             
             Object[] agentArgs = new Object[]{ api };
             
-            AgentController thermostatAgent = mainContainer.createNewAgent
-            ("Thermostat", "thermostat.Agent", agentArgs);
+            AgentController thermostatAgent = agentContainer.createNewAgent
+            ("Thermostat", AgentTemp.class.getName(), agentArgs);
             
 
             thermostatAgent.start();
