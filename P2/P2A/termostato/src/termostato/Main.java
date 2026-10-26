@@ -5,7 +5,7 @@ import jade.core.ProfileImpl;
 import jade.core.Runtime;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
-import api.ConexionAPI;
+import api.ConexAPI;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -73,7 +73,7 @@ public class Main {
         try{
             AgentContainer mainContainer = rt.createMainContainer(profile);
             
-            ConexionAPI api = new ConexionAPI();
+            ConexAPI api = new ConexAPI();
             
             Object[] agentArgs = new Object[]{ api };
             

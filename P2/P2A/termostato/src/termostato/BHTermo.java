@@ -11,14 +11,14 @@ package termostato;
 
 import jade.core.Agent;
 import jade.core.behaviours.*;  
-import api.ConexionAPI;
+import api.ConexAPI;
 
 public class BHTermo {
     
     public class comprobarTemperatura extends OneShotBehaviour{
         @Override
         public void action(){
-           ConexionAPI api = ((AgentTemp) myAgent).getApi();
+           ConexAPI api = ((AgentTemp) myAgent).getApi();
            
            double temperatura = api.getTemperature();
         }

@@ -12,7 +12,7 @@ import com.google.gson.JsonParser;
  *
  * @author pablo
  */
-public class ConexionAPI {
+public class ConexAPI {
 
     private String runID;
 
