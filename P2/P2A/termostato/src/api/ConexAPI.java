@@ -37,6 +37,24 @@ public class ConexAPI {
         HttpResponse<String> found = http.send(discovery, HttpResponse.BodyHandlers.ofString());
         return found.body();
     }
+    
+    public String getStatus() throws java.io.IOException, InterruptedException {
+        HttpClient http = HttpClient.newHttpClient();
+        String api = System.getenv("DBA_LAB_URL") + "/api/v1";
+        String token = System.getenv("DBA_TOKEN");
+
+        HttpRequest statusRequest = HttpRequest.newBuilder()
+                .uri(URI.create(api + "/runs/" + this.runID))
+                .header("Authorization", "Bearer " + token)
+                .GET()
+                .build();
+        HttpResponse<String> found = http.send(statusRequest, HttpResponse.BodyHandlers.ofString());
+        String statusJson = found.body();
+        
+        JsonObject json = JsonParser.parseString(statusJson).getAsJsonObject();
+
+        return json.getAsJsonObject("control").get("runStatus").getAsString();
+    }
 
     public String startChallenge() throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
