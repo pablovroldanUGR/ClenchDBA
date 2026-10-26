@@ -73,5 +73,10 @@ public class AgentTemp extends Agent {
     public String getRunId() {
         return this.run_id;
     }
+    
+    public double getTarget() {
+        return target;
+    }
+    
 
 }
