@@ -37,7 +37,7 @@ public class ConexAPI {
         HttpResponse<String> found = http.send(discovery, HttpResponse.BodyHandlers.ofString());
         return found.body();
     }
-    
+
     public String getStatus() throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
@@ -50,10 +50,17 @@ public class ConexAPI {
                 .build();
         HttpResponse<String> found = http.send(statusRequest, HttpResponse.BodyHandlers.ofString());
         String statusJson = found.body();
-        
-        JsonObject json = JsonParser.parseString(statusJson).getAsJsonObject();
 
-        System.out.println(json.getAsJsonObject("control").getAsString());
+        JsonObject json = JsonParser.parseString(statusJson).getAsJsonObject();
+        JsonObject control = json.getAsJsonObject("control");
+
+        if (control != null) {
+            System.out.println(json.getAsJsonObject("control").getAsString());
+        } else {
+            System.out.println("Ha ocurrido un error al intentar iniciar la run: " + json.getAsString());
+            closeChallenge();
+        }
+
         return json.getAsJsonObject("control").get("runStatus").getAsString();
     }
 
@@ -75,14 +82,13 @@ public class ConexAPI {
 
         // Extraer y guardar el runId automáticamente
         JsonObject json = JsonParser.parseString(startJson).getAsJsonObject();
-        
+
         JsonObject control = json.getAsJsonObject("control");
-        
-        if(control != null){
+
+        if (control != null) {
             this.runID = json.getAsJsonObject("control").get("runId").getAsString();
             System.out.println("Se ha iniciado una nueva run: " + this.runID);
-        }
-        else{
+        } else {
             System.out.println("Ha ocurrido un error al intentar iniciar la run: " + json.getAsString());
         }
 
@@ -121,7 +127,7 @@ public class ConexAPI {
 
         return celsius.getAsDouble();
     }
-    
+
     public String getControl() throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
@@ -134,7 +140,7 @@ public class ConexAPI {
                 .build();
 
         HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
-        
+
         // Parseamos el JSON para extraer y devolver únicamente la parte de "control"
         JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
         return json.getAsJsonObject("control").toString();
@@ -240,4 +246,43 @@ public class ConexAPI {
         JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
         return json.get("actionStatus").getAsString();
     }
+
+    public String closeChallenge()
+            throws java.io.IOException, InterruptedException {
+
+        HttpClient http = HttpClient.newHttpClient();
+
+        String api = System.getenv("DBA_LAB_URL") + "/api/v1";
+        String token = System.getenv("DBA_TOKEN");
+
+        // Comprobar que existe un run activo o conocido
+        if (this.runID == null || this.runID.isBlank()) {
+            throw new java.io.IOException(
+                    "No existe un runID para cerrar el reto."
+            );
+        }
+
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(api + "/runs/" + this.runID + "/close"))
+                .header("Authorization", "Bearer " + token)
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+        
+        HttpResponse<String> response = http.send(request,HttpResponse.BodyHandlers.ofString());
+
+        String responseJson = response.body();
+        
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new java.io.IOException(
+                    "Error al cerrar el reto. HTTP "
+                    + response.statusCode() + ": " + responseJson
+            );
+        }
+
+        System.out.println("[DBA LAB] Solicitud de cierre aceptada: " + this.runID);
+
+        return responseJson;
+    }
+
 }
