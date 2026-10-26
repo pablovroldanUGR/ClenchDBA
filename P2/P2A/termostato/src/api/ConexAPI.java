@@ -81,7 +81,7 @@ public class ConexAPI {
             this.runID = control.get("runId").getAsString();
             System.out.println("Se ha iniciado una nueva run: " + this.runID);
         } else {
-            System.out.println("Ha ocurrido un error al intentar iniciar la run: " + json.getAsString());
+            System.out.println("Ha ocurrido un error al intentar iniciar la run");
             System.exit(1);
         }
 

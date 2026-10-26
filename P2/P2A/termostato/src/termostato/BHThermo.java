@@ -20,6 +20,7 @@ public class BHThermo extends Behaviour {
                 
             // Obtenemos temperatura
             double temp = api.getTemperature();
+            System.out.println("ESTADO: " + status);
             
             if (status == "ACTIVE") {
                 ((AgentTemp) myAgent).printMessage("Temperatura obtenida -> " + temp);
