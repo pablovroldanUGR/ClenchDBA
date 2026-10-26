@@ -53,6 +53,7 @@ public class ConexAPI {
         
         JsonObject json = JsonParser.parseString(statusJson).getAsJsonObject();
 
+        System.out.println(json.getAsJsonObject("control").getAsString());
         return json.getAsJsonObject("control").get("runStatus").getAsString();
     }
 
@@ -74,7 +75,16 @@ public class ConexAPI {
 
         // Extraer y guardar el runId automáticamente
         JsonObject json = JsonParser.parseString(startJson).getAsJsonObject();
-        this.runID = json.getAsJsonObject("control").get("runId").getAsString();
+        
+        JsonObject control = json.getAsJsonObject("control");
+        
+        if(control != null){
+            this.runID = json.getAsJsonObject("control").get("runId").getAsString();
+            System.out.println("Se ha iniciado una nueva run: " + this.runID);
+        }
+        else{
+            System.out.println("Ha ocurrido un error al intentar iniciar la run: " + json.getAsString());
+        }
 
         return startJson;
     }
