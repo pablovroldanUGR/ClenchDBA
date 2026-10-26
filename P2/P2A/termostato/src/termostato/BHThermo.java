@@ -5,8 +5,7 @@ import jade.core.behaviours.*;
 import api.ConexAPI;
 
 public class BHThermo extends Behaviour {
-    
-    private ConexAPI api = ((AgentTemp) myAgent).getApi();
+    private ConexAPI api;
     private String status = "";
     private int exitCode = 0;
     
@@ -14,6 +13,8 @@ public class BHThermo extends Behaviour {
     public void action() {
 
         try {
+            api = ((AgentTemp) myAgent).getApi();
+            
             // Comprobamos estado de la run
             this.status = api.getStatus();
 
