@@ -37,7 +37,7 @@ public class AgentTemp extends Agent {
                 this.challenge_id = Integer.parseInt(System.getenv("DBA_CHALLENGE_ID"));
                 this.run_id = this.thermo.getRunID();
                 
-                printMessage("Reto iniciado. Run ID: " + this.run_id);
+                printMessage("Reto " + this.challenge_id + " iniciado. Run ID: " + this.run_id);
                 
                 this.limit_inf = this.thermo.getMaximumLimit();
                 this.limit_sup = this.thermo.getMinimumLimit();
@@ -54,6 +54,8 @@ public class AgentTemp extends Agent {
             System.out.println("No se ha pasado la conexión a la API");
             doDelete();
         }
+        
+        addBehaviour(new BHThermo.mainBehaviour());
     }
 
     public void printMessage(String msg) {

@@ -81,7 +81,7 @@ public class Main {
             ("Thermostat", "thermostat.Agent", agentArgs);
             
 
-            termostatoAgent.start();
+            thermostatAgent.start();
             System.out.println("Agente Termostato lanzado");
             
         }catch (Exception e) {
