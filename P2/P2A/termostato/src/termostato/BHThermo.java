@@ -13,6 +13,6 @@ import jade.core.Agent;
 import jade.core.behaviours.*;  
 import api.ConexAPI;
 
-public class BHThermoSeq {
+public class BHThermo {
     
 }
