@@ -17,21 +17,28 @@ public class BHThermo extends Behaviour {
             
             // Comprobamos estado de la run
             this.status = api.getStatus();
-
+                
+            // Obtenemos temperatura
+            double temp = api.getTemperature();
+            
             if (status == "ACTIVE") {
-                // Obtenemos temperatura
-                double temp = api.getTemperature();
+                ((AgentTemp) myAgent).printMessage("Temperatura obtenida -> " + temp);
                 
                 // Decidimos acción
                 if(temp >= ((AgentTemp) myAgent).getTarget()){
                     api.activateRefrigeration(); // CALIENTE: ACTIVAMOS REFRIGERACION
+                    ((AgentTemp) myAgent).printMessage("CALIENTE: ACTIVAMOS REFRIGERACION");
+
+                    
                 } else {
                     api.disableRefrigeration(); // FRIO: DESACTIVAMOS REFRIGERACION
+                    ((AgentTemp) myAgent).printMessage("FRIO: DESACTIVAMOS REFRIGERACION");
+                    
                 }
                 
             } else if (status == "SUCCEEDED") {
                 // Reto completado
-                ((AgentTemp) myAgent).printMessage("COMPLETADO");
+                ((AgentTemp) myAgent).printMessage("RETO COMPLETADO. TEMPERATURA ALCANZADA -> " + temp);
                 this.exitCode = 1;
             }
         } catch (Exception e) {

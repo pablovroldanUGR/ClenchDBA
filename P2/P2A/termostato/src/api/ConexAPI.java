@@ -52,16 +52,8 @@ public class ConexAPI {
         String statusJson = found.body();
 
         JsonObject json = JsonParser.parseString(statusJson).getAsJsonObject();
-        JsonObject control = json.getAsJsonObject("control");
 
-        if (control != null) {
-            System.out.println(json.getAsJsonObject("control").getAsString());
-        } else {
-            System.out.println("Ha ocurrido un error al intentar iniciar la run: " + json.getAsString());
-            closeChallenge();
-        }
-
-        return json.getAsJsonObject("control").get("runStatus").getAsString();
+        return json.get("runStatus").getAsString();
     }
 
     public String startChallenge() throws java.io.IOException, InterruptedException {
@@ -86,10 +78,11 @@ public class ConexAPI {
         JsonObject control = json.getAsJsonObject("control");
 
         if (control != null) {
-            this.runID = json.getAsJsonObject("control").get("runId").getAsString();
+            this.runID = control.get("runId").getAsString();
             System.out.println("Se ha iniciado una nueva run: " + this.runID);
         } else {
             System.out.println("Ha ocurrido un error al intentar iniciar la run: " + json.getAsString());
+            System.exit(1);
         }
 
         return startJson;
