@@ -1,6 +1,6 @@
 package termostato;
 
-import api.ConexionAPI;
+import api.ConexAPI;
 import jade.core.Agent;
 import jade.core.behaviours.*;
 
@@ -10,7 +10,7 @@ public class AgentTemp extends Agent {
     private String name = "[TERMOSTATO]: ";
     
     // Conexion a la API
-    private ConexionAPI thermo;
+    private ConexAPI thermo;
     
     // Estado del entorno
     private double limit_inf;
@@ -29,7 +29,7 @@ public class AgentTemp extends Agent {
         Object[] args = getArguments();
 
         if (args != null && args.length > 0) {
-            this.thermo = (ConexionAPI) args[0];
+            this.thermo = (ConexAPI) args[0];
 
             try {
                 this.thermo.startChallenge();
@@ -37,13 +37,13 @@ public class AgentTemp extends Agent {
                 this.challenge_id = Integer.parseInt(System.getenv("DBA_CHALLENGE_ID"));
                 this.run_id = this.thermo.getRunID();
                 
-                ImprimirMensaje("Reto iniciado. Run ID: " + this.run_id);
+                printMessage("Reto iniciado. Run ID: " + this.run_id);
                 
                 this.limit_inf = this.thermo.getMaximumLimit();
                 this.limit_sup = this.thermo.getMinimumLimit();
                 this.target = this.thermo.getObjectiveTemperature();
                 
-                ImprimirMensaje("Estado inicial -> Objetivo: " + this.target + " | Limites: [" + this.limit_inf + ", " + limit_sup + "]");
+                printMessage("Estado inicial -> Objetivo: " + this.target + " | Limites: [" + this.limit_inf + ", " + limit_sup + "]");
 
             } catch (Exception e) {
                 System.err.println("Error al comunicarse con la API durante el setup: " + e.getMessage());
@@ -56,11 +56,11 @@ public class AgentTemp extends Agent {
         }
     }
 
-    public void ImprimirMensaje(String mensaje) {
-        System.out.println(name + mensaje);
+    public void printMessage(String msg) {
+        System.out.println(name + msg);
     }
 
-    public ConexionAPI getApi() {
+    public ConexAPI getApi() {
         return this.thermo;
     }
     
