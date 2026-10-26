@@ -39,8 +39,8 @@ public class AgentTemp extends Agent {
                 
                 printMessage("Reto " + this.challenge_id + " iniciado. Run ID: " + this.run_id);
                 
-                this.limit_inf = this.thermo.getMaximumLimit();
-                this.limit_sup = this.thermo.getMinimumLimit();
+                this.limit_inf = this.thermo.getMinimumLimit();
+                this.limit_sup = this.thermo.getMaximumLimit();
                 this.target = this.thermo.getObjectiveTemperature();
                 
                 printMessage("Estado inicial -> Objetivo: " + this.target + " | Limites: [" + this.limit_inf + ", " + limit_sup + "]");
