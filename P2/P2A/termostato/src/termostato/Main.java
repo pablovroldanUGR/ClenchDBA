@@ -77,10 +77,10 @@ public class Main {
             
             Object[] agentArgs = new Object[]{ api };
             
-            AgentController termostatoAgent = mainContainer.createNewAgent
-            ("Termostato", "termostato.Agente", agentArgs);
+            AgentController thermostatAgent = mainContainer.createNewAgent
+            ("Thermostat", "thermostat.Agent", agentArgs);
             
-            termostatoAgent.start();
+            thermostatAgent.start();
             System.err.println("Agente Termostato lanzado");
             
         }catch (Exception e) {
