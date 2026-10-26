@@ -13,14 +13,6 @@ import jade.core.Agent;
 import jade.core.behaviours.*;  
 import api.ConexAPI;
 
-public class BHTermo {
+public class BHThermoSeq {
     
-    public class comprobarTemperatura extends OneShotBehaviour{
-        @Override
-        public void action(){
-           ConexAPI api = ((AgentTemp) myAgent).getApi();
-           
-           double temperatura = api.getTemperature();
-        }
-    }
 }

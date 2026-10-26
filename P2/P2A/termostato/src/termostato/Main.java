@@ -80,8 +80,9 @@ public class Main {
             AgentController thermostatAgent = mainContainer.createNewAgent
             ("Thermostat", "thermostat.Agent", agentArgs);
             
-            thermostatAgent.start();
-            System.err.println("Agente Termostato lanzado");
+
+            termostatoAgent.start();
+            System.out.println("Agente Termostato lanzado");
             
         }catch (Exception e) {
             System.err.println("Error al inicializar la plataforma JADE:");
