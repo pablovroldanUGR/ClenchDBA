@@ -55,7 +55,7 @@ public class AgentTemp extends Agent {
             doDelete();
         }
         
-        addBehaviour(new BHThermo.mainBehaviour());
+        addBehaviour(new BHThermo());
     }
 
     public void printMessage(String msg) {
