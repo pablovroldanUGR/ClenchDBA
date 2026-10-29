@@ -17,12 +17,11 @@ public class BHThermo extends Behaviour {
             
             // Comprobamos estado de la run
             this.status = api.getStatus();
-                
-            // Obtenemos temperatura
-            double temp = api.getTemperature();
-            System.out.println("ESTADO: " + status);
             
-            if (status == "ACTIVE") {
+            if (status.equals("ACTIVE")) {
+                // Obtenemos temperatura
+                double temp = api.getTemperature();
+                
                 ((AgentTemp) myAgent).printMessage("Temperatura obtenida -> " + temp);
                 
                 // Decidimos acción
@@ -37,9 +36,9 @@ public class BHThermo extends Behaviour {
                     
                 }
                 
-            } else if (status == "SUCCEEDED") {
+            } else if (status.equals("SUCCEEDED")) {
                 // Reto completado
-                ((AgentTemp) myAgent).printMessage("RETO COMPLETADO. TEMPERATURA ALCANZADA -> " + temp);
+                ((AgentTemp) myAgent).printMessage("RETO COMPLETADO");
                 this.exitCode = 1;
             }
         } catch (Exception e) {
@@ -52,7 +51,7 @@ public class BHThermo extends Behaviour {
     @Override
     public boolean done() {
         // Si no esta activa la run, terminamos
-        return this.status != "ACTIVE";
+        return !this.status.equals("ACTIVE");
     }
     
     @Override

@@ -44,6 +44,7 @@ public class AgentTemp extends Agent {
                 this.target = this.thermo.getObjectiveTemperature();
                 
                 printMessage("Estado inicial -> Objetivo: " + this.target + " | Limites: [" + this.limit_inf + ", " + limit_sup + "]");
+                addBehaviour(new BHThermo());
 
             } catch (Exception e) {
                 System.err.println("Error al comunicarse con la API durante el setup: " + e.getMessage());
@@ -54,8 +55,6 @@ public class AgentTemp extends Agent {
             System.out.println("No se ha pasado la conexión a la API");
             doDelete();
         }
-        
-        addBehaviour(new BHThermo());
     }
 
     public void printMessage(String msg) {
@@ -79,4 +78,15 @@ public class AgentTemp extends Agent {
     }
     
 
+    @Override
+    protected void takeDown(){
+        try{
+            thermo.closeChallenge();
+            System.out.println("API cerrada");
+        }
+        catch (Exception e2){
+            System.out.println("Error al cerrar la conexión con la API." + e2.getMessage());
+        }
+        System.exit(0);
+    }
 }
