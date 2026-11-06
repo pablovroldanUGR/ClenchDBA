@@ -10,10 +10,10 @@ public abstract class Environment {
     protected int challengeID;
     
     protected Environment(){
-        runStatus = RunStatus.UNINITALIZED;
-        api = new ConexAPI();
-        runID = -1;
-        challengeID = -1;
+        this.runStatus = RunStatus.UNINITALIZED;
+        this.api = new ConexAPI();
+        this.runID = -1;
+        this.challengeID = -1;
     }
     
     public static Environment getInstance(String name){
@@ -30,5 +30,20 @@ public abstract class Environment {
         }
         
         return instance;
+    }
+    
+    public void setChallenge(int challengeID){
+        this.challengeID = challengeID;
+    }
+    
+    public void startChallenge(){
+        if(this.challengeID != -1){
+            Control controlInfo = api.startChallenge(this.challengeID);
+            this.runID = controlInfo.runID;
+            this.runStatus = controlInfo.runStatus;
+        }
+        else{
+            System.out.println("Error al intentar iniciar el reto. Debes seleccionar uno primero");
+        }
     }
 }
