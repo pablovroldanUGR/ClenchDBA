@@ -12,7 +12,7 @@ import com.google.gson.JsonParser;
  * @author yeray
  */
 
-//Importante cargar datos nuevos al hacer una accionó
+// Importante cargar datos nuevos al hacer una acción.
 public class Control {
     public int runID;
     public RunStatus runStatus;
@@ -21,15 +21,37 @@ public class Control {
     public int remainingObjectives;
     public String reasonCode;
     
-    public void update(String jsonResponse) {
+    // Actualiza el control y devuelve el JSON con los datos particulares del problema.
+    public JsonObject update(String jsonResponse) {
         if (jsonResponse == null || jsonResponse.isBlank()) {
-            return;
+            return new JsonObject();
         }
 
         try {
             JsonObject json = JsonParser.parseString(jsonResponse).getAsJsonObject();
-            
-            JsonObject controlNode = json.has("control") ? json.getAsJsonObject("control") : json;
+
+            JsonObject datos = json.deepCopy();
+            JsonObject controlNode;
+
+            if (json.has("control")) {
+                datos.remove("control");
+                if (json.get("control").isJsonNull()) {
+                    return datos;
+                }
+                controlNode = json.getAsJsonObject("control");
+            } else if (json.has("runId") || json.has("runStatus")) {
+                // También se admite recibir directamente el objeto de control.
+                controlNode = json;
+                datos.remove("runId");
+                datos.remove("runStatus");
+                datos.remove("isAlive");
+                datos.remove("objectivePhase");
+                datos.remove("remainingObjectives");
+                datos.remove("reasonCode");
+            } else {
+                // Una respuesta sin control conserva todos sus datos.
+                return datos;
+            }
 
             // Mapeo seguro de campos comprobando su existencia
             if (controlNode.has("runId") && !controlNode.get("runId").isJsonNull()) {
@@ -60,9 +82,11 @@ public class Control {
             if (controlNode.has("reasonCode") && !controlNode.get("reasonCode").isJsonNull()) {
                 this.reasonCode = controlNode.get("reasonCode").getAsString();
             }
-            
+
+            return datos;
         } catch (Exception e) {
             System.err.println("Error al parsear el JSON de Control: " + e.getMessage());
+            return new JsonObject();
         }
     }
 }
