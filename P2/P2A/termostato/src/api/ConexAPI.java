@@ -6,7 +6,9 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
+import common.Pair;
 
 public class ConexAPI {
 
@@ -20,7 +22,7 @@ public class ConexAPI {
         this.runID = runID;
     }
 
-    public String getChallenges() throws java.io.IOException, InterruptedException {
+    public Pair<JsonElement> getChallenges() throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -31,10 +33,17 @@ public class ConexAPI {
                 .GET()
                 .build();
         HttpResponse<String> found = http.send(discovery, HttpResponse.BodyHandlers.ofString());
-        return found.body();
+
+        // El listado de retos también puede ser un array JSON y no tiene un run asociado.
+        JsonElement json = readResponse(found);
+        Control control = new Control();
+        if (json.isJsonObject()) {
+            return new Pair<>(control, control.update(json.toString()));
+        }
+        return new Pair<>(control, json);
     }
 
-    public String getStatus() throws java.io.IOException, InterruptedException {
+    public Pair<JsonObject> getStatus() throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -45,18 +54,19 @@ public class ConexAPI {
                 .GET()
                 .build();
         HttpResponse<String> found = http.send(statusRequest, HttpResponse.BodyHandlers.ofString());
-        String statusJson = found.body();
 
-        JsonObject json = JsonParser.parseString(statusJson).getAsJsonObject();
-
-        return json.get("runStatus").getAsString();
+        return parseResponse(found);
     }
 
-    public String startChallenge() throws java.io.IOException, InterruptedException {
+    public Pair<JsonObject> startChallenge() throws java.io.IOException, InterruptedException {
+        int challengeId = Integer.parseInt(System.getenv("DBA_CHALLENGE_ID"));
+        return startChallenge(challengeId);
+    }
+
+    public Pair<JsonObject> startChallenge(int challengeId) throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
-        long challengeId = Long.parseLong(System.getenv("DBA_CHALLENGE_ID"));
         String body = "{\"challengeId\":" + challengeId + "}";
 
         HttpRequest start = HttpRequest.newBuilder()
@@ -66,212 +76,121 @@ public class ConexAPI {
                 .POST(HttpRequest.BodyPublishers.ofString(body))
                 .build();
         HttpResponse<String> started = http.send(start, HttpResponse.BodyHandlers.ofString());
-        String startJson = started.body();
 
-        // Extraer y guardar el runId automáticamente
-        JsonObject json = JsonParser.parseString(startJson).getAsJsonObject();
-
-        JsonObject control = json.getAsJsonObject("control");
-
-        if (control != null) {
-            this.runID = control.get("runId").getAsString();
-            System.out.println("Se ha iniciado una nueva run: " + this.runID);
-        } else {
-            System.out.println("Ha ocurrido un error al intentar iniciar la run");
-            System.exit(1);
+        Pair<JsonObject> result = parseResponse(started);
+        if (result.control.runStatus == null) {
+            throw new java.io.IOException("La respuesta de inicio no contiene un control válido");
         }
 
-        return startJson;
+        this.runID = String.valueOf(result.control.runID);
+        System.out.println("Se ha iniciado una nueva run: " + this.runID);
+        return result;
     }
 
-    public double getTemperature() throws java.io.IOException, InterruptedException {
+    public Pair<JsonObject> getSensor(String sensorId) throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
-        String sensorId = "thermostat.temperature";
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(api + "/runs/" + this.runID + "/perceptions/" + sensorId))
                 .header("Authorization", "Bearer " + token)
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
-
         HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
 
-        JsonElement json = JsonParser.parseString(response.body());
-        if (!json.isJsonObject()) {
-            throw new java.io.IOException("La respuesta del sensor no es un objeto JSON");
-        }
-
-        JsonObject root = json.getAsJsonObject();
-        JsonElement value = root.get("value");
-        if (value == null || !value.isJsonObject()) {
-            throw new java.io.IOException("La respuesta del sensor no contiene un objeto 'value'");
-        }
-
-        JsonElement celsius = value.getAsJsonObject().get("celsius");
-        if (celsius == null || !celsius.isJsonPrimitive() || !celsius.getAsJsonPrimitive().isNumber()) {
-            throw new java.io.IOException("La respuesta no contiene el campo 'value.celsius' numérico");
-        }
-
-        return celsius.getAsDouble();
+        return parseResponse(response);
     }
 
-    public String getControl() throws java.io.IOException, InterruptedException {
+    public Pair<JsonObject> getTemperature() throws java.io.IOException, InterruptedException {
+        return getSensor("thermostat.temperature");
+    }
+
+    public Pair<JsonObject> getControl() throws java.io.IOException, InterruptedException {
+        return getStatus();
+    }
+
+    public Pair<JsonObject> getMaximumLimit() throws java.io.IOException, InterruptedException {
+        return getSensor("thermostat.limits");
+    }
+
+    public Pair<JsonObject> getMinimumLimit() throws java.io.IOException, InterruptedException {
+        return getSensor("thermostat.limits");
+    }
+
+    public Pair<JsonObject> getObjectiveTemperature() throws java.io.IOException, InterruptedException {
+        return getSensor("thermostat.target");
+    }
+
+    public Pair<JsonObject> executeAction(String actionCode) throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(api + "/runs/" + this.runID))
-                .header("Authorization", "Bearer " + token)
-                .GET()
-                .build();
-
-        HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
-
-        // Parseamos el JSON para extraer y devolver únicamente la parte de "control"
-        JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
-        return json.getAsJsonObject("control").toString();
-    }
-
-    public double getMaximumLimit() throws java.io.IOException, InterruptedException {
-        return getLimit("upper");
-    }
-
-    public double getMinimumLimit() throws java.io.IOException, InterruptedException {
-        return getLimit("lower");
-    }
-
-    private double getLimit(String limite) throws java.io.IOException, InterruptedException {
-        HttpClient http = HttpClient.newHttpClient();
-        String api = System.getenv("DBA_LAB_URL") + "/api/v1";
-        String token = System.getenv("DBA_TOKEN");
-        String sensorId = "thermostat.limits";
-
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(api + "/runs/" + this.runID + "/perceptions/" + sensorId))
-                .header("Authorization", "Bearer " + token)
-                .POST(HttpRequest.BodyPublishers.noBody())
-                .build();
-
-        HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
-        JsonElement json;
-        try {
-            json = JsonParser.parseString(response.body());
-        } catch (com.google.gson.JsonParseException e) {
-            throw new java.io.IOException("La respuesta del sensor no es JSON válido", e);
-        }
-
-        if (!json.isJsonObject()) {
-            throw new java.io.IOException("La respuesta del sensor no es un objeto JSON");
-        }
-        JsonObject root = json.getAsJsonObject();
-        JsonElement value = root.get("value");
-        if (value == null || !value.isJsonObject()) {
-            throw new java.io.IOException("La respuesta del sensor no contiene un objeto value");
-        }
-        JsonElement bound = value.getAsJsonObject().get(limite);
-        if (bound == null || !bound.isJsonPrimitive() || !bound.getAsJsonPrimitive().isNumber()) {
-            throw new java.io.IOException("La respuesta no contiene value." + limite + " numérico");
-        }
-        return bound.getAsDouble();
-    }
-
-    public double getObjectiveTemperature() throws java.io.IOException, InterruptedException {
-        HttpClient http = HttpClient.newHttpClient();
-        String api = System.getenv("DBA_LAB_URL") + "/api/v1";
-        String token = System.getenv("DBA_TOKEN");
-        String sensorId = "thermostat.target";
-
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(api + "/runs/" + this.runID + "/perceptions/" + sensorId))
-                .header("Authorization", "Bearer " + token)
-                .POST(HttpRequest.BodyPublishers.noBody())
-                .build();
-
-        HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
-
-        JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
-        return json.getAsJsonObject("value").get("celsius").getAsDouble();
-    }
-
-    public String activateRefrigeration() throws java.io.IOException, InterruptedException {
-        HttpClient http = HttpClient.newHttpClient();
-        String api = System.getenv("DBA_LAB_URL") + "/api/v1";
-        String token = System.getenv("DBA_TOKEN");
-        String actionCode = "thermostat.refrigeration.on";
-        String body = "{\"actionCode\":\"" + actionCode + "\"}";
+        JsonObject body = new JsonObject();
+        body.addProperty("actionCode", actionCode);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(api + "/runs/" + this.runID + "/actions"))
                 .header("Authorization", "Bearer " + token)
                 .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(body))
+                .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
                 .build();
-
         HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
 
-        JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
-        return json.get("actionStatus").getAsString();
+        return parseResponse(response);
     }
 
-    public String disableRefrigeration() throws java.io.IOException, InterruptedException {
+    public Pair<JsonObject> activateRefrigeration() throws java.io.IOException, InterruptedException {
+        return executeAction("thermostat.refrigeration.on");
+    }
+
+    public Pair<JsonObject> disableRefrigeration() throws java.io.IOException, InterruptedException {
+        return executeAction("thermostat.refrigeration.off");
+    }
+
+    public Pair<JsonObject> closeChallenge() throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
-        String actionCode = "thermostat.refrigeration.off";
-        String body = "{\"actionCode\":\"" + actionCode + "\"}";
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(api + "/runs/" + this.runID + "/actions"))
-                .header("Authorization", "Bearer " + token)
-                .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(body))
-                .build();
-
-        HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
-
-        JsonObject json = JsonParser.parseString(response.body()).getAsJsonObject();
-        return json.get("actionStatus").getAsString();
-    }
-
-    public String closeChallenge()
-            throws java.io.IOException, InterruptedException {
-
-        HttpClient http = HttpClient.newHttpClient();
-
-        String api = System.getenv("DBA_LAB_URL") + "/api/v1";
-        String token = System.getenv("DBA_TOKEN");
-
-        // Comprobar que existe un run activo o conocido
         if (this.runID == null || this.runID.isBlank()) {
-            throw new java.io.IOException(
-                    "No existe un runID para cerrar el reto."
-            );
+            throw new java.io.IOException("No existe un runID para cerrar el reto.");
         }
 
-        
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(api + "/runs/" + this.runID + "/close"))
                 .header("Authorization", "Bearer " + token)
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
-        
-        HttpResponse<String> response = http.send(request,HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
 
-        String responseJson = response.body();
-        
-        if (response.statusCode() < 200 || response.statusCode() >= 300) {
-            throw new java.io.IOException(
-                    "Error al cerrar el reto. HTTP "
-                    + response.statusCode() + ": " + responseJson
-            );
-        }
-
+        Pair<JsonObject> result = parseResponse(response);
         System.out.println("[DBA LAB] Solicitud de cierre aceptada: " + this.runID);
-
-        return responseJson;
+        return result;
     }
 
+    // Todas las respuestas de un run se separan usando el método de Control.
+    private Pair<JsonObject> parseResponse(HttpResponse<String> response) throws java.io.IOException {
+        JsonElement json = readResponse(response);
+        if (!json.isJsonObject()) {
+            throw new java.io.IOException("La respuesta de la API no es un objeto JSON");
+        }
+
+        Control control = new Control();
+        JsonObject particular = control.update(json.toString());
+        return new Pair<>(control, particular);
+    }
+
+    private JsonElement readResponse(HttpResponse<String> response) throws java.io.IOException {
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new java.io.IOException("Error en la API. HTTP " + response.statusCode() + ": " + response.body());
+        }
+
+        try {
+            return JsonParser.parseString(response.body());
+        } catch (JsonParseException e) {
+            throw new java.io.IOException("La respuesta de la API no es JSON válido", e);
+        }
+    }
 }

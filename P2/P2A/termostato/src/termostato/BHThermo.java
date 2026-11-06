@@ -3,6 +3,8 @@ package termostato;
 import jade.core.Agent;
 import jade.core.behaviours.*;
 import api.ConexAPI;
+import common.Pair;
+import com.google.gson.JsonObject;
 
 public class BHThermo extends Behaviour {
     private ConexAPI api;
@@ -16,27 +18,35 @@ public class BHThermo extends Behaviour {
             api = ((AgentTemp) myAgent).getApi();
             
             // Comprobamos estado de la run
-            this.status = api.getStatus();
+            this.status = api.getStatus().control.runStatus.name();
             
             if (status.equals("ACTIVE")) {
                 // Obtenemos temperatura
-                double temp = api.getTemperature();
+                Pair<JsonObject> temperature = api.getTemperature();
+                this.status = temperature.control.runStatus.name();
+                if (!status.equals("ACTIVE")) {
+                    return;
+                }
+                double temp = temperature.particular.getAsJsonObject("value").get("celsius").getAsDouble();
                 
                 ((AgentTemp) myAgent).printMessage("Temperatura obtenida -> " + temp);
                 
                 // Decidimos acción
                 if(temp >= ((AgentTemp) myAgent).getTarget()){
-                    api.activateRefrigeration(); // CALIENTE: ACTIVAMOS REFRIGERACION
+                    Pair<JsonObject> action = api.executeAction("thermostat.refrigeration.on");
+                    this.status = action.control.runStatus.name();
                     ((AgentTemp) myAgent).printMessage("CALIENTE: ACTIVAMOS REFRIGERACION");
 
                     
                 } else {
-                    api.disableRefrigeration(); // FRIO: DESACTIVAMOS REFRIGERACION
+                    Pair<JsonObject> action = api.executeAction("thermostat.refrigeration.off");
+                    this.status = action.control.runStatus.name();
                     ((AgentTemp) myAgent).printMessage("FRIO: DESACTIVAMOS REFRIGERACION");
                     
                 }
                 
-            } else if (status.equals("SUCCEEDED")) {
+            }
+            if (status.equals("SUCCEEDED")) {
                 // Reto completado
                 ((AgentTemp) myAgent).printMessage("RETO COMPLETADO");
                 this.exitCode = 1;

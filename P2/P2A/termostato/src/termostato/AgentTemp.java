@@ -1,6 +1,8 @@
 package termostato;
 
 import api.ConexAPI;
+import common.Pair;
+import com.google.gson.JsonObject;
 import jade.core.Agent;
 
 public class AgentTemp extends Agent {
@@ -34,9 +36,11 @@ public class AgentTemp extends Agent {
                 
             printMessage("Reto " + this.challenge_id + " iniciado. Run ID: " + this.run_id);
                 
-            this.limit_inf = this.thermo.getMinimumLimit();
-            this.limit_sup = this.thermo.getMaximumLimit();
-            this.target = this.thermo.getObjectiveTemperature();
+            Pair<JsonObject> limits = this.thermo.getSensor("thermostat.limits");
+            this.limit_inf = limits.particular.getAsJsonObject("value").get("lower").getAsDouble();
+            this.limit_sup = limits.particular.getAsJsonObject("value").get("upper").getAsDouble();
+            Pair<JsonObject> target = this.thermo.getObjectiveTemperature();
+            this.target = target.particular.getAsJsonObject("value").get("celsius").getAsDouble();
                 
             printMessage("Estado inicial -> Objetivo: " + this.target + " | Limites: [" + this.limit_inf + ", " + limit_sup + "]");
             addBehaviour(new BHThermo());
