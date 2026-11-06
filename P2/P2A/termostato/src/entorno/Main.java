@@ -1,4 +1,4 @@
-package termostato;
+package entorno;
 
 import jade.core.Profile;
 import jade.core.ProfileImpl;
@@ -6,6 +6,7 @@ import jade.core.Runtime;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
 import api.ConexAPI;
+import termostato.AgentTemp;
 
 //--- LIBRERÍAS PARA PRUEBAS DE API ---//
 //import com.google.gson.JsonObject;
