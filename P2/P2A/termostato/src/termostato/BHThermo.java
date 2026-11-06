@@ -1,48 +1,46 @@
 package termostato;
 
+import common.RunStatus;
+import entorno.EnvironmentThermo;
 import jade.core.Agent;
 import jade.core.behaviours.*;
-import api.ConexAPI;
 
 public class BHThermo extends Behaviour {
-    private ConexAPI api;
     private String status = "";
     private int exitCode = 0;
+    private EnvironmentThermo thermo = ((AgentTemp) myAgent).getEnvironment();
     
     @Override
     public void action() {
 
-        try {
-            api = ((AgentTemp) myAgent).getApi();
+        try {    
+            thermo.checkStatus();
             
-            // Comprobamos estado de la run
-            this.status = api.getStatus();
-            
-            if (status.equals("ACTIVE")) {
+            if (thermo.runStatus == RunStatus.ACTIVE) {
                 // Obtenemos temperatura
-                double temp = api.getTemperature();
+                double temp = thermo.getTemperature();
                 
                 ((AgentTemp) myAgent).printMessage("Temperatura obtenida -> " + temp);
                 
                 // Decidimos acción
-                if(temp >= ((AgentTemp) myAgent).getTarget()){
-                    api.activateRefrigeration(); // CALIENTE: ACTIVAMOS REFRIGERACION
+                if(temp >= thermo.getObjectiveTemperature()){
+                    thermo.activateRefrigeration(); // CALIENTE: ACTIVAMOS REFRIGERACION
                     ((AgentTemp) myAgent).printMessage("CALIENTE: ACTIVAMOS REFRIGERACION");
 
                     
                 } else {
-                    api.disableRefrigeration(); // FRIO: DESACTIVAMOS REFRIGERACION
+                    thermo.disableRefrigeration(); // FRIO: DESACTIVAMOS REFRIGERACION
                     ((AgentTemp) myAgent).printMessage("FRIO: DESACTIVAMOS REFRIGERACION");
                     
                 }
                 
-            } else if (status.equals("SUCCEEDED")) {
+            } else if (thermo.runStatus == RunStatus.SUCCEEDED) {
                 // Reto completado
                 ((AgentTemp) myAgent).printMessage("RETO COMPLETADO");
                 this.exitCode = 1;
             }
         } catch (Exception e) {
-            System.err.println("Error al comunicarse con la API durante el setup: " + e.getMessage());
+            System.err.println("Error al comunicarse con la thermo durante el setup: " + e.getMessage());
             e.printStackTrace();
             myAgent.doDelete();
         }
@@ -51,7 +49,7 @@ public class BHThermo extends Behaviour {
     @Override
     public boolean done() {
         // Si no esta activa la run, terminamos
-        return !this.status.equals("ACTIVE");
+        return !(thermo.runStatus == RunStatus.ACTIVE);
     }
     
     @Override
