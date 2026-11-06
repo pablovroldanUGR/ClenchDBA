@@ -49,28 +49,23 @@ DBA_TOKEN="<token-personal>"
 DBA_CHALLENGE_ID="<id-obtenido-de-challenges>"
 DBA_RUN_ID="<runId-obtenido-al-iniciar>"
 
-curl -i -H "Authorization: Bearer $DBA_TOKEN" \
-  "$DBA_LAB_URL/api/v1/challenges"
+# Ver los retos disponibles:
+curl -i -H "Authorization: Bearer $DBA_TOKEN" "$DBA_LAB_URL/api/v1/challenges"
 
-curl -i -X POST -H "Authorization: Bearer $DBA_TOKEN" \
-  -H "Content-Type: application/json" \
-  --data "{\"challengeId\":$DBA_CHALLENGE_ID}" \  
-  "$DBA_LAB_URL/api/v1/runs"
+# Crear una run con un reto concreto
+curl -i -X POST -H "Authorization: Bearer $DBA_TOKEN" -H "Content-Type: application/json" --data "{\"challengeId\":$DBA_CHALLENGE_ID}" "$DBA_LAB_URL/api/v1/runs"
 
-curl -i -X POST -H "Authorization: Bearer $DBA_TOKEN" \
-  "$DBA_LAB_URL/api/v1/runs/$DBA_RUN_ID/perceptions/<sensorId>"
+# Para obtener la información de un sensor
+curl -i -X POST -H "Authorization: Bearer $DBA_TOKEN" "$DBA_LAB_URL/api/v1/runs/$DBA_RUN_ID/perceptions/<sensorId>"
 
-curl -i -X POST -H "Authorization: Bearer $DBA_TOKEN" \
-  -H "Content-Type: application/json" \
-  --data '{"actionCode":"<actionCode>"}' \
-  "$DBA_LAB_URL/api/v1/runs/$DBA_RUN_ID/actions"
+# Ejecutar una acción
+curl -i -X POST -H "Authorization: Bearer $DBA_TOKEN" -H "Content-Type: application/json" --data '{"actionCode":"<actionCode>"}' "$DBA_LAB_URL/api/v1/runs/$DBA_RUN_ID/actions"
 
-curl -i -H "Authorization: Bearer $DBA_TOKEN" \
-  "$DBA_LAB_URL/api/v1/runs/$DBA_RUN_ID"
+# Obtener información de la run
+curl -i -H "Authorization: Bearer $DBA_TOKEN" "$DBA_LAB_URL/api/v1/runs/$DBA_RUN_ID"
 
 # Solo si quieres abandonar un run que sigue activo:
-curl -i -X POST -H "Authorization: Bearer $DBA_TOKEN" \
-  "$DBA_LAB_URL/api/v1/runs/$DBA_RUN_ID/close"
+curl -i -X POST -H "Authorization: Bearer $DBA_TOKEN" "$DBA_LAB_URL/api/v1/runs/$DBA_RUN_ID/close"
 ```
 
 `-i` muestra el estado y las cabeceras HTTP además del cuerpo. `DBA_CHALLENGE_ID` procede del descubrimiento, y `DBA_RUN_ID` del campo `control.runId` de la respuesta de inicio. Sustituye `sensorId` y `actionCode` por capacidades anunciadas para el reto elegido.
