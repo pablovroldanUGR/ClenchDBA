@@ -2,10 +2,8 @@ package termostato;
 
 import api.ConexAPI;
 import jade.core.Agent;
-import jade.core.behaviours.*;
 
 public class AgentTemp extends Agent {
-    
     // Para imprimir mensajes
     private String name = "[THERMOSTAT]: ";
     
@@ -16,7 +14,6 @@ public class AgentTemp extends Agent {
     private double limit_inf;
     private double limit_sup;
     private double target;
-    private double current_temp;
     
     // Id del desafio
     private int challenge_id = 0;
