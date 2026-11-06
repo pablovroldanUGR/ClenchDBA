@@ -102,26 +102,6 @@ public class ConexAPI {
         return parseResponse(response);
     }
 
-    public Pair<JsonObject> getTemperature() throws java.io.IOException, InterruptedException {
-        return getSensor("thermostat.temperature");
-    }
-
-    public Pair<JsonObject> getControl() throws java.io.IOException, InterruptedException {
-        return getStatus();
-    }
-
-    public Pair<JsonObject> getMaximumLimit() throws java.io.IOException, InterruptedException {
-        return getSensor("thermostat.limits");
-    }
-
-    public Pair<JsonObject> getMinimumLimit() throws java.io.IOException, InterruptedException {
-        return getSensor("thermostat.limits");
-    }
-
-    public Pair<JsonObject> getObjectiveTemperature() throws java.io.IOException, InterruptedException {
-        return getSensor("thermostat.target");
-    }
-
     public Pair<JsonObject> executeAction(String actionCode) throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
@@ -141,13 +121,6 @@ public class ConexAPI {
         return parseResponse(response);
     }
 
-    public Pair<JsonObject> activateRefrigeration() throws java.io.IOException, InterruptedException {
-        return executeAction("thermostat.refrigeration.on");
-    }
-
-    public Pair<JsonObject> disableRefrigeration() throws java.io.IOException, InterruptedException {
-        return executeAction("thermostat.refrigeration.off");
-    }
 
     public Pair<JsonObject> closeChallenge() throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
