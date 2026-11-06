@@ -23,34 +23,28 @@ public class AgentTemp extends Agent {
 
     @Override
     protected void setup() {
-        Object[] args = getArguments();
+        
+        this.thermo = new ConexAPI();
 
-        if (args != null && args.length > 0) {
-            this.thermo = (ConexAPI) args[0];
+        try {
+            this.thermo.startChallenge();
+                
+            this.challenge_id = Integer.parseInt(System.getenv("DBA_CHALLENGE_ID"));
+            this.run_id = this.thermo.getRunID();
+                
+            printMessage("Reto " + this.challenge_id + " iniciado. Run ID: " + this.run_id);
+                
+            this.limit_inf = this.thermo.getMinimumLimit();
+            this.limit_sup = this.thermo.getMaximumLimit();
+            this.target = this.thermo.getObjectiveTemperature();
+                
+            printMessage("Estado inicial -> Objetivo: " + this.target + " | Limites: [" + this.limit_inf + ", " + limit_sup + "]");
+            addBehaviour(new BHThermo());
 
-            try {
-                this.thermo.startChallenge();
-                
-                this.challenge_id = Integer.parseInt(System.getenv("DBA_CHALLENGE_ID"));
-                this.run_id = this.thermo.getRunID();
-                
-                printMessage("Reto " + this.challenge_id + " iniciado. Run ID: " + this.run_id);
-                
-                this.limit_inf = this.thermo.getMinimumLimit();
-                this.limit_sup = this.thermo.getMaximumLimit();
-                this.target = this.thermo.getObjectiveTemperature();
-                
-                printMessage("Estado inicial -> Objetivo: " + this.target + " | Limites: [" + this.limit_inf + ", " + limit_sup + "]");
-                addBehaviour(new BHThermo());
-
-            } catch (Exception e) {
-                System.err.println("Error al comunicarse con la API durante el setup: " + e.getMessage());
-                e.printStackTrace();
-                doDelete(); 
-            }
-        } else {
-            System.out.println("No se ha pasado la conexión a la API");
-            doDelete();
+        } catch (Exception e) {
+            System.err.println("Error al comunicarse con la API durante el setup: " + e.getMessage());
+            e.printStackTrace();
+            doDelete(); 
         }
     }
 

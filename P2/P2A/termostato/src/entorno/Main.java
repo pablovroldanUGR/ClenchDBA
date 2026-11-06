@@ -35,13 +35,9 @@ public class Main {
         
         try{
             AgentContainer agentContainer = rt.createAgentContainer(profile);
-            
-            ConexAPI api = new ConexAPI();
-            
-            Object[] agentArgs = new Object[]{ api };
-            
+                                    
             AgentController thermostatAgent = agentContainer.createNewAgent
-            ("Thermostat", AgentTemp.class.getName(), agentArgs);
+            ("Thermostat", AgentTemp.class.getName(), new Object[]{});
             
 
             thermostatAgent.start();
