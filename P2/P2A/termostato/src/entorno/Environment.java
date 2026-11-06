@@ -1,13 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package entorno;
 
-/**
- *
- * @author pablo
- */
-public class Environment {
+import api.ConexAPI;
+
+public abstract class Environment {
+    protected ConexAPI api;
+    private static Environment instance; 
+    public RunStatus runStatus;
+    protected int runID;
+    protected int challengeID;
     
+    protected Environment(){
+        runStatus = RunStatus.UNINITALIZED;
+        api = new ConexAPI();
+        runID = -1;
+        challengeID = -1;
+    }
+    
+    public static Environment getInstance(String name){
+        if(instance == null){
+            if(name.equalsIgnoreCase("Thermo")){
+                instance = new EnvironmentThermo();
+            }
+            else if (name.equalsIgnoreCase("Grid")){
+                instance = new EnvironmentGrid();
+            }
+            else{
+                throw new IllegalArgumentException("Error al crear el entorno. Entorno no válido");
+            }
+        }
+        
+        return instance;
+    }
 }
