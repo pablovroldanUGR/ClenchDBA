@@ -1,5 +1,6 @@
 package entorno;
 
+import common.RunStatus;
 import api.ConexAPI;
 
 public abstract class Environment {
@@ -44,6 +45,26 @@ public abstract class Environment {
         }
         else{
             System.out.println("Error al intentar iniciar el reto. Debes seleccionar uno primero");
+        }
+    }
+    
+    public void checkStatus(){
+        if(this.runID != -1){
+            Control controlInfo = api.getStatus(this.runID);
+            this.runStatus = controlInfo.runsStatus;
+        }
+        else{
+            System.out.println("Error al intentar obtener el estado de la run " + runID);
+        }
+    }
+    
+    public void closeRun(){
+        if(this.runID != -1){
+            Control controlInfo = api.closeRun(this.runID);
+            this.runStatus = controlInfo.runsStatus;
+        }
+        else{
+            System.out.println("Error al intentar cerrar la run " + runID);
         }
     }
 }

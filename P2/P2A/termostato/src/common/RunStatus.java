@@ -1,4 +1,4 @@
-package entorno;
+package common;
 
 public enum RunStatus {
     ACTIVE,

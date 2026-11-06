@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package api;
-import entorno.RunStatus;
+import common.RunStatus;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
