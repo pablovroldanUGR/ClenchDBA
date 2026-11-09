@@ -62,7 +62,7 @@ public class ConexAPI {
         catch (Exception e){
             System.out.println(e.getMessage());
             
-            return;
+            return null;
         }
         
         return new ResponseLAB(response);
@@ -88,12 +88,12 @@ public class ConexAPI {
         catch (Exception e){
             System.out.println(e.getMessage());
             
-            return;
+            return null;
         }
         
         if (response.runStatus == null) {
             throw new java.io.IOException("La respuesta de inicio no contiene un control válido");
-            return;
+            return null;
         }
 
         this.runID = String.valueOf(result.getFirst().runID);
@@ -119,7 +119,7 @@ public class ConexAPI {
         catch (Exception e){
             System.out.println(e.getMessage());
             
-            return;
+            return null;
         }
         
         return new ResponseLAB(response);
@@ -147,7 +147,7 @@ public class ConexAPI {
         catch (Exception e){
             System.out.println(e.getMessage());
             
-            return;
+            return null;
         }
         
         return new ResponseLAB(response);
@@ -176,7 +176,7 @@ public class ConexAPI {
         catch (Exception e){
             System.out.println(e.getMessage());
             
-            return;
+            return null;
         }
         
         System.out.println("[DBA LAB] Solicitud de cierre aceptada: " + this.runID);
