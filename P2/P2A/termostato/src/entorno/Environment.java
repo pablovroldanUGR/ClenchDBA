@@ -2,6 +2,8 @@ package entorno;
 
 import common.RunStatus;
 import api.ConexAPI;
+import api.ResponseLAB;
+import java.io.IOException;
 
 public abstract class Environment {
     protected ConexAPI api;
@@ -39,32 +41,54 @@ public abstract class Environment {
     
     public void startChallenge(){
         if(this.challengeID != -1){
-            Pair<Control, > controlInfo = api.startChallenge(this.challengeID);
-            this.runID = controlInfo.runID;
-            this.runStatus = controlInfo.runStatus;
+            try{
+                ResponseLAB responseInfo = api.startChallenge(this.challengeID);
+                this.runID = responseInfo.runId;
+                this.runStatus = responseInfo.runStatus;
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+                return;
+            }
         }
         else{
             System.out.println("Error al intentar iniciar el reto. Debes seleccionar uno primero");
         }
     }
     
-    public void checkStatus(){
-        if(this.runID != -1){
-            Control controlInfo = api.getStatus(this.runID);
-            this.runStatus = controlInfo.runsStatus;
+    public RunStatus checkStatus() throws IOException, InterruptedException {
+        if (this.runID == -1) {
+            throw new IllegalStateException("No hay una run iniciada.");
         }
-        else{
-            System.out.println("Error al intentar obtener el estado de la run " + runID);
+
+        ResponseLAB runInfo = api.getStatus(this.runID);
+
+        if (runInfo == null || runInfo.runStatus == null) {
+            throw new IOException("La respuesta no contiene un estado válido.");
         }
+
+        if(runInfo.runId != -1 && runInfo.runId != this.runID) {
+            throw new IOException("La API devolvió el estado de otra run.");
+        }
+
+        this.runStatus = runInfo.runStatus;
+        return this.runStatus;
     }
     
-    public void closeRun(){
-        if(this.runID != -1){
-            Control controlInfo = api.closeRun(this.runID);
-            this.runStatus = controlInfo.runsStatus;
+    public void closeRun() throws IOException, InterruptedException {
+        if (this.runID == -1) {
+            throw new IllegalStateException("No hay una run iniciada.");
         }
-        else{
-            System.out.println("Error al intentar cerrar la run " + runID);
+
+        if (this.runStatus != RunStatus.ACTIVE) {
+            return;
         }
+
+        ResponseLAB responseInfo = api.closeChallenge(this.runID);
+
+        if (responseInfo == null || responseInfo.runStatus == null) {
+            throw new IOException("La respuesta de cierre no contiene un estado válido.");
+        }
+
+        this.runStatus = responseInfo.runStatus;
     }
 }
