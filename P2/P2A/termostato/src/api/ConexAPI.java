@@ -1,18 +1,19 @@
 package api;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
+
+import common.Pair;
 
 public class ConexAPI {
-    //                               |
-    //                               V
-    // --------------------> Revisar GetChallenges <------------- //
-    //                               ^
-    //                               |
-                                               
-    public getChallenges() throws java.io.IOException, InterruptedException {
+    public ArrayList<Pair<Integer, String>> getChallenges() throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -22,42 +23,11 @@ public class ConexAPI {
                 .header("Authorization", "Bearer " + token)
                 .GET()
                 .build();
-        HttpResponse<String> found = http.send(discovery, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> responseHTTP = http.send(discovery, HttpResponse.BodyHandlers.ofString());
 
         // Comprobar que la respuesta HTTP es válida
         try{
-            validateResponse(response);
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
-            
-            return;
-        }
-        
-        
-        /* Comprobar esta parte del código
-        ResponseLAB control = new ResponseLAB();
-        if (json.isJsonObject()) {
-            //return new Pair<>(control, control.update(json.toString()));
-        }
-            return new Pair<>(control, json);
-        */
-    }
-
-    public ResponseLAB getStatus() throws java.io.IOException, InterruptedException {
-        HttpClient http = HttpClient.newHttpClient();
-        String api = System.getenv("DBA_LAB_URL") + "/api/v1";
-        String token = System.getenv("DBA_TOKEN");
-
-        HttpRequest statusRequest = HttpRequest.newBuilder()
-                .uri(URI.create(api + "/runs/" + this.runID))
-                .header("Authorization", "Bearer " + token)
-                .GET()
-                .build();
-        HttpResponse<String> response = http.send(statusRequest, HttpResponse.BodyHandlers.ofString());
-        
-        try{
-            validateResponse(response);
+            validateResponse(responseHTTP);
         }
         catch (Exception e){
             System.out.println(e.getMessage());
@@ -65,7 +35,46 @@ public class ConexAPI {
             return null;
         }
         
-        return new ResponseLAB(response);
+        String responseString = responseHTTP.body();
+        JsonObject json = JsonParser.parseString(responseString).getAsJsonObject();
+        JsonArray challengesArray = json.getAsJsonArray("challenges");
+        
+        ArrayList<Pair<Integer, String>> listaParejas = new ArrayList<>();
+        
+        for (JsonElement elem : challengesArray) {
+            JsonObject obj = elem.getAsJsonObject();
+            int id = obj.get("id").getAsInt();
+            String name = obj.get("name").getAsString();
+
+            listaParejas.add(new Pair<>(id, name));
+        }
+        
+        return listaParejas;
+    }
+
+    public ResponseLAB getStatus(int runID) throws java.io.IOException, InterruptedException {
+        HttpClient http = HttpClient.newHttpClient();
+        String api = System.getenv("DBA_LAB_URL") + "/api/v1";
+        String token = System.getenv("DBA_TOKEN");
+
+        HttpRequest statusRequest = HttpRequest.newBuilder()
+                .uri(URI.create(api + "/runs/" + String.valueOf(runID)))
+                .header("Authorization", "Bearer " + token)
+                .GET()
+                .build();
+        HttpResponse<String> responseHTTP = http.send(statusRequest, HttpResponse.BodyHandlers.ofString());
+        
+        try{
+            validateResponse(responseHTTP);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        }
+        
+        String responseString = responseHTTP.body();
+        
+        return new ResponseLAB(responseString);
     }
 
     public ResponseLAB startChallenge(int challengeId) throws java.io.IOException, InterruptedException {
@@ -80,52 +89,49 @@ public class ConexAPI {
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(body))
                 .build();
-        HttpResponse<String> APIresponse = http.send(start, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> responseHTTP = http.send(start, HttpResponse.BodyHandlers.ofString());
         
         try{
-            validateResponse(APIresponse);
+            validateResponse(responseHTTP);
         }
         catch (Exception e){
             System.out.println(e.getMessage());
-            
             return null;
         }
         
-        if (response.runStatus == null) {
-            throw new java.io.IOException("La respuesta de inicio no contiene un control válido");
-            return null;
-        }
+        String responseString = responseHTTP.body();
 
-        this.runID = String.valueOf(result.getFirst().runID);
-        System.out.println("Se ha iniciado una nueva run: " + this.runID);
-        return response;
+        System.out.println("Se ha iniciado una nueva run");
+        
+        return new ResponseLAB(responseString);
     }
 
-    public ResponseLAB getSensor(String sensorId) throws java.io.IOException, InterruptedException {
+    public ResponseLAB getSensor(int runID, String sensorId) throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(api + "/runs/" + this.runID + "/perceptions/" + sensorId))
+                .uri(URI.create(api + "/runs/" + String.valueOf(runID) + "/perceptions/" + sensorId))
                 .header("Authorization", "Bearer " + token)
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
-        HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> responseHTTP = http.send(request, HttpResponse.BodyHandlers.ofString());
 
         try{
-            validateResponse(response);
+            validateResponse(responseHTTP);
         }
         catch (Exception e){
             System.out.println(e.getMessage());
-            
             return null;
         }
         
-        return new ResponseLAB(response);
+        String responseString = responseHTTP.body();
+        
+        return new ResponseLAB(responseString);
     }
 
-    public ResponseLAB executeAction(String actionCode) throws java.io.IOException, InterruptedException {
+    public ResponseLAB executeAction(int runID, String actionCode) throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -134,53 +140,51 @@ public class ConexAPI {
         body.addProperty("actionCode", actionCode);
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(api + "/runs/" + this.runID + "/actions"))
+                .uri(URI.create(api + "/runs/" + String.valueOf(runID) + "/actions"))
                 .header("Authorization", "Bearer " + token)
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(body.toString()))
                 .build();
-        HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> responseHTTP = http.send(request, HttpResponse.BodyHandlers.ofString());
 
         try{
-            validateResponse(response);
+            validateResponse(responseHTTP);
         }
         catch (Exception e){
             System.out.println(e.getMessage());
-            
             return null;
         }
         
-        return new ResponseLAB(response);
+        String responseString = responseHTTP.body();
+        
+        return new ResponseLAB(responseString);
     }
 
 
-    public ResponseAPI closeChallenge() throws java.io.IOException, InterruptedException {
+    public ResponseLAB closeChallenge(int runID) throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
 
-        if (this.runID == null || this.runID.isBlank()) {
-            throw new java.io.IOException("No existe un runID para cerrar el reto.");
-        }
-
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(api + "/runs/" + this.runID + "/close"))
+                .uri(URI.create(api + "/runs/" + String.valueOf(runID)+ "/close"))
                 .header("Authorization", "Bearer " + token)
                 .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
-        HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> responseHTTP = http.send(request, HttpResponse.BodyHandlers.ofString());
         
         try{
-            validateResponse(response);
+            validateResponse(responseHTTP);
         }
         catch (Exception e){
             System.out.println(e.getMessage());
-            
             return null;
         }
         
-        System.out.println("[DBA LAB] Solicitud de cierre aceptada: " + this.runID);
-        return new ResponseAPI(response);
+        String responseString = responseHTTP.body();
+        
+        System.out.println("[DBA LAB] Solicitud de cierre aceptada: " + String.valueOf(runID));
+        return new ResponseLAB(responseString);
     }
 
     private void validateResponse(HttpResponse<String> response) throws java.io.IOException {
