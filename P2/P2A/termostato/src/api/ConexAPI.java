@@ -25,7 +25,15 @@ public class ConexAPI {
         HttpResponse<String> found = http.send(discovery, HttpResponse.BodyHandlers.ofString());
 
         // Comprobar que la respuesta HTTP es válida
-        validateResponse(found);
+        try{
+            validateResponse(response);
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            
+            return;
+        }
+        
         
         /* Comprobar esta parte del código
         ResponseLAB control = new ResponseLAB();
@@ -73,8 +81,6 @@ public class ConexAPI {
                 .POST(HttpRequest.BodyPublishers.ofString(body))
                 .build();
         HttpResponse<String> APIresponse = http.send(start, HttpResponse.BodyHandlers.ofString());
-
-        validateResponse(APIresponse);
         
         try{
             validateResponse(APIresponse);
