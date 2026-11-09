@@ -14,17 +14,6 @@ import termostato.AgentTemp;
 public class Main {
     public static void main(String args[]){
         
-        // Comprobamos variables de entorno
-        String url = System.getenv("DBA_LAB_URL");
-        String token = System.getenv("DBA_TOKEN");
-        String challengeId = System.getenv("DBA_CHALLENGE_ID");
-        
-        if (url == null || url.isBlank() || token == null || token.isBlank() || challengeId == null || challengeId.isBlank()) {
-            System.err.println("Error: Debes definir las variables de entorno "
-                    + "DBA_LAB_URL, DBA_TOKEN y DBA_CHALLENGE_ID.");
-            System.exit(1);
-        }
-        
         Runtime rt = Runtime.instance();
         
         // Perfil del contenedor
