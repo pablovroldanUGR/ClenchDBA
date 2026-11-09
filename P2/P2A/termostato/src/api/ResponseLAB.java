@@ -1,25 +1,36 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package api;
 import common.RunStatus;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-/**
- *
- * @author yeray
- */
+import java.util.ArrayList;
+import common.Pair;
 
 // Importante cargar datos nuevos al hacer una acción.
-public class Control {
+public class ResponseLAB {
+    // Respuesta de DBA_LAB a sensores
+    public int sensorID;
+    public ArrayList<Pair<String>, <String>> value;
+    
+    // Respuesta de DBA_LAB a acciones
+    public int actionID;
+    public String actionStatus;
+    public String reasonCodeAction;
+    
+    // Respuesta de control de DBA_LAB
     public int runID;
     public RunStatus runStatus;
     public Boolean isAlive;
     public String objectivePhase;
     public int remainingObjectives;
     public String reasonCode;
+    
+    public ResponseLAB(){
+        this.sensorID = -1;
+        this.value = new ArrayList<>();
+        
+        this.actionID = -1;
+    }
     
     // Actualiza el control y devuelve el JSON con los datos particulares del problema.
     public JsonObject update(String jsonResponse) {

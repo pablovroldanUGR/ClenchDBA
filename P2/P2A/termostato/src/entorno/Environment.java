@@ -39,7 +39,7 @@ public abstract class Environment {
     
     public void startChallenge(){
         if(this.challengeID != -1){
-            Control controlInfo = api.startChallenge(this.challengeID);
+            Pair<Control, > controlInfo = api.startChallenge(this.challengeID);
             this.runID = controlInfo.runID;
             this.runStatus = controlInfo.runStatus;
         }

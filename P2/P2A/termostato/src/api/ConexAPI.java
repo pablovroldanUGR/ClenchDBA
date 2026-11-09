@@ -22,7 +22,7 @@ public class ConexAPI {
         this.runID = runID;
     }
 
-    public Pair<JsonElement> getChallenges() throws java.io.IOException, InterruptedException {
+    public Pair<ResponseLAB, JsonElement> getChallenges() throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -36,14 +36,14 @@ public class ConexAPI {
 
         // El listado de retos también puede ser un array JSON y no tiene un run asociado.
         JsonElement json = readResponse(found);
-        Control control = new Control();
+        ResponseLAB control = new ResponseLAB();
         if (json.isJsonObject()) {
             return new Pair<>(control, control.update(json.toString()));
         }
         return new Pair<>(control, json);
     }
 
-    public Pair<JsonObject> getStatus() throws java.io.IOException, InterruptedException {
+    public Pair<ResponseLAB, JsonObject> getStatus() throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -58,12 +58,7 @@ public class ConexAPI {
         return parseResponse(found);
     }
 
-    public Pair<JsonObject> startChallenge() throws java.io.IOException, InterruptedException {
-        int challengeId = Integer.parseInt(System.getenv("DBA_CHALLENGE_ID"));
-        return startChallenge(challengeId);
-    }
-
-    public Pair<JsonObject> startChallenge(int challengeId) throws java.io.IOException, InterruptedException {
+    public Pair<ResponseLAB, JsonObject> startChallenge(int challengeId) throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -77,17 +72,17 @@ public class ConexAPI {
                 .build();
         HttpResponse<String> started = http.send(start, HttpResponse.BodyHandlers.ofString());
 
-        Pair<JsonObject> result = parseResponse(started);
-        if (result.control.runStatus == null) {
+        Pair<ResponseLAB, JsonObject> result = parseResponse(started);
+        if (result.getFirst().runStatus == null) {
             throw new java.io.IOException("La respuesta de inicio no contiene un control válido");
         }
 
-        this.runID = String.valueOf(result.control.runID);
+        this.runID = String.valueOf(result.getFirst().runID);
         System.out.println("Se ha iniciado una nueva run: " + this.runID);
         return result;
     }
 
-    public Pair<JsonObject> getSensor(String sensorId) throws java.io.IOException, InterruptedException {
+    public Pair<ResponseLAB, JsonObject> getSensor(String sensorId) throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -102,7 +97,7 @@ public class ConexAPI {
         return parseResponse(response);
     }
 
-    public Pair<JsonObject> executeAction(String actionCode) throws java.io.IOException, InterruptedException {
+    public Pair<ResponseLAB, JsonObject> executeAction(String actionCode) throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -122,7 +117,7 @@ public class ConexAPI {
     }
 
 
-    public Pair<JsonObject> closeChallenge() throws java.io.IOException, InterruptedException {
+    public Pair<ResponseLAB, JsonObject> closeChallenge() throws java.io.IOException, InterruptedException {
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
         String token = System.getenv("DBA_TOKEN");
@@ -138,19 +133,19 @@ public class ConexAPI {
                 .build();
         HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
 
-        Pair<JsonObject> result = parseResponse(response);
+        Pair<ResponseLAB, JsonObject> result = parseResponse(response);
         System.out.println("[DBA LAB] Solicitud de cierre aceptada: " + this.runID);
         return result;
     }
 
     // Todas las respuestas de un run se separan usando el método de Control.
-    private Pair<JsonObject> parseResponse(HttpResponse<String> response) throws java.io.IOException {
+    private Pair<ResponseLAB, JsonObject> parseResponse(HttpResponse<String> response) throws java.io.IOException {
         JsonElement json = readResponse(response);
         if (!json.isJsonObject()) {
             throw new java.io.IOException("La respuesta de la API no es un objeto JSON");
         }
 
-        Control control = new Control();
+        ResponseLAB control = new ResponseLAB();
         JsonObject particular = control.update(json.toString());
         return new Pair<>(control, particular);
     }
