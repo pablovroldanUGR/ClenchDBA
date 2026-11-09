@@ -22,6 +22,13 @@ public class Main {
         profile.setParameter(Profile.CONTAINER_NAME, "termostato");
         
         try{
+            EnvironmentThermo environment = (EnvironmentThermo) Environment.getInstance("Thermo");
+            
+            //------ Simulación interfaz -----//
+            environment.setChallenge(1);
+            environment.startChallenge();
+            //------ Simulación interfaz -----//
+            
             AgentContainer agentContainer = rt.createAgentContainer(profile);
                                     
             AgentController thermostatAgent = agentContainer.createNewAgent

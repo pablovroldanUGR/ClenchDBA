@@ -33,8 +33,8 @@ public class AgentTemp extends Agent {
             thermo.closeRun();
             System.out.println("Run terminada");
         }
-        catch (Exception e2){
-            System.out.println("Error al cerrar la conexión con la API." + e2.getMessage());
+        catch (Exception e){
+            System.out.println("Error al cerrar la conexión con la API. " + e.getMessage());
         }
         System.exit(0);
     }

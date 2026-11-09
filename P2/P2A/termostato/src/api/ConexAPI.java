@@ -183,7 +183,7 @@ public class ConexAPI {
         
         String responseString = responseHTTP.body();
         
-        System.out.println("[DBA LAB] Solicitud de cierre aceptada: " + String.valueOf(runID));
+        System.out.println("[DBA LAB] Solicitud de cierre aceptada. Id de la run " + String.valueOf(runID));
         return new ResponseLAB(responseString);
     }
 

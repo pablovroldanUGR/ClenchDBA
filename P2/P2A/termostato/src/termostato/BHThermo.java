@@ -2,16 +2,15 @@ package termostato;
 
 import common.RunStatus;
 import entorno.EnvironmentThermo;
-import jade.core.Agent;
 import jade.core.behaviours.*;
 
 public class BHThermo extends Behaviour {
-    private String status = "";
     private int exitCode = 0;
-    private EnvironmentThermo thermo = ((AgentTemp) myAgent).getEnvironment();
+    private EnvironmentThermo thermo;
     
     @Override
     public void action() {
+        thermo = ((AgentTemp) myAgent).getEnvironment();
 
         try {    
             thermo.checkStatus();
@@ -23,7 +22,7 @@ public class BHThermo extends Behaviour {
                 ((AgentTemp) myAgent).printMessage("Temperatura obtenida -> " + temp);
                 
                 // Decidimos acción
-                if(temp >= thermo.getObjectiveTemperature()){
+                if(temp >= thermo.getTargetTemperature()){
                     thermo.activateRefrigeration(); // CALIENTE: ACTIVAMOS REFRIGERACION
                     ((AgentTemp) myAgent).printMessage("CALIENTE: ACTIVAMOS REFRIGERACION");
 
@@ -41,7 +40,6 @@ public class BHThermo extends Behaviour {
             }
         } catch (Exception e) {
             System.err.println("Error al comunicarse con la thermo durante el setup: " + e.getMessage());
-            e.printStackTrace();
             myAgent.doDelete();
         }
     }

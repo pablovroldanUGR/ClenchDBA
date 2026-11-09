@@ -6,55 +6,52 @@ import api.ResponseLAB;
 import java.io.IOException;
 
 public abstract class Environment {
+
     protected ConexAPI api;
-    private static Environment instance; 
+    private static Environment instance;
     public RunStatus runStatus;
     protected int runID;
     protected int challengeID;
-    
-    protected Environment(){
+
+    protected Environment() {
         this.runStatus = RunStatus.UNINITALIZED;
         this.api = new ConexAPI();
         this.runID = -1;
         this.challengeID = -1;
     }
-    
-    public static Environment getInstance(String name){
-        if(instance == null){
-            if(name.equalsIgnoreCase("Thermo")){
+
+    public static Environment getInstance(String name) {
+        if (instance == null) {
+            if (name.equalsIgnoreCase("Thermo")) {
                 instance = new EnvironmentThermo();
-            }
-            else if (name.equalsIgnoreCase("Grid")){
+            } else if (name.equalsIgnoreCase("Grid")) {
                 instance = new EnvironmentGrid();
-            }
-            else{
+            } else {
                 throw new IllegalArgumentException("Error al crear el entorno. Entorno no válido");
             }
         }
-        
+
         return instance;
     }
-    
-    public void setChallenge(int challengeID){
+
+    public void setChallenge(int challengeID) {
         this.challengeID = challengeID;
     }
-    
-    public void startChallenge(){
-        if(this.challengeID != -1){
-            try{
+
+    public void startChallenge() {
+        if (this.challengeID != -1) {
+            try {
                 ResponseLAB responseInfo = api.startChallenge(this.challengeID);
                 this.runID = responseInfo.runId;
                 this.runStatus = responseInfo.runStatus;
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
-                return;
             }
-        }
-        else{
+        } else {
             System.out.println("Error al intentar iniciar el reto. Debes seleccionar uno primero");
         }
     }
-    
+
     public RunStatus checkStatus() throws IOException, InterruptedException {
         if (this.runID == -1) {
             throw new IllegalStateException("No hay una run iniciada.");
@@ -66,21 +63,17 @@ public abstract class Environment {
             throw new IOException("La respuesta no contiene un estado válido.");
         }
 
-        if(runInfo.runId != -1 && runInfo.runId != this.runID) {
+        if (runInfo.runId != -1 && runInfo.runId != this.runID) {
             throw new IOException("La API devolvió el estado de otra run.");
         }
 
         this.runStatus = runInfo.runStatus;
         return this.runStatus;
     }
-    
-    public void closeRun() throws IOException, InterruptedException {
+
+    public RunStatus closeRun() throws IOException, InterruptedException {
         if (this.runID == -1) {
             throw new IllegalStateException("No hay una run iniciada.");
-        }
-
-        if (this.runStatus != RunStatus.ACTIVE) {
-            return;
         }
 
         ResponseLAB responseInfo = api.closeChallenge(this.runID);
@@ -90,5 +83,7 @@ public abstract class Environment {
         }
 
         this.runStatus = responseInfo.runStatus;
+
+        return this.runStatus;
     }
 }
