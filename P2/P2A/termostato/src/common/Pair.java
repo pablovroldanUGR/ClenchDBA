@@ -1,14 +1,32 @@
-package common;
-import api.Control;
+import java.util.Objects;
 
-//Usarlo en sensores y realizar accion
-//Es generico porque en termo nos da numero y en grid nos da string
-public class Pair<T> {
-    public Control control;
-    public T particular;
-    
-    public Pair(Control control, T particular) {
-        this.control = control;
-        this.particular = particular;
+public class Pair<T, U> {
+    private final T first;
+    private final U second;
+
+    public Pair(T first, U second) {
+        this.first = first;
+        this.second = second;
+    }
+
+    public T getFirst() {
+        return first;
+    }
+
+    public U getSecond() {
+        return second;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pair<?, ?> pair = (Pair<?, ?>) o;
+        return Objects.equals(first, pair.first) && Objects.equals(second, pair.second);
+    }
+
+    @Override
+    public String toString() {
+        return "(" + first + ", " + second + ")";
     }
 }
