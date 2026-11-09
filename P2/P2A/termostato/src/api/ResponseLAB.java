@@ -9,16 +9,16 @@ import common.Pair;
 // Importante cargar datos nuevos al hacer una acción.
 public class ResponseLAB {
     // Respuesta de DBA_LAB a sensores
-    public int sensorID;
-    public ArrayList<Pair<String>, <String>> value;
+    public String sensorId;
+    public ArrayList<Pair<String, String>> value;
     
     // Respuesta de DBA_LAB a acciones
-    public int actionID;
+    public int actionId;
     public String actionStatus;
     public String reasonCodeAction;
     
     // Respuesta de control de DBA_LAB
-    public int runID;
+    public int runId;
     public RunStatus runStatus;
     public Boolean isAlive;
     public String objectivePhase;
@@ -26,56 +26,53 @@ public class ResponseLAB {
     public String reasonCode;
     
     public ResponseLAB(){
-        this.sensorID = -1;
+        // Sensores
+        this.sensorId = "";
         this.value = new ArrayList<>();
         
-        this.actionID = -1;
+        // Acciones
+        this.actionId = -1;
+        this.actionStatus = "";
+        this.reasonCodeAction = "";
+        
+        // Control
+        this.runId = -1;
+        this.runStatus = null;
+        this.isAlive = false;
+        this.objectivePhase = "";
+        this.remainingObjectives = -1;
+        this.reasonCode = "";
     }
-    
+     
+    public ResponseLAB(String response){
+        this();
+        update(response);
+    }
+            
+            
     // Actualiza el control y devuelve el JSON con los datos particulares del problema.
-    public JsonObject update(String jsonResponse) {
+    public void update(String jsonResponse) {
         if (jsonResponse == null || jsonResponse.isBlank()) {
-            return new JsonObject();
+            return;
         }
 
         try {
             JsonObject json = JsonParser.parseString(jsonResponse).getAsJsonObject();
-
-            JsonObject datos = json.deepCopy();
             JsonObject controlNode;
-
-            if (json.has("control")) {
-                datos.remove("control");
-                if (json.get("control").isJsonNull()) {
-                    return datos;
-                }
+            
+            // SECCIÓN DE CONTROL (raíz o dentro de "control")
+            if (json.has("control") && !json.get("control").isJsonNull()) {
                 controlNode = json.getAsJsonObject("control");
-            } else if (json.has("runId") || json.has("runStatus")) {
-                // También se admite recibir directamente el objeto de control.
-                controlNode = json;
-                datos.remove("runId");
-                datos.remove("runStatus");
-                datos.remove("isAlive");
-                datos.remove("objectivePhase");
-                datos.remove("remainingObjectives");
-                datos.remove("reasonCode");
             } else {
-                // Una respuesta sin control conserva todos sus datos.
-                return datos;
+                controlNode = json;
             }
-
-            // Mapeo seguro de campos comprobando su existencia
+            
             if (controlNode.has("runId") && !controlNode.get("runId").isJsonNull()) {
-                this.runID = controlNode.get("runId").getAsInt();
+                this.runId = controlNode.get("runId").getAsInt();
             }
 
             if (controlNode.has("runStatus") && !controlNode.get("runStatus").isJsonNull()) {
-                String statusStr = controlNode.get("runStatus").getAsString();
-                try {
-                    this.runStatus = RunStatus.valueOf(statusStr); // Convierte el String al Enum exacto
-                } catch (IllegalArgumentException e) {
-                    this.runStatus = RunStatus.UNINITALIZED; // Fallback por seguridad
-                }
+                this.runStatus = RunStatus.valueOf(controlNode.get("runStatus").getAsString());
             }
 
             if (controlNode.has("isAlive") && !controlNode.get("isAlive").isJsonNull()) {
@@ -84,6 +81,8 @@ public class ResponseLAB {
 
             if (controlNode.has("objectivePhase") && !controlNode.get("objectivePhase").isJsonNull()) {
                 this.objectivePhase = controlNode.get("objectivePhase").getAsString();
+            } else {
+                this.objectivePhase = null;
             }
 
             if (controlNode.has("remainingObjectives") && !controlNode.get("remainingObjectives").isJsonNull()) {
@@ -92,12 +91,44 @@ public class ResponseLAB {
 
             if (controlNode.has("reasonCode") && !controlNode.get("reasonCode").isJsonNull()) {
                 this.reasonCode = controlNode.get("reasonCode").getAsString();
+            } else {
+                this.reasonCode = null;
             }
-
-            return datos;
+            
+            // SECCIÓN DE SENSORES ("sensorId" y objeto "value")
+            if (json.has("sensorId") && !json.get("sensorId").isJsonNull()) {
+                this.sensorId = json.get("sensorId").getAsString();
+            }
+            
+            if (json.has("value") && !json.get("value").isJsonNull()) {
+                controlNode = json.getAsJsonObject("value");
+                this.value.clear();
+                String valStr = "";
+                    for (String key : controlNode.keySet()) {
+                        if(controlNode.get(key).isJsonNull()){
+                            valStr = null;
+                        } else{
+                            valStr = controlNode.get(key).getAsString();
+                        }
+                        this.value.add(new Pair<>(key, valStr));
+                    }
+            }
+            
+            // SECCIÓN DE ACCIONES ("actionId", "actionStatus", "reasonCodeAction")
+            if (json.has("actionId") && !json.get("actionId").isJsonNull()) {
+                this.actionId = json.get("actionId").getAsInt();
+            }
+            
+            if (json.has("actionStatus") && !json.get("actionStatus").isJsonNull()) {
+                this.actionStatus = json.get("actionStatus").getAsString();
+            }
+            
+            if (json.has("reasonCode") && !json.get("reasonCode").isJsonNull()) {
+                this.reasonCodeAction = json.get("reasonCode").getAsString();
+            }
         } catch (Exception e) {
             System.err.println("Error al parsear el JSON de Control: " + e.getMessage());
-            return new JsonObject();
+            return;
         }
     }
 }
