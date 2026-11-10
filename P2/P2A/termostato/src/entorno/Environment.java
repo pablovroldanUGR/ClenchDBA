@@ -40,12 +40,10 @@ public abstract class Environment {
 
     public void startChallenge() {
         if (this.challengeID != -1) {
-            try {
-                ResponseLAB responseInfo = api.startChallenge(this.challengeID);
+            ResponseLAB responseInfo = api.startChallenge(this.challengeID);
+            if(responseInfo != null){
                 this.runID = responseInfo.runId;
                 this.runStatus = responseInfo.runStatus;
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
             }
         } else {
             System.out.println("Error al intentar iniciar el reto. Debes seleccionar uno primero");
@@ -53,7 +51,7 @@ public abstract class Environment {
     }
 
     public RunStatus checkStatus() throws IOException, InterruptedException {
-        if (this.runID == -1) {
+        if (this.runID != -1) {
             throw new IllegalStateException("No hay una run iniciada.");
         }
 
@@ -75,7 +73,7 @@ public abstract class Environment {
         if (this.runID == -1) {
             throw new IllegalStateException("No hay una run iniciada.");
         }
-
+        
         ResponseLAB responseInfo = api.closeChallenge(this.runID);
 
         if (responseInfo == null || responseInfo.runStatus == null) {

@@ -31,10 +31,10 @@ public class AgentTemp extends Agent {
     protected void takeDown(){
         try{
             thermo.closeRun();
-            System.out.println("Run terminada");
+            printMessage("Run terminada por el agente.");
         }
         catch (Exception e){
-            System.out.println("Error al cerrar la conexión con la API. " + e.getMessage());
+            printMessage("Error al terminar la run por parte del agente. Respuesta del entorno: " + e.getMessage());
         }
         System.exit(0);
     }

@@ -12,36 +12,37 @@ public class BHThermo extends Behaviour {
     public void action() {
         thermo = ((AgentTemp) myAgent).getEnvironment();
 
-        try {    
-            thermo.checkStatus();
-            
-            if (thermo.runStatus == RunStatus.ACTIVE) {
-                // Obtenemos temperatura
-                double temp = thermo.getTemperature();
+            try{
+                thermo.checkStatus(); // Tira excepción
                 
-                ((AgentTemp) myAgent).printMessage("Temperatura obtenida -> " + temp);
-                
-                // Decidimos acción
-                if(temp >= thermo.getTargetTemperature()){
-                    thermo.activateRefrigeration(); // CALIENTE: ACTIVAMOS REFRIGERACION
-                    ((AgentTemp) myAgent).printMessage("CALIENTE: ACTIVAMOS REFRIGERACION");
+                if (thermo.runStatus == RunStatus.ACTIVE) {
+                    // Obtenemos temperatura
+                    double temp = thermo.getTemperature();
 
-                    
-                } else {
-                    thermo.disableRefrigeration(); // FRIO: DESACTIVAMOS REFRIGERACION
-                    ((AgentTemp) myAgent).printMessage("FRIO: DESACTIVAMOS REFRIGERACION");
-                    
+                    ((AgentTemp) myAgent).printMessage("Temperatura obtenida -> " + temp);
+
+                    // Decidimos acción
+                    if(temp >= thermo.getTargetTemperature()){
+                        thermo.activateRefrigeration(); // CALIENTE: ACTIVAMOS REFRIGERACION
+                        ((AgentTemp) myAgent).printMessage("CALIENTE: ACTIVAMOS REFRIGERACION");
+
+
+                    } else {
+                        thermo.disableRefrigeration(); // FRIO: DESACTIVAMOS REFRIGERACION
+                        ((AgentTemp) myAgent).printMessage("FRIO: DESACTIVAMOS REFRIGERACION");
+
+                    }
+
+                } else if (thermo.runStatus == RunStatus.SUCCEEDED) {
+                    // Reto completado
+                    ((AgentTemp) myAgent).printMessage("RETO COMPLETADO");
+                    this.exitCode = 1;
                 }
-                
-            } else if (thermo.runStatus == RunStatus.SUCCEEDED) {
-                // Reto completado
-                ((AgentTemp) myAgent).printMessage("RETO COMPLETADO");
-                this.exitCode = 1;
             }
-        } catch (Exception e) {
-            System.err.println("Error al comunicarse con la thermo durante el setup: " + e.getMessage());
-            myAgent.doDelete();
-        }
+            catch (Exception e){
+                System.out.println("Error por parte del agente al solicitar estado al entorno. " + e.getMessage());
+                myAgent.doDelete();
+            }
     }
 
     @Override

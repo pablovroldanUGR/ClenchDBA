@@ -25,14 +25,11 @@ public class EnvironmentThermo extends Environment{
     
     private void getLimits(){
         if(this.runID != -1){
-            try{
-                ResponseLAB response = api.getSensor(this.runID, this.ENV_TYPE + this.SENSOR_LIMITS);
+            ResponseLAB response = api.getSensor(this.runID, this.ENV_TYPE + this.SENSOR_LIMITS);
+            if(response != null){
                 this.runStatus = response.runStatus;
                 this.limits.setFirst(Double.valueOf(response.value.get(0).getSecond()));
                 this.limits.setSecond(Double.valueOf(response.value.get(1).getSecond()));
-            }
-            catch (Exception e){
-                System.out.println(e.getMessage());
             }
         }
         else{
@@ -52,13 +49,11 @@ public class EnvironmentThermo extends Environment{
     
     public double getTemperature(){
         if(this.runID != -1){
-            try{
-                ResponseLAB response = api.getSensor(this.runID, this.ENV_TYPE + this.SENSOR_TEMP);
+            ResponseLAB response = api.getSensor(this.runID, this.ENV_TYPE + this.SENSOR_TEMP);
+
+            if(response != null){
                 this.runStatus = response.runStatus;
                 this.temperature = Double.valueOf(response.value.get(0).getSecond());
-            }
-            catch (Exception e){
-                System.out.println(e.getMessage());
             }
         }
         else{
@@ -70,13 +65,11 @@ public class EnvironmentThermo extends Environment{
     
     public double getTargetTemperature(){
         if(this.runID != -1){
-            try{
-                ResponseLAB response = api.getSensor(this.runID, this.ENV_TYPE + this.SENSOR_TARGET);
+            ResponseLAB response = api.getSensor(this.runID, this.ENV_TYPE + this.SENSOR_TARGET);
+            
+            if(response != null){
                 this.runStatus = response.runStatus;
                 this.target = Double.valueOf(response.value.get(0).getSecond());
-            }
-            catch (Exception e){
-                System.out.println(e.getMessage());
             }
         }
         else{
@@ -88,12 +81,10 @@ public class EnvironmentThermo extends Environment{
     
     public void activateRefrigeration(){
         if(this.runID != -1){
-            try{
-                ResponseLAB response = api.executeAction(this.runID, this.ENV_TYPE + this.ACTION_ON);
+            ResponseLAB response = api.executeAction(this.runID, this.ENV_TYPE + this.ACTION_ON);
+
+            if(response != null){
                 this.runStatus = response.runStatus;
-            }
-            catch (Exception e){
-                System.out.println(e.getMessage());
             }
         }
         else{
@@ -103,12 +94,10 @@ public class EnvironmentThermo extends Environment{
     
      public void disableRefrigeration(){
         if(this.runID != -1){
-            try{
-                ResponseLAB response = api.executeAction(this.runID, this.ENV_TYPE + this.ACTION_OFF);
+            ResponseLAB response = api.executeAction(this.runID, this.ENV_TYPE + this.ACTION_OFF);
+            
+            if(response != null){
                 this.runStatus = response.runStatus;
-            }
-            catch (Exception e){
-                System.out.println(e.getMessage());
             }
         }
         else{
