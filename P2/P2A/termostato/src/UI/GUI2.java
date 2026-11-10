@@ -3,7 +3,12 @@ package UI;
 import common.RunStatus;
 import java.awt.Color;
 import entorno.Main;
-
+import java.awt.BorderLayout;
+import java.awt.Font;
+import javax.swing.BorderFactory;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JScrollPane;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -30,10 +35,26 @@ public class GUI2 extends javax.swing.JFrame {
     private static final Color GREEN = new Color(31, 160, 110);
     private static final Color RED = new Color(190, 65, 75);
     
-    private void initComponentsCustom(){
-        playButton.setText("PLAY");
-        playButton.setBackground(GREEN);
-        playButton.setForeground(TEXT);
+    private void initComponentsCustom(){      
+        stopButton1.setText("PLAY");
+        stopButton1.setBackground(GREEN);
+        stopButton1.setForeground(TEXT);
+        
+        stopButton.setText("STOP");
+        stopButton.setBackground(RED);
+        stopButton.setForeground(TEXT);
+        
+        terminalText.setBackground(BACKGROUND);
+        terminalText.setForeground(TEXT);
+        terminalText.setCaretColor(TEXT);
+        terminalText.setBorder(new EmptyBorder(12, 13, 12, 13));
+        terminalText.setText("[Terminal]");
+        terminalText.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+    }
+    
+    public void printText(String text){
+        terminalText.append(text);
+        terminalText.append("\n");
     }
     
     /**
@@ -42,25 +63,6 @@ public class GUI2 extends javax.swing.JFrame {
     public GUI2() {
         initComponents();
         initComponentsCustom();
-    }
-    
-    private void updateStartButton(){
-        RunStatus runStatus = Main.checkRunStatus();
-        
-        running = runStatus == RunStatus.ACTIVE;
-        
-        if(running){
-            playButton.setText("STOP");
-            playButton.setBackground(RED);
-            
-            Main.closeRun();
-        }
-        else{
-            playButton.setText("START");
-            playButton.setBackground(GREEN);
-            
-            Main.startChallenge(this.challengeID);
-        }
     }
 
     /**
@@ -72,16 +74,13 @@ public class GUI2 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        playButton = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         terminalText = new javax.swing.JTextArea();
         challengeSelector = new javax.swing.JComboBox<>();
+        stopButton1 = new javax.swing.JButton();
+        stopButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        playButton.setBackground(new java.awt.Color(31, 160, 110));
-        playButton.setText("PLAY");
-        playButton.addActionListener(this::playButtonActionPerformed);
 
         terminalText.setEditable(false);
         terminalText.setColumns(20);
@@ -92,6 +91,12 @@ public class GUI2 extends javax.swing.JFrame {
         challengeSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19" }));
         challengeSelector.addActionListener(this::challengeSelectorActionPerformed);
 
+        stopButton1.setText("PLAY");
+        stopButton1.addActionListener(this::stopButton11ActionPerformed);
+
+        stopButton.setText("STOP");
+        stopButton.addActionListener(this::stopButtonActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -99,32 +104,30 @@ public class GUI2 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(challengeSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(92, Short.MAX_VALUE))
+                    .addComponent(stopButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(challengeSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(375, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(challengeSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(playButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(stopButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(19, 19, 19))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void playButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playButtonActionPerformed
-        updateStartButton();
-    }//GEN-LAST:event_playButtonActionPerformed
 
     private void challengeSelectorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_challengeSelectorActionPerformed
         
@@ -134,6 +137,22 @@ public class GUI2 extends javax.swing.JFrame {
             this.challengeID = Integer.parseInt(selected.toString());
         }
     }//GEN-LAST:event_challengeSelectorActionPerformed
+
+    private void stopButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButton11ActionPerformed
+        RunStatus runStatus = Main.getRunStatus();
+        
+        if(runStatus != RunStatus.ACTIVE){            
+            Main.startChallenge(this.challengeID);
+        }
+    }//GEN-LAST:event_stopButton11ActionPerformed
+
+    private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
+        RunStatus runStatus = Main.getRunStatus();
+                
+        if(runStatus == RunStatus.ACTIVE){
+            Main.closeRun();
+        }
+    }//GEN-LAST:event_stopButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,7 +182,8 @@ public class GUI2 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> challengeSelector;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JToggleButton playButton;
+    private javax.swing.JButton stopButton;
+    private javax.swing.JButton stopButton1;
     private javax.swing.JTextArea terminalText;
     // End of variables declaration//GEN-END:variables
 }
