@@ -51,7 +51,7 @@ public abstract class Environment {
     }
 
     public RunStatus checkStatus() throws IOException, InterruptedException {
-        if (this.runID != -1) {
+        if (this.runID == -1) {
             throw new IllegalStateException("No hay una run iniciada.");
         }
 
@@ -66,6 +66,16 @@ public abstract class Environment {
         }
 
         this.runStatus = runInfo.runStatus;
+        
+        if(this.runStatus == RunStatus.SUCCEEDED){
+            Main.printGUI("============ CHALLENGE " + this.challengeID + " TERMINADO ============");
+        }
+        Main.printGUI("================ Valor de runStatus: " + this.runStatus.toString());
+        
+        return this.runStatus;
+    }
+    
+    public RunStatus getStatus(){
         return this.runStatus;
     }
 

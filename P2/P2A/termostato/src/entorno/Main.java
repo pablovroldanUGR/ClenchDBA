@@ -16,26 +16,33 @@ import termostato.AgentTemp;
 public class Main {
     private static Environment environment;
     private static GUI2 gui;
-    
-    private static RunStatus runStatus = RunStatus.UNINITALIZED;
-    
-    public static void checkRunStatus(){
+        
+    public static RunStatus checkRunStatus(){
         try{
-            runStatus = environment.checkStatus();
+            return environment.checkStatus();
         }
         catch (Exception e){
-            
+            System.out.println("Error en el main al intentar leer el estado del entorno. " + e.getMessage());
         }
+        
+        return RunStatus.UNINITALIZED;
     }
     
     public static RunStatus getRunStatus(){
-        return runStatus;
+        if(environment != null){
+            return environment.getStatus();
+        }
+        
+        return RunStatus.UNINITALIZED;
+    }
+    
+    public static void printGUI(String text){
+        if(gui != null){
+            gui.printText(text);
+        }
     }
     
     public static void startChallenge(int challengeID){
-        environment.setChallenge(challengeID);
-        environment.startChallenge();
-        
         String name = challengeID==1? "termostato" : "grid";
         
         Runtime rt = Runtime.instance();
@@ -49,12 +56,22 @@ public class Main {
         
         try{
             if(challengeID == 1){
+                environment = Environment.getInstance("Thermo");  
+                environment.setChallenge(challengeID);
+                environment.startChallenge();
+                checkRunStatus();
+                
                 AgentController thermostatAgent = agentContainer.createNewAgent
                 ("Thermostat", AgentTemp.class.getName(), new Object[]{});
 
                 thermostatAgent.start();                
             }
             else{/*
+                environment = Environment.getInstance("Grid"); 
+                environment.setChallenge(challengeID);
+                environment.startChallenge();
+                checkRunStatus();
+                
                 AgentController gridAgent = agentContainer.createNewAgent
                 ("Grid", AgentGrid.class.getName(), new Object[]{});
 
@@ -78,10 +95,8 @@ public class Main {
         }
     }
     
-    public static void main(String args[]){
-        environment = Environment.getInstance("Thermo");
+    public static void main(String args[]){      
         gui = new GUI2();
-        
         gui.setVisible(true);
     }
 }

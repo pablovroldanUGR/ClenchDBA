@@ -33,7 +33,7 @@ public class EnvironmentThermo extends Environment{
             }
         }
         else{
-            System.out.println("Error al intentar obtener los límites. RunID no inicailizado");
+            Main.printGUI("Error al intentar obtener los límites. RunID no inicailizado");
         }
     }
     
@@ -57,7 +57,7 @@ public class EnvironmentThermo extends Environment{
             }
         }
         else{
-            System.out.println("Error al intentar obtener la temperatura. RunID no inicailizado");
+            Main.printGUI("Error al intentar obtener la temperatura. RunID no inicailizado");
         }
         
         return this.temperature;
@@ -73,7 +73,7 @@ public class EnvironmentThermo extends Environment{
             }
         }
         else{
-            System.out.println("Error al intentar obtener la temperatura objetivo. RunID no inicailizado");
+            Main.printGUI("Error al intentar obtener la temperatura objetivo. RunID no inicailizado");
         }
         
         return this.target;
@@ -88,7 +88,7 @@ public class EnvironmentThermo extends Environment{
             }
         }
         else{
-            System.out.println("Error al intentar activar la refrigeración. RunID no inicializado");
+            Main.printGUI("Error al intentar activar la refrigeración. RunID no inicializado");
         }
     }
     
@@ -101,7 +101,7 @@ public class EnvironmentThermo extends Environment{
             }
         }
         else{
-            System.out.println("Error al intentar desactivar la refrigeración. RunID no inicializado");
+            Main.printGUI("Error al intentar desactivar la refrigeración. RunID no inicializado");
         }
     }
 }

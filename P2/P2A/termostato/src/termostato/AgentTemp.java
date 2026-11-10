@@ -2,6 +2,7 @@ package termostato;
 
 import entorno.Environment;
 import entorno.EnvironmentThermo;
+import entorno.Main;
 import jade.core.Agent;
 
 public class AgentTemp extends Agent {
@@ -20,7 +21,7 @@ public class AgentTemp extends Agent {
     }
 
     public void printMessage(String msg) {
-        System.out.println(name + msg);
+        Main.printGUI(name + msg);
     }
     
     public EnvironmentThermo getEnvironment(){
@@ -36,6 +37,5 @@ public class AgentTemp extends Agent {
         catch (Exception e){
             printMessage("Error al terminar la run por parte del agente. Respuesta del entorno: " + e.getMessage());
         }
-        System.exit(0);
     }
 }

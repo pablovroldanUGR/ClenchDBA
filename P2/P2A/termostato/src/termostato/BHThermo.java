@@ -40,7 +40,7 @@ public class BHThermo extends Behaviour {
                 }
             }
             catch (Exception e){
-                System.out.println("Error por parte del agente al solicitar estado al entorno. " + e.getMessage());
+                ((AgentTemp) myAgent).printMessage("Error por parte del comportamiento al solicitar estado al entorno. " + e.getMessage());
                 myAgent.doDelete();
             }
     }
