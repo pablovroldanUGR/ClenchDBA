@@ -2,6 +2,7 @@ package entorno;
 
 import UI.GUI;
 import common.CellType;
+import common.Pair;
 import common.RunStatus;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
@@ -11,10 +12,6 @@ import jade.wrapper.AgentController;
 import termostato.AgentTemp;
 import java.util.ArrayList;
 import grid.*;
-
-//--- LIBRERÍAS PARA PRUEBAS DE API ---//
-//import com.google.gson.JsonObject;
-//import com.google.gson.JsonParser;
 
 public class Main {
     public static final int MAP_COL = 13;
@@ -102,35 +99,92 @@ public class Main {
         }
     }
     
-    private static ArrayList<ArrayList<CellType>> createTestMap(){
-        int rows = 13;
-        int columns = 13;
-        ArrayList<ArrayList<CellType>> map = new ArrayList<>();
-
-        for (int row = 0; row < rows; row++) {
-            ArrayList<CellType> cells = new ArrayList<>();
-            for (int column = 0; column < columns; column++) {
-                cells.add(CellType.UNKNOWN);
+    public static void updateMap(ArrayList<ArrayList<CellType>> map){
+        if(map != null && !map.isEmpty()){
+            Pair<Integer, Integer> agentPos = new Pair<>();
+            boolean agentFound = false;
+            
+            for(int i = 0; i < map.size() && !agentFound; i++){
+                for(int j = 0; j < map.get(0).size() && !agentFound; j++){
+                    agentFound = map.get(i).get(j) == CellType.AGENT;
+                    if(agentFound){
+                        agentPos.setFirst(j); // x = columnas
+                        agentPos.setSecond(i); // y = filas
+                    }
+                }
             }
-            map.add(cells);
+
+            if(agentPos.getFirst() != null && agentPos.getSecond() != null){
+                int minColMainMap = agentPos.getFirst() - Main.MAP_COL/2;
+                int minRowMainMap = agentPos.getSecond() - Main.MAP_ROWS/2;
+                int currentRowMainMap = minRowMainMap;
+                int currentColMainMap = minColMainMap;
+                
+                ArrayList<ArrayList<CellType>> reducedMap = new ArrayList<>(Main.MAP_ROWS);
+
+                for(int i = 0; i < MAP_ROWS; i++){
+                    reducedMap.add(new ArrayList<>(Main.MAP_COL));
+                    currentColMainMap = minColMainMap;
+
+                    for(int j = 0; j < MAP_COL; j++){
+                        if(currentRowMainMap < 0 || currentRowMainMap >= map.size() || currentColMainMap < 0 || currentColMainMap >= map.get(0).size()){
+                            reducedMap.get(i).add(CellType.UNKNOWN);
+                        }
+                        else{
+                            reducedMap.get(i).add(map.get(currentRowMainMap).get(currentColMainMap));
+                        }
+
+                        currentColMainMap ++;
+                    }
+
+                    currentRowMainMap ++;
+                }
+
+                gui.updateMap(reducedMap);
+            }
+        }
+    }
+    
+    public void updateInfo(String info){
+        gui.updateInfo(info);
+    }
+    
+    private static ArrayList<ArrayList<CellType>> createTestMap(int rows, int cols) {
+        ArrayList<ArrayList<CellType>> map = new ArrayList<>(rows);
+
+        // 1. Inicializar mapa vacío con bordes de muros (WALL)
+        for (int i = 0; i < rows; i++) {
+            ArrayList<CellType> row = new ArrayList<>(cols);
+            for (int j = 0; j < cols; j++) {
+                if (i == 0 || i == rows - 1 || j == 0 || j == cols - 1) {
+                    row.add(CellType.WALL);
+                } else {
+                    row.add(CellType.FREE);
+                }
+            }
+            map.add(row);
         }
 
-        for (int column = 3; column <= 9; column++) {
-            map.get(6).set(column, CellType.FREE);
+        // 2. Añadir obstáculos internos (si el mapa es suficientemente grande)
+        if (rows > 8 && cols > 8) {
+            map.get(2).set(5, CellType.WALL);
+            map.get(3).set(5, CellType.WALL);
+            map.get(4).set(5, CellType.WALL);
+            map.get(6).set(3, CellType.WALL);
+            map.get(6).set(4, CellType.WALL);
         }
-        for (int row = 3; row <= 6; row++) {
-            map.get(row).set(6, CellType.FREE);
-        }
-        map.get(5).set(7, CellType.WALL);
-        map.get(3).set(6, CellType.GOAL);
-        map.get(6).set(6, CellType.AGENT);
+
+        // 3. Colocar al agente (AGENT) y la meta (GOAL)
+        map.get(3).set(3, CellType.AGENT);
+        map.get(7).set(8, CellType.GOAL);
 
         return map;
     }
     
     public static void main(String args[]){      
         gui = new GUI();
-        gui.updateMap(createTestMap());
+        updateMap(createTestMap(10, 10));
+        gui.updateInfo("Reto: 1 \nEnergía: 100 \nEstado: ACTIVO");
         gui.setVisible(true);
     }
 }
