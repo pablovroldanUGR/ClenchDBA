@@ -17,6 +17,9 @@ import grid.*;
 //import com.google.gson.JsonParser;
 
 public class Main {
+    public static final int MAP_COL = 13;
+    public static final int MAP_ROWS = 13;
+    
     private static Environment environment;
     private static GUI gui;
         

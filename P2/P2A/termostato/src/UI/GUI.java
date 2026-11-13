@@ -22,11 +22,6 @@ public class GUI extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUI.class.getName());
     
-    private static final int MAP_COL = 13;
-    private static final int MAP_ROWS = 13;
-    private static final int CENTER_ROW = MAP_ROWS/2 + 1;
-    private static final int CENTER_COL = MAP_COL/2 + 1;
-    
     private static final Color MAP_BACKGROUND = new Color(70, 70, 70);
     private static final Color BORDER_MAP_CELL = new Color(45, 55, 70);
     private static final Color UNKNOWN_CELL = new Color(27, 35, 47);
@@ -44,7 +39,7 @@ public class GUI extends javax.swing.JFrame {
     private static final Color ACCENT = new Color(73, 133, 255);
     
     private int challengeID = 1;
-    private final JPanel[][] mapCells= new JPanel[MAP_ROWS][MAP_COL];
+    private final JPanel[][] mapCells= new JPanel[Main.MAP_ROWS][Main.MAP_COL];
     
     
     private void initComponentsCustom(){      
@@ -79,11 +74,11 @@ public class GUI extends javax.swing.JFrame {
     }
     
     private void initMap(){
-        mapPanel.setLayout(new java.awt.GridLayout(MAP_ROWS, MAP_COL, 2, 2));
+        mapPanel.setLayout(new java.awt.GridLayout(Main.MAP_ROWS, Main.MAP_COL, 2, 2));
         mapPanel.removeAll();
         
-        for(int i = 0; i < MAP_ROWS; i++){
-            for(int j = 0; j < MAP_COL; j++){
+        for(int i = 0; i < Main.MAP_ROWS; i++){
+            for(int j = 0; j < Main.MAP_COL; j++){
                 JPanel cell = new JPanel();
                 
                 cell.setOpaque(true);
@@ -100,12 +95,12 @@ public class GUI extends javax.swing.JFrame {
     }
     
     public void updateMap(ArrayList<ArrayList<CellType>> data){
-        if(data == null || data.size() != MAP_ROWS || data.get(0).size() != MAP_COL){
+        if(data == null || data.size() != Main.MAP_ROWS || data.get(0).size() != Main.MAP_COL){
             Main.printGUI("Error al actualizar el mapa: no coincide la dimensión del mapa a mostrar.");
         }
         else{
-            for(int i = 0; i < MAP_ROWS; i++){
-                for(int j = 0; j < MAP_COL; j++){
+            for(int i = 0; i < Main.MAP_ROWS; i++){
+                for(int j = 0; j < Main.MAP_COL; j++){
                     switch(data.get(i).get(j)){
                         case UNKNOWN:
                             mapCells[i][j].setBackground(UNKNOWN_CELL);
