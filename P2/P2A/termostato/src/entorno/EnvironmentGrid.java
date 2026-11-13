@@ -41,7 +41,7 @@ public class EnvironmentGrid extends Environment {
         this.grid_map = new ArrayList<>();
     }
 
-    private void updateGridMap(Pair<Integer, Integer> new_pos, boolean isGoal) {
+    private void updateGridMap(Pair<Integer, Integer> new_pos, CellType type) {
         // El mapa esta vacio
         if (this.grid_map.isEmpty()) {
             for (int i = 0; i <= new_pos.getFirst(); i++) {
@@ -73,15 +73,12 @@ public class EnvironmentGrid extends Environment {
             }
         }
         
-        CellType type = CellType.FREE;
-        
-        if(isGoal){
-            type = CellType.GOAL;
+        if(type == CellType.AGENT){
+            this.grid_map.get(this.position.getFirst()).set(this.position.getSecond(), type);
         }
         
-        // Marcar propia posición como libre si esta marcada como unknown
-        if (this.grid_map.get(new_pos.getFirst()).get(new_pos.getSecond()) == CellType.UNKNOWN) {
-            this.grid_map.get(new_pos.getFirst()).set(new_pos.getSecond(), type);
+        if(type == CellType.GOAL){
+            this.grid_map.get(this.target_pos.getFirst()).set(this.target_pos.getSecond(), type);
         }
     }
 
@@ -92,7 +89,7 @@ public class EnvironmentGrid extends Environment {
                 this.runStatus = response.runStatus;
                 this.position.setFirst(Integer.valueOf(response.value.get(0).getSecond()));
                 this.position.setSecond(Integer.valueOf(response.value.get(1).getSecond()));
-                updateGridMap(this.position, false);
+                updateGridMap(this.position, CellType.GOAL);
             } else {
                 System.out.println("Algo salio mal. Response = null (Grid.getPos)");
             }
@@ -156,7 +153,7 @@ public class EnvironmentGrid extends Environment {
                 this.runStatus = response.runStatus;
                 this.target_pos.setFirst(Integer.valueOf(response.value.get(0).getSecond()));
                 this.target_pos.setSecond(Integer.valueOf(response.value.get(1).getSecond()));
-                updateGridMap(this.target_pos, true);
+                updateGridMap(this.target_pos, CellType.GOAL);
             } else {
                 System.out.println("Algo salio mal. Response = null (Grid.getTargetPos)");
             }
@@ -205,6 +202,10 @@ public class EnvironmentGrid extends Environment {
             };
 
             ResponseLAB response = api.getSensor(this.runID, this.ENV_TYPE + action);
+            this.grid_map.get(this.position.getFirst()).set(this.position.getSecond(), CellType.FREE);
+            getPos();
+            this.grid_map.get(this.position.getFirst()).set(this.position.getSecond(), CellType.AGENT);
+            
 
             if (response != null) {
                 this.runStatus = response.runStatus;
@@ -233,5 +234,11 @@ public class EnvironmentGrid extends Environment {
             return false;
         }
         return true;
+    }
+    
+    public String toString(){
+        return "Posición Agente: [ " +  this.position.getFirst() + " ][ " + this.position.getSecond() + " ]\n" +
+               "Posición Objetivo : [ " +  this.target_pos.getFirst() + " ][ " + this.target_pos.getSecond() + " ]\n" +
+               "Energía: " + this.energy_left;
     }
 }
