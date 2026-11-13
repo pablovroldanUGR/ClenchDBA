@@ -3,12 +3,11 @@ package UI;
 import common.RunStatus;
 import java.awt.Color;
 import entorno.Main;
-import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JScrollPane;
+import java.util.ArrayList;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -21,35 +20,56 @@ import javax.swing.JScrollPane;
 public class GUI2 extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUI2.class.getName());
-
-    private boolean running = false;
-    private int challengeID = 1;
+    
+    private static final int MAP_COL = 13;
+    private static final int MAP_ROWS = 13;
+    private static final int CENTER_ROW = MAP_ROWS/2 + 1;
+    private static final int CENTER_COL = MAP_COL/2 + 1;
+    
+    private static final Color MAP_BACKGROUND = new Color(70, 70, 70);
+    private static final Color BORDER_MAP_CELL = new Color(45, 55, 70);
+    private static final Color UNKNOWN_CELL = new Color(27, 35, 47);
+    private static final Color FREE_CELL = new Color(27, 35, 100);
+    private static final Color WALL_CELL = new Color(100, 35, 47);
+    private static final Color AGENT_CELL = new Color(27, 100, 47);
+    private static final Color OBJECTIVE_CELL = new Color(100, 35, 100);
     
     private static final Color BACKGROUND = new Color(13, 17, 24);
-    private static final Color PANEL = new Color(21, 27, 37);
-    private static final Color PANEL_LIGHT = new Color(27, 35, 47);
-    private static final Color BORDER = new Color(45, 55, 70);
     private static final Color TEXT = new Color(229, 236, 245);
-    private static final Color MUTED = new Color(139, 153, 173);
-    private static final Color ACCENT = new Color(73, 133, 255);
     private static final Color GREEN = new Color(31, 160, 110);
     private static final Color RED = new Color(190, 65, 75);
     
+    private static final Color MUTED = new Color(139, 153, 173);
+    private static final Color ACCENT = new Color(73, 133, 255);
+    
+    private int challengeID = 1;
+    private final JPanel[][] mapCells= new JPanel[MAP_ROWS][MAP_COL];
+    
+    
     private void initComponentsCustom(){      
-        stopButton1.setText("PLAY");
-        stopButton1.setBackground(GREEN);
-        stopButton1.setForeground(TEXT);
+        startButton.setText("PLAY");
+        startButton.setBackground(GREEN);
+        startButton.setForeground(TEXT);
         
         stopButton.setText("STOP");
         stopButton.setBackground(RED);
         stopButton.setForeground(TEXT);
         
+        terminalText.setText("");
         terminalText.setBackground(BACKGROUND);
         terminalText.setForeground(TEXT);
         terminalText.setCaretColor(TEXT);
         terminalText.setBorder(new EmptyBorder(12, 13, 12, 13));
-        terminalText.setText("[Terminal]");
         terminalText.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        
+        infoPanel.setText("");
+        infoPanel.setBackground(BACKGROUND);
+        infoPanel.setForeground(TEXT);
+        infoPanel.setCaretColor(TEXT);
+        infoPanel.setBorder(new EmptyBorder(12, 13, 12, 13));
+        infoPanel.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        
+        mapPanel.setBackground(MAP_BACKGROUND);
     }
     
     public void printText(String text){
@@ -57,11 +77,74 @@ public class GUI2 extends javax.swing.JFrame {
         terminalText.append("\n");
     }
     
+    private void initMap(){
+        mapPanel.setLayout(new java.awt.GridLayout(MAP_ROWS, MAP_COL, 2, 2));
+        mapPanel.removeAll();
+        
+        for(int i = 0; i < MAP_ROWS; i++){
+            for(int j = 0; j < MAP_COL; j++){
+                JPanel cell = new JPanel();
+                
+                cell.setOpaque(true);
+                cell.setBackground(UNKNOWN_CELL);
+                cell.setBorder(BorderFactory.createLineBorder(BORDER_MAP_CELL));
+                
+                mapCells[i][j] = cell;
+                mapPanel.add(cell);
+            }
+        }
+        
+        mapPanel.revalidate();
+        mapPanel.repaint();
+    }
+    
+    public void updateMap(ArrayList<ArrayList<String>> stringMap){
+        if(stringMap.size() != MAP_ROWS || stringMap.get(0).size() != MAP_COL){
+            Main.printGUI("Error al actualizar el mapa: no coincide la dimensión del mapa a mostrar.");
+        }
+        else{
+            for(int i = 0; i < MAP_ROWS; i++){
+                for(int j = 0; j < MAP_COL; j++){
+                    JPanel cell = new JPanel();
+                    
+                    switch(stringMap.get(i).get(j)){
+                        case "UNKNOWN":
+                            cell.setBackground(UNKNOWN_CELL);
+                        break;
+                        
+                        case "WALL":
+                            cell.setBackground(WALL_CELL);
+                        break;
+                        
+                        case "FREE":
+                            cell.setBackground(FREE_CELL);
+                        break;
+                        
+                        case "AGENT":
+                            cell.setBackground(AGENT_CELL);
+                        break;
+                        
+                        case "OBJECTIVE":
+                            cell.setBackground(OBJECTIVE_CELL);
+                        break;
+                    }
+                    
+                    mapCells[i][j] = cell;
+                }
+            }
+        }
+        
+        mapPanel.revalidate();
+        mapPanel.repaint();
+    }
+    
+    
     /**
      * Creates new form GUI2
      */
     public GUI2() {
         initComponents();
+        initMap();
         initComponentsCustom();
     }
 
@@ -77,49 +160,79 @@ public class GUI2 extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         terminalText = new javax.swing.JTextArea();
         challengeSelector = new javax.swing.JComboBox<>();
-        stopButton1 = new javax.swing.JButton();
+        startButton = new javax.swing.JButton();
         stopButton = new javax.swing.JButton();
+        mapPanel = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        infoPanel = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         terminalText.setEditable(false);
         terminalText.setColumns(20);
         terminalText.setRows(5);
-        terminalText.setText("[TERMINAL]");
         jScrollPane1.setViewportView(terminalText);
 
         challengeSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19" }));
         challengeSelector.addActionListener(this::challengeSelectorActionPerformed);
 
-        stopButton1.setText("PLAY");
-        stopButton1.addActionListener(this::stopButton11ActionPerformed);
+        startButton.setText("PLAY");
+        startButton.addActionListener(this::startButton1ActionPerformed);
 
         stopButton.setText("STOP");
         stopButton.addActionListener(this::stopButtonActionPerformed);
+
+        mapPanel.setPreferredSize(new java.awt.Dimension(480, 480));
+
+        javax.swing.GroupLayout mapPanelLayout = new javax.swing.GroupLayout(mapPanel);
+        mapPanel.setLayout(mapPanelLayout);
+        mapPanelLayout.setHorizontalGroup(
+            mapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 480, Short.MAX_VALUE)
+        );
+        mapPanelLayout.setVerticalGroup(
+            mapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 480, Short.MAX_VALUE)
+        );
+
+        infoPanel.setEditable(false);
+        infoPanel.setColumns(20);
+        infoPanel.setRows(5);
+        jScrollPane2.setViewportView(infoPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(stopButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(challengeSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(25, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(mapPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(challengeSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(375, Short.MAX_VALUE)
+                .addContainerGap(47, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(mapPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(challengeSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(stopButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -138,13 +251,13 @@ public class GUI2 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_challengeSelectorActionPerformed
 
-    private void stopButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButton11ActionPerformed
+    private void startButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButton1ActionPerformed
         RunStatus runStatus = Main.getRunStatus();
         
         if(runStatus != RunStatus.ACTIVE){            
             Main.startChallenge(this.challengeID);
         }
-    }//GEN-LAST:event_stopButton11ActionPerformed
+    }//GEN-LAST:event_startButton1ActionPerformed
 
     private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
         RunStatus runStatus = Main.getRunStatus();
@@ -181,9 +294,12 @@ public class GUI2 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> challengeSelector;
+    private javax.swing.JTextArea infoPanel;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JPanel mapPanel;
+    private javax.swing.JButton startButton;
     private javax.swing.JButton stopButton;
-    private javax.swing.JButton stopButton1;
     private javax.swing.JTextArea terminalText;
     // End of variables declaration//GEN-END:variables
 }

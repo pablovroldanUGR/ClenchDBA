@@ -46,7 +46,7 @@ public abstract class Environment {
                 this.runStatus = responseInfo.runStatus;
             }
         } else {
-            System.out.println("Error al intentar iniciar el reto. Debes seleccionar uno primero");
+            Main.printGUI("Error al intentar iniciar el reto. Debes seleccionar uno primero");
         }
     }
 
@@ -70,7 +70,6 @@ public abstract class Environment {
         if(this.runStatus == RunStatus.SUCCEEDED){
             Main.printGUI("============ CHALLENGE " + this.challengeID + " TERMINADO ============");
         }
-        Main.printGUI("================ Valor de runStatus: " + this.runStatus.toString());
         
         return this.runStatus;
     }
@@ -81,10 +80,13 @@ public abstract class Environment {
 
     public RunStatus closeRun() throws IOException, InterruptedException {
         if (this.runID == -1) {
+            Main.printGUI("No hay una run iniciada");
             throw new IllegalStateException("No hay una run iniciada.");
         }
         
         ResponseLAB responseInfo = api.closeChallenge(this.runID);
+        
+        Main.printGUI("Entorno cierra la RUN con estado: " + this.runStatus.toString());
 
         if (responseInfo == null || responseInfo.runStatus == null) {
             throw new IOException("La respuesta de cierre no contiene un estado válido.");

@@ -22,7 +22,7 @@ public class Main {
             return environment.checkStatus();
         }
         catch (Exception e){
-            System.out.println("Error en el main al intentar leer el estado del entorno. " + e.getMessage());
+            printGUI("Error en el main al intentar leer el estado del entorno. " + e.getMessage());
         }
         
         return RunStatus.UNINITALIZED;
@@ -81,17 +81,18 @@ public class Main {
             }
         } 
         catch (Exception e){
-            System.err.println("Error al inicializar la plataforma JADE:");
+            printGUI("Error al inicializar la plataforma JADE:");
             e.printStackTrace();
         }
     }
     
-    public static void closeRun(){
+    public static void closeRun(){       
         try{
             environment.closeRun();
+            printGUI("Cerrando la run manualmente...");
         }
         catch (Exception e){
-            System.out.println("Error en el main al cerrar la run. " + e.getMessage());
+            printGUI("Error al intentar cerrar la run manualmente. " + e.getMessage());
         }
     }
     

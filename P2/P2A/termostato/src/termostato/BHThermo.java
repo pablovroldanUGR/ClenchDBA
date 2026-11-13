@@ -2,6 +2,7 @@ package termostato;
 
 import common.RunStatus;
 import entorno.EnvironmentThermo;
+import entorno.Main;
 import jade.core.behaviours.*;
 
 public class BHThermo extends Behaviour {
@@ -47,7 +48,7 @@ public class BHThermo extends Behaviour {
 
     @Override
     public boolean done() {
-        // Si no esta activa la run, terminamos
+        // Si no esta activa la run, terminamos        
         return !(thermo.runStatus == RunStatus.ACTIVE);
     }
     
