@@ -30,6 +30,7 @@ public class AgentTemp extends Agent {
 
     @Override
     protected void takeDown(){
+        printMessage("--->Agente finalizado<---");
         try{
             thermo.closeRun();
             printMessage("Run terminada por el agente.");

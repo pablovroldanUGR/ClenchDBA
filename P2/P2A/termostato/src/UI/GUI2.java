@@ -36,9 +36,9 @@ public class GUI2 extends javax.swing.JFrame {
     private static final Color RED = new Color(190, 65, 75);
     
     private void initComponentsCustom(){      
-        stopButton1.setText("PLAY");
-        stopButton1.setBackground(GREEN);
-        stopButton1.setForeground(TEXT);
+        startButton.setText("PLAY");
+        startButton.setBackground(GREEN);
+        startButton.setForeground(TEXT);
         
         stopButton.setText("STOP");
         stopButton.setBackground(RED);
@@ -77,7 +77,7 @@ public class GUI2 extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         terminalText = new javax.swing.JTextArea();
         challengeSelector = new javax.swing.JComboBox<>();
-        stopButton1 = new javax.swing.JButton();
+        startButton = new javax.swing.JButton();
         stopButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -91,8 +91,8 @@ public class GUI2 extends javax.swing.JFrame {
         challengeSelector.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19" }));
         challengeSelector.addActionListener(this::challengeSelectorActionPerformed);
 
-        stopButton1.setText("PLAY");
-        stopButton1.addActionListener(this::stopButton11ActionPerformed);
+        startButton.setText("PLAY");
+        startButton.addActionListener(this::startButton1ActionPerformed);
 
         stopButton.setText("STOP");
         stopButton.addActionListener(this::stopButtonActionPerformed);
@@ -106,7 +106,7 @@ public class GUI2 extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(stopButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(challengeSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(22, Short.MAX_VALUE))
@@ -119,7 +119,7 @@ public class GUI2 extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(challengeSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(stopButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(startButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(stopButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -138,13 +138,13 @@ public class GUI2 extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_challengeSelectorActionPerformed
 
-    private void stopButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButton11ActionPerformed
+    private void startButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButton1ActionPerformed
         RunStatus runStatus = Main.getRunStatus();
         
         if(runStatus != RunStatus.ACTIVE){            
             Main.startChallenge(this.challengeID);
         }
-    }//GEN-LAST:event_stopButton11ActionPerformed
+    }//GEN-LAST:event_startButton1ActionPerformed
 
     private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
         RunStatus runStatus = Main.getRunStatus();
@@ -182,8 +182,8 @@ public class GUI2 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> challengeSelector;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton startButton;
     private javax.swing.JButton stopButton;
-    private javax.swing.JButton stopButton1;
     private javax.swing.JTextArea terminalText;
     // End of variables declaration//GEN-END:variables
 }

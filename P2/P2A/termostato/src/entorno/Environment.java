@@ -85,6 +85,8 @@ public abstract class Environment {
         }
         
         ResponseLAB responseInfo = api.closeChallenge(this.runID);
+        
+        Main.printGUI("Entorno cierra la RUN con estado: " + this.runStatus.toString());
 
         if (responseInfo == null || responseInfo.runStatus == null) {
             throw new IOException("La respuesta de cierre no contiene un estado válido.");
