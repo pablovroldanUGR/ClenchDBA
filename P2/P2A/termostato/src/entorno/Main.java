@@ -1,6 +1,7 @@
 package entorno;
 
-import UI.GUI2;
+import UI.GUI;
+import common.CellType;
 import common.RunStatus;
 import jade.core.Profile;
 import jade.core.ProfileImpl;
@@ -8,6 +9,7 @@ import jade.core.Runtime;
 import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
 import termostato.AgentTemp;
+import java.util.ArrayList;
 
 //--- LIBRERÍAS PARA PRUEBAS DE API ---//
 //import com.google.gson.JsonObject;
@@ -15,7 +17,7 @@ import termostato.AgentTemp;
 
 public class Main {
     private static Environment environment;
-    private static GUI2 gui;
+    private static GUI gui;
         
     public static RunStatus checkRunStatus(){
         try{
@@ -96,8 +98,35 @@ public class Main {
         }
     }
     
+    private static ArrayList<ArrayList<CellType>> createTestMap(){
+        int rows = 13;
+        int columns = 13;
+        ArrayList<ArrayList<CellType>> map = new ArrayList<>();
+
+        for (int row = 0; row < rows; row++) {
+            ArrayList<CellType> cells = new ArrayList<>();
+            for (int column = 0; column < columns; column++) {
+                cells.add(CellType.UNKNOWN);
+            }
+            map.add(cells);
+        }
+
+        for (int column = 3; column <= 9; column++) {
+            map.get(6).set(column, CellType.FREE);
+        }
+        for (int row = 3; row <= 6; row++) {
+            map.get(row).set(6, CellType.FREE);
+        }
+        map.get(5).set(7, CellType.WALL);
+        map.get(3).set(6, CellType.GOAL);
+        map.get(6).set(6, CellType.AGENT);
+
+        return map;
+    }
+    
     public static void main(String args[]){      
-        gui = new GUI2();
+        gui = new GUI();
+        gui.updateMap(createTestMap());
         gui.setVisible(true);
     }
 }
