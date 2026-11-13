@@ -3,12 +3,11 @@ package UI;
 import common.RunStatus;
 import java.awt.Color;
 import entorno.Main;
-import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JScrollPane;
+import java.util.ArrayList;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -22,12 +21,18 @@ public class GUI2 extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUI2.class.getName());
     
-    private static final int MAP_COL = 12;
-    private static final int MAP_ROWS = 12;
+    private static final int MAP_COL = 13;
+    private static final int MAP_ROWS = 13;
+    private static final int CENTER_ROW = MAP_ROWS/2 + 1;
+    private static final int CENTER_COL = MAP_COL/2 + 1;
     
     private static final Color MAP_BACKGROUND = new Color(70, 70, 70);
     private static final Color BORDER_MAP_CELL = new Color(45, 55, 70);
     private static final Color UNKNOWN_CELL = new Color(27, 35, 47);
+    private static final Color FREE_CELL = new Color(27, 35, 100);
+    private static final Color WALL_CELL = new Color(100, 35, 47);
+    private static final Color AGENT_CELL = new Color(27, 100, 47);
+    private static final Color OBJECTIVE_CELL = new Color(100, 35, 100);
     
     private static final Color BACKGROUND = new Color(13, 17, 24);
     private static final Color TEXT = new Color(229, 236, 245);
@@ -73,6 +78,7 @@ public class GUI2 extends javax.swing.JFrame {
     }
     
     private void initMap(){
+        mapPanel.setLayout(new java.awt.GridLayout(MAP_ROWS, MAP_COL, 2, 2));
         mapPanel.removeAll();
         
         for(int i = 0; i < MAP_ROWS; i++){
@@ -92,6 +98,45 @@ public class GUI2 extends javax.swing.JFrame {
         mapPanel.repaint();
     }
     
+    public void updateMap(ArrayList<ArrayList<String>> stringMap){
+        if(stringMap.size() != MAP_ROWS || stringMap.get(0).size() != MAP_COL){
+            Main.printGUI("Error al actualizar el mapa: no coincide la dimensión del mapa a mostrar.");
+        }
+        else{
+            for(int i = 0; i < MAP_ROWS; i++){
+                for(int j = 0; j < MAP_COL; j++){
+                    JPanel cell = new JPanel();
+                    
+                    switch(stringMap.get(i).get(j)){
+                        case "UNKNOWN":
+                            cell.setBackground(UNKNOWN_CELL);
+                        break;
+                        
+                        case "WALL":
+                            cell.setBackground(WALL_CELL);
+                        break;
+                        
+                        case "FREE":
+                            cell.setBackground(FREE_CELL);
+                        break;
+                        
+                        case "AGENT":
+                            cell.setBackground(AGENT_CELL);
+                        break;
+                        
+                        case "OBJECTIVE":
+                            cell.setBackground(OBJECTIVE_CELL);
+                        break;
+                    }
+                    
+                    mapCells[i][j] = cell;
+                }
+            }
+        }
+        
+        mapPanel.revalidate();
+        mapPanel.repaint();
+    }
     
     
     /**
