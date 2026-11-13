@@ -21,19 +21,25 @@ import javax.swing.JScrollPane;
 public class GUI2 extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GUI2.class.getName());
-
-    private boolean running = false;
-    private int challengeID = 1;
+    
+    private static final int MAP_COL = 12;
+    private static final int MAP_ROWS = 12;
+    
+    private static final Color MAP_BACKGROUND = new Color(70, 70, 70);
+    private static final Color BORDER_MAP_CELL = new Color(45, 55, 70);
+    private static final Color UNKNOWN_CELL = new Color(27, 35, 47);
     
     private static final Color BACKGROUND = new Color(13, 17, 24);
-    private static final Color PANEL = new Color(21, 27, 37);
-    private static final Color PANEL_LIGHT = new Color(27, 35, 47);
-    private static final Color BORDER = new Color(45, 55, 70);
     private static final Color TEXT = new Color(229, 236, 245);
-    private static final Color MUTED = new Color(139, 153, 173);
-    private static final Color ACCENT = new Color(73, 133, 255);
     private static final Color GREEN = new Color(31, 160, 110);
     private static final Color RED = new Color(190, 65, 75);
+    
+    private static final Color MUTED = new Color(139, 153, 173);
+    private static final Color ACCENT = new Color(73, 133, 255);
+    
+    private int challengeID = 1;
+    private final JPanel[][] mapCells= new JPanel[MAP_ROWS][MAP_COL];
+    
     
     private void initComponentsCustom(){      
         startButton.setText("PLAY");
@@ -57,6 +63,8 @@ public class GUI2 extends javax.swing.JFrame {
         infoPanel.setCaretColor(TEXT);
         infoPanel.setBorder(new EmptyBorder(12, 13, 12, 13));
         infoPanel.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+        
+        mapPanel.setBackground(MAP_BACKGROUND);
     }
     
     public void printText(String text){
@@ -64,11 +72,34 @@ public class GUI2 extends javax.swing.JFrame {
         terminalText.append("\n");
     }
     
+    private void initMap(){
+        mapPanel.removeAll();
+        
+        for(int i = 0; i < MAP_ROWS; i++){
+            for(int j = 0; j < MAP_COL; j++){
+                JPanel cell = new JPanel();
+                
+                cell.setOpaque(true);
+                cell.setBackground(UNKNOWN_CELL);
+                cell.setBorder(BorderFactory.createLineBorder(BORDER_MAP_CELL));
+                
+                mapCells[i][j] = cell;
+                mapPanel.add(cell);
+            }
+        }
+        
+        mapPanel.revalidate();
+        mapPanel.repaint();
+    }
+    
+    
+    
     /**
      * Creates new form GUI2
      */
     public GUI2() {
         initComponents();
+        initMap();
         initComponentsCustom();
     }
 
@@ -106,15 +137,17 @@ public class GUI2 extends javax.swing.JFrame {
         stopButton.setText("STOP");
         stopButton.addActionListener(this::stopButtonActionPerformed);
 
+        mapPanel.setPreferredSize(new java.awt.Dimension(480, 480));
+
         javax.swing.GroupLayout mapPanelLayout = new javax.swing.GroupLayout(mapPanel);
         mapPanel.setLayout(mapPanelLayout);
         mapPanelLayout.setHorizontalGroup(
             mapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 601, Short.MAX_VALUE)
+            .addGap(0, 480, Short.MAX_VALUE)
         );
         mapPanelLayout.setVerticalGroup(
             mapPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 480, Short.MAX_VALUE)
         );
 
         infoPanel.setEditable(false);
@@ -128,11 +161,11 @@ public class GUI2 extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(25, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(mapPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -145,11 +178,11 @@ public class GUI2 extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+                .addContainerGap(47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(mapPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(mapPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(challengeSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
