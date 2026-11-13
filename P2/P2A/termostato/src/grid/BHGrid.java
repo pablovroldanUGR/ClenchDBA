@@ -76,9 +76,9 @@ public class BHGrid extends Behaviour {
                     indice_optima = distancias.indexOf(minima);
                     optima = casillas_adyacentes.get(indice_optima);
 
-                    if (bumpers.get(indice_optima) == CellType.WALL) {
+                    if (bumpers.get(indice_optima).equals(true)) {
                         mano_derecha = true;
-                    } else if (bumpers.get(indice_optima) == CellType.FREE) {
+                    } else if (bumpers.get(indice_optima).equals(false)) {
                         direction = direcciones[indice_optima];
                         grid.move(direction);
                         grid.getPos();

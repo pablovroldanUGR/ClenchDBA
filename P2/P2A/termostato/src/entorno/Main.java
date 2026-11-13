@@ -10,6 +10,7 @@ import jade.wrapper.AgentContainer;
 import jade.wrapper.AgentController;
 import termostato.AgentTemp;
 import java.util.ArrayList;
+import grid.*;
 
 //--- LIBRERÍAS PARA PRUEBAS DE API ---//
 //import com.google.gson.JsonObject;
@@ -68,7 +69,7 @@ public class Main {
 
                 thermostatAgent.start();                
             }
-            else{/*
+            else{
                 environment = Environment.getInstance("Grid"); 
                 environment.setChallenge(challengeID);
                 environment.startChallenge();
@@ -79,7 +80,7 @@ public class Main {
 
                 gridAgent.start();
                 System.out.println("Agente Grid lanzado");
-                */
+                
             }
         } 
         catch (Exception e){
