@@ -31,6 +31,7 @@ public class BHGrid extends Behaviour {
     private int indice_optima = -1;
     private ArrayList<CellType> bumpers = new ArrayList<>();
     private boolean mano_derecha = false;
+    private int wallFollowStartDistance = -1;
     Direction[] direcciones = {
         Direction.NORTH,
         Direction.EAST,
@@ -62,19 +63,26 @@ public class BHGrid extends Behaviour {
 
                 calculateOptimalCell(position, objetivo);
                 CellType optimalCellType = bumpers.get(indice_optima);
+                int currentDistance = manhattanDistance(position, objetivo);
                 System.out.println("[GRID][BHGrid.action] Óptima=" + optima
                         + ", dirección=" + direcciones[indice_optima]
-                        + ", tipo=" + optimalCellType);
+                        + ", tipo=" + optimalCellType
+                        + ", distancia al objetivo=" + currentDistance
+                        + ", distancia al entrar en mano derecha=" + wallFollowStartDistance);
 
-                if (mano_derecha && optimalCellType == CellType.FREE) {
-                    // La ruta preferida vuelve a estar despejada: salir y tomarla ahora.
+                if (mano_derecha
+                        && optimalCellType == CellType.FREE
+                        && currentDistance < wallFollowStartDistance) {
+                    // La ruta preferida está libre y ya hemos progresado desde el obstáculo.
                     mano_derecha = false;
+                    wallFollowStartDistance = -1;
                     move(direcciones[indice_optima]);
                 } else if (!mano_derecha && optimalCellType == CellType.FREE) {
                     move(direcciones[indice_optima]);
                 } else if (!mano_derecha && optimalCellType == CellType.WALL) {
-                    // Se intentaba avanzar hacia la pared; úsese como orientación inicial.
+                    // Se intentaba avanzar hacia la pared;
                     mano_derecha = true;
+                    wallFollowStartDistance = currentDistance;
                     last_move = direcciones[indice_optima];
                     followRightWall();
                 } else if (mano_derecha) {
@@ -123,6 +131,12 @@ public class BHGrid extends Behaviour {
         double minimum = Collections.min(distancias);
         indice_optima = distancias.indexOf(minimum);
         optima = casillas_adyacentes.get(indice_optima);
+    }
+
+    private int manhattanDistance(Pair<Integer, Integer> from,
+                                  Pair<Integer, Integer> to) {
+        return Math.abs(from.getFirst() - to.getFirst())
+                + Math.abs(from.getSecond() - to.getSecond());
     }
 
     /** Sigue la pared por la derecha: derecha, recto, izquierda y atrás. */
