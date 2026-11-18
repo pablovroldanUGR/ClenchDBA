@@ -108,7 +108,10 @@ public class BHGrid extends Behaviour {
                         System.out.println("[GRID][BHGrid.action] Movimiento terminado; consultando posición");
                         grid.getPos();
                         System.out.println("[GRID][BHGrid.action] Consulta de posición tras movimiento terminada");
+                    }else if (bumpers.get(indice_optima).equals(CellType.UNKNOWN)){
+                        System.out.println("[GRID][BHGrid.action] La casilla es UNKNOWN");
                     }
+                    
                     System.out.println("[GRID][BHGrid.action] Fin de evaluación del bumper: " + bumpers.get(indice_optima) + "; mano_derecha=" + mano_derecha + ", dirección=" + direction);
 
                 } else {

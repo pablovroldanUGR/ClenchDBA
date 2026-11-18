@@ -105,8 +105,8 @@ public class EnvironmentGrid extends Environment {
             if (response != null) {
                 System.out.println("[GRID][getPos] Datos=" + response.value + ", estado=" + response.runStatus);
                 this.runStatus = response.runStatus;
-                this.position.setFirst(Integer.valueOf(response.value.get(0).getSecond()));
-                this.position.setSecond(Integer.valueOf(response.value.get(1).getSecond()));
+                this.position.setFirst(Integer.valueOf(response.value.get(1).getSecond()));
+                this.position.setSecond(Integer.valueOf(response.value.get(0).getSecond()));
                 System.out.println("[GRID][getPos] Posición=" + this.position + "; actualizando mapa");
                 updateGridMap(this.position, CellType.GOAL);
             } else {
@@ -183,8 +183,8 @@ public class EnvironmentGrid extends Environment {
             if (response != null) {
                 System.out.println("[GRID][getTargetPos] Datos=" + response.value + ", estado=" + response.runStatus);
                 this.runStatus = response.runStatus;
-                this.target_pos.setFirst(Integer.valueOf(response.value.get(0).getSecond()));
-                this.target_pos.setSecond(Integer.valueOf(response.value.get(1).getSecond()));
+                this.target_pos.setFirst(Integer.valueOf(response.value.get(1).getSecond()));
+                this.target_pos.setSecond(Integer.valueOf(response.value.get(0).getSecond()));
                 System.out.println("[GRID][getTargetPos] Objetivo=" + this.target_pos + "; actualizando mapa");
                 updateGridMap(this.target_pos, CellType.GOAL);
             } else {
@@ -242,7 +242,7 @@ public class EnvironmentGrid extends Environment {
             };
 
             System.out.println("[GRID][move] Solicitando " + this.ENV_TYPE + action);
-            ResponseLAB response = api.getSensor(this.runID, this.ENV_TYPE + action);
+            ResponseLAB response = api.executeAction(this.runID, this.ENV_TYPE + action);
             System.out.println("[GRID][move] Respuesta API recibida; null=" + (response == null));
             System.out.println("[GRID][move] Marcando posición anterior como libre: " + this.position);
             this.grid_map.get(this.position.getFirst()).set(this.position.getSecond(), CellType.FREE);
