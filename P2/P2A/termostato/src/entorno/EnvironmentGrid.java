@@ -48,9 +48,9 @@ public class EnvironmentGrid extends Environment {
         // El mapa esta vacio
         if (this.grid_map.isEmpty()) {
             System.out.println("[GRID][updateGridMap] Creando mapa inicial");
-            for (int i = 0; i <= new_pos.getFirst(); i++) {
+            for (int i = 0; i <= new_pos.getFirst() + 1; i++) {
                 ArrayList<CellType> newRow = new ArrayList<>();
-                for (int j = 0; j <= new_pos.getSecond(); j++) {
+                for (int j = 0; j <= new_pos.getSecond() + 1; j++) {
                     newRow.add(CellType.UNKNOWN);
                 }
                 this.grid_map.add(newRow);
@@ -62,10 +62,10 @@ public class EnvironmentGrid extends Environment {
         }
 
         // Metemos filas nuevas si excede las filas
-        while (new_pos.getFirst() >= this.grid_map.size()) {
+        while (new_pos.getFirst() >= this.grid_map.size() + 1) {
             System.out.println("[GRID][updateGridMap] Añadiendo fila " + this.grid_map.size());
             ArrayList<CellType> newRow = new ArrayList<>();
-            for (int j = 0; j < this.grid_map.get(0).size(); j++) {
+            for (int j = 0; j <= this.grid_map.get(0).size() + 1; j++) {
                 newRow.add(CellType.UNKNOWN); // Rellenamos las nuevas filas con UNKNOWN
             }
             this.grid_map.add(newRow);
@@ -75,7 +75,7 @@ public class EnvironmentGrid extends Environment {
         if (new_pos.getSecond() >= this.grid_map.get(0).size()) {
             System.out.println("[GRID][updateGridMap] Ampliando columnas hasta " + new_pos.getSecond());
             for (ArrayList<CellType> row : this.grid_map) {
-                while (row.size() <= new_pos.getSecond()) {
+                while (row.size() <= new_pos.getSecond() + 1) {
                     row.add(CellType.UNKNOWN);
                 }
             }
