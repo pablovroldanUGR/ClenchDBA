@@ -36,6 +36,10 @@ public class BHGrid extends Behaviour {
         Direction.SOUTH,
         Direction.WEST
     };
+    private Direction pared = null;
+    private Direction siguiente_move_pared = null;
+    
+    
 
     @Override
     public void action() {
@@ -86,6 +90,10 @@ public class BHGrid extends Behaviour {
 
                 } else {
                     // TODO: implementar el comportamiento de mano derecha.
+                    
+                    
+                    
+                    
                 }
 
             } else if (grid.runStatus == RunStatus.SUCCEEDED) {
