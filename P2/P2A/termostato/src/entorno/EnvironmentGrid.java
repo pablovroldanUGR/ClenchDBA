@@ -45,37 +45,41 @@ public class EnvironmentGrid extends Environment {
 
     private void updateGridMap(Pair<Integer, Integer> new_pos, CellType type) {
         System.out.println("[GRID][updateGridMap] Inicio; posición=" + new_pos + ", tipo=" + type + ", filas actuales=" + this.grid_map.size());
+        
+        int desiredRows = new_pos.getFirst() + 2;
+        int desiredCols = new_pos.getSecond() + 2;
+        
         // El mapa esta vacio
         if (this.grid_map.isEmpty()) {
             System.out.println("[GRID][updateGridMap] Creando mapa inicial");
-            for (int i = 0; i <= new_pos.getFirst() + 1; i++) {
+            for (int i = 0; i <= desiredRows; i++) {
                 ArrayList<CellType> newRow = new ArrayList<>();
-                for (int j = 0; j <= new_pos.getSecond() + 1; j++) {
+                for (int j = 0; j < desiredCols; j++) {
                     newRow.add(CellType.UNKNOWN);
                 }
                 this.grid_map.add(newRow);
             }
-            this.grid_map.get(new_pos.getFirst()).set(new_pos.getSecond(), CellType.FREE);
+            this.grid_map.get(new_pos.getFirst()).set(new_pos.getSecond(), type);
             System.out.println("[GRID][updateGridMap] Mapa inicial creado; fin");
             Main.updateMap(grid_map);
             return;
         }
 
         // Metemos filas nuevas si excede las filas
-        while (new_pos.getFirst() >= this.grid_map.size() + 1) {
+        while (desiredRows > this.grid_map.size()) {
             System.out.println("[GRID][updateGridMap] Añadiendo fila " + this.grid_map.size());
             ArrayList<CellType> newRow = new ArrayList<>();
-            for (int j = 0; j <= this.grid_map.get(0).size() + 1; j++) {
+            for (int j = 0; j < this.grid_map.get(0).size(); j++) {
                 newRow.add(CellType.UNKNOWN); // Rellenamos las nuevas filas con UNKNOWN
             }
             this.grid_map.add(newRow);
         }
 
         // Metemos columnas nuevas si excede las columnas
-        if (new_pos.getSecond() >= this.grid_map.get(0).size()) {
-            System.out.println("[GRID][updateGridMap] Ampliando columnas hasta " + new_pos.getSecond());
+        if (desiredCols > this.grid_map.get(0).size()) {
+            System.out.println("[GRID][updateGridMap] Ampliando columnas hasta " + desiredCols);
             for (ArrayList<CellType> row : this.grid_map) {
-                while (row.size() <= new_pos.getSecond() + 1) {
+                while (row.size() < desiredCols) {
                     row.add(CellType.UNKNOWN);
                 }
             }
@@ -86,9 +90,11 @@ public class EnvironmentGrid extends Environment {
             this.grid_map.get(this.position.getFirst()).set(this.position.getSecond(), type);
         }
         
-        if(type == CellType.GOAL){
+        else if(type == CellType.GOAL){
             System.out.println("[GRID][updateGridMap] Marcando objetivo en " + this.target_pos);
             this.grid_map.get(this.target_pos.getFirst()).set(this.target_pos.getSecond(), type);
+        } else {
+            this.grid_map.get(new_pos.getFirst()).set(new_pos.getSecond(), type);
         }
         
         System.out.println("[GRID][updateGridMap] Enviando mapa a la GUI");
@@ -105,10 +111,10 @@ public class EnvironmentGrid extends Environment {
             if (response != null) {
                 System.out.println("[GRID][getPos] Datos=" + response.value + ", estado=" + response.runStatus);
                 this.runStatus = response.runStatus;
-                this.position.setFirst(Integer.valueOf(response.value.get(1).getSecond()));
-                this.position.setSecond(Integer.valueOf(response.value.get(0).getSecond()));
+                this.position.setFirst(Integer.valueOf(response.value.get(1).getSecond()) + 1);
+                this.position.setSecond(Integer.valueOf(response.value.get(0).getSecond()) + 1);
                 System.out.println("[GRID][getPos] Posición=" + this.position + "; actualizando mapa");
-                updateGridMap(this.position, CellType.GOAL);
+                updateGridMap(this.position, CellType.AGENT);
             } else {
                System.out.println("Algo salio mal. Response = null (Grid.getPos)");
             }
@@ -183,8 +189,8 @@ public class EnvironmentGrid extends Environment {
             if (response != null) {
                 System.out.println("[GRID][getTargetPos] Datos=" + response.value + ", estado=" + response.runStatus);
                 this.runStatus = response.runStatus;
-                this.target_pos.setFirst(Integer.valueOf(response.value.get(1).getSecond()));
-                this.target_pos.setSecond(Integer.valueOf(response.value.get(0).getSecond()));
+                this.target_pos.setFirst(Integer.valueOf(response.value.get(1).getSecond()) + 1);
+                this.target_pos.setSecond(Integer.valueOf(response.value.get(0).getSecond()) + 1);
                 System.out.println("[GRID][getTargetPos] Objetivo=" + this.target_pos + "; actualizando mapa");
                 updateGridMap(this.target_pos, CellType.GOAL);
             } else {

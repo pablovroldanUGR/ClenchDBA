@@ -140,16 +140,7 @@ public class Main {
                         boolean OutOfBounds = currentRowMainMap < 0 || currentRowMainMap >= map.size() || 
                                               currentColMainMap < 0 || currentColMainMap >= map.get(0).size();
                         
-                        // Booleano adyacente al agente
-                        boolean Adjacent = Math.abs(currentRowMainMap - agentPos.getSecond()) <= 1 && 
-                                             Math.abs(currentColMainMap - agentPos.getFirst()) <= 1;
-                        
-                        // Pintar pared si esta fuera y es adyacente
-                        if (OutOfBounds && Adjacent) {
-                            reducedMap.get(i).add(CellType.WALL);
-                        } 
-                        // Pintar desconocido si esta directamente fuera de limites
-                        else if(OutOfBounds){
+                        if(OutOfBounds){
                             reducedMap.get(i).add(CellType.UNKNOWN);
                         }
                         else{
