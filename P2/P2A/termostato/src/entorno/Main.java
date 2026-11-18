@@ -136,13 +136,24 @@ public class Main {
                     currentColMainMap = minColMainMap;
 
                     for(int j = 0; j < MAP_COL; j++){
-                        if (currentRowMainMap == -1 || currentColMainMap == -1) {
+                        // Booleano fuera de limites
+                        boolean OutOfBounds = currentRowMainMap < 0 || currentRowMainMap >= map.size() || 
+                                              currentColMainMap < 0 || currentColMainMap >= map.get(0).size();
+                        
+                        // Booleano adyacente al agente
+                        boolean Adjacent = Math.abs(currentRowMainMap - agentPos.getSecond()) <= 1 && 
+                                             Math.abs(currentColMainMap - agentPos.getFirst()) <= 1;
+                        
+                        // Pintar pared si esta fuera y es adyacente
+                        if (OutOfBounds && Adjacent) {
                             reducedMap.get(i).add(CellType.WALL);
                         } 
-                        else if(currentRowMainMap < 0 || currentRowMainMap >= map.size() || currentColMainMap < 0 || currentColMainMap >= map.get(0).size()){
+                        // Pintar desconocido si esta directamente fuera de limites
+                        else if(OutOfBounds){
                             reducedMap.get(i).add(CellType.UNKNOWN);
                         }
                         else{
+                            // Pintar mapa del entorno
                             reducedMap.get(i).add(map.get(currentRowMainMap).get(currentColMainMap));
                         }
 
