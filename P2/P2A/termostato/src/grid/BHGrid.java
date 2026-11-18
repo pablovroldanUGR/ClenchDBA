@@ -80,10 +80,10 @@ public class BHGrid extends Behaviour {
                 } else if (!mano_derecha && optimalCellType == CellType.FREE) {
                     move(direcciones[indice_optima]);
                 } else if (!mano_derecha && optimalCellType == CellType.WALL) {
-                    // Se intentaba avanzar hacia la pared;
+                    // Orientarse en paralelo al muro para dejarlo a la derecha.
                     mano_derecha = true;
                     wallFollowStartDistance = currentDistance;
-                    last_move = direcciones[indice_optima];
+                    last_move = turnLeft(direcciones[indice_optima]);
                     followRightWall();
                 } else if (mano_derecha) {
                     followRightWall();
