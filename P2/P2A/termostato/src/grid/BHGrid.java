@@ -97,10 +97,10 @@ public class BHGrid extends Behaviour {
                     optima = casillas_adyacentes.get(indice_optima);
                     System.out.println("[GRID][BHGrid.action] Óptima=" + optima + ", índice=" + indice_optima + ", dirección=" + direcciones[indice_optima] + ", bumper=" + bumpers.get(indice_optima));
 
-                    if (bumpers.get(indice_optima).equals(true)) {
+                    if (bumpers.get(indice_optima).equals(CellType.WALL)) {
                         System.out.println("[GRID][BHGrid.action] Bumper equals(true); activando mano derecha");
                         mano_derecha = true;
-                    } else if (bumpers.get(indice_optima).equals(false)) {
+                    } else if (bumpers.get(indice_optima).equals(CellType.FREE)) {
                         System.out.println("[GRID][BHGrid.action] Bumper equals(false); preparando movimiento");
                         direction = direcciones[indice_optima];
                         System.out.println("[GRID][BHGrid.action] Llamando a move: " + direction);

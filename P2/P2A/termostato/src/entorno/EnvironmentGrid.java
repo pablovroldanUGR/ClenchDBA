@@ -57,6 +57,7 @@ public class EnvironmentGrid extends Environment {
             }
             this.grid_map.get(new_pos.getFirst()).set(new_pos.getSecond(), CellType.FREE);
             System.out.println("[GRID][updateGridMap] Mapa inicial creado; fin");
+            Main.updateMap(grid_map);
             return;
         }
 
