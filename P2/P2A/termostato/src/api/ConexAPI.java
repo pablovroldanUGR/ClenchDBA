@@ -33,7 +33,7 @@ public class ConexAPI {
                 validateResponse(responseHTTP);
             }
             catch (Exception e){
-                Main.printGUI(e.getMessage());
+                System.out.println(e.getMessage());
                 return null;
             }
 
@@ -54,7 +54,7 @@ public class ConexAPI {
             return listaParejas;
         }
         catch (Exception e){
-            Main.printGUI("Error al intentar obtener los challenges de la API.");
+            System.out.println("Error al intentar obtener los challenges de la API.");
             return null;
         }
     }
@@ -77,7 +77,7 @@ public class ConexAPI {
                 validateResponse(responseHTTP);
             }
             catch (Exception e){
-                Main.printGUI(e.getMessage());
+                System.out.println(e.getMessage());
                 return null;
             }
 
@@ -86,7 +86,7 @@ public class ConexAPI {
             return new ResponseLAB(responseString);
         }
         catch (Exception e){
-            Main.printGUI("Error al intentar obtener el estado de la API.");
+            System.out.println("Error al intentar obtener el estado de la API.");
             return null;
         }
     }
@@ -111,18 +111,18 @@ public class ConexAPI {
                 validateResponse(responseHTTP);
             }
             catch (Exception e){
-                Main.printGUI(e.getMessage());
+                System.out.println(e.getMessage());
                 return null;
             }
 
             String responseString = responseHTTP.body();
 
-            Main.printGUI("Se ha iniciado una nueva run");
+            System.out.println("Se ha iniciado una nueva run");
 
             return new ResponseLAB(responseString);
         }
         catch (Exception e){
-            Main.printGUI("Error al conectarse a la API para iniciar el reto " + challengeId + ".");
+            System.out.println("Error al conectarse a la API para iniciar el reto " + challengeId + ".");
             return null;
         }
     }
@@ -145,7 +145,7 @@ public class ConexAPI {
                 validateResponse(responseHTTP);
             }
             catch (Exception e){
-                Main.printGUI(e.getMessage());
+                System.out.println(e.getMessage());
                 return null;
             }
 
@@ -154,7 +154,7 @@ public class ConexAPI {
             return new ResponseLAB(responseString);
         }
         catch (Exception e){
-            Main.printGUI("Error al intentar obtener sensores de la API.");
+            System.out.println("Error al intentar obtener sensores de la API.");
             return null;
         }
     }
@@ -180,7 +180,7 @@ public class ConexAPI {
                 validateResponse(responseHTTP);
             }
             catch (Exception e){
-                Main.printGUI(e.getMessage());
+                System.out.println(e.getMessage());
                 return null;
             }
 
@@ -189,7 +189,7 @@ public class ConexAPI {
             return new ResponseLAB(responseString);
         }
         catch (Exception e){
-            Main.printGUI("Error al intentar ejecutar una acción en la API.");
+            System.out.println("Error al intentar ejecutar una acción en la API.");
             return null;
         }
     }
@@ -213,17 +213,17 @@ public class ConexAPI {
                 validateResponse(responseHTTP);
             }
             catch (Exception e){
-                Main.printGUI(e.getMessage());
+                System.out.println(e.getMessage());
                 return null;
             }
 
             String responseString = responseHTTP.body();
 
-            Main.printGUI("Solicitud de cierre aceptada por la API. Id de la run " + String.valueOf(runID));
+            System.out.println("Solicitud de cierre aceptada por la API. Id de la run " + String.valueOf(runID));
             return new ResponseLAB(responseString);
         }
         catch (Exception e){
-            Main.printGUI("Error al conectarse a la API para cerrar el reto.");
+            System.out.println("Error al conectarse a la API para cerrar el reto.");
             return null;
         }
     }

@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import grid.*;
 
 public class Main {
-    public static final int MAP_COL = 13;
-    public static final int MAP_ROWS = 13;
+    public static final int MAP_COL = 32;
+    public static final int MAP_ROWS = 32;
     
     private static Environment environment;
     private static GUI gui;
@@ -25,7 +25,7 @@ public class Main {
             return environment.checkStatus();
         }
         catch (Exception e){
-            printGUI("Error en el main al intentar leer el estado del entorno. " + e.getMessage());
+            System.out.println("Error en el main al intentar leer el estado del entorno. " + e.getMessage());
         }
         
         return RunStatus.UNINITALIZED;
@@ -70,21 +70,28 @@ public class Main {
                 thermostatAgent.start();                
             }
             else{
+                System.out.println("[GRID][Main.startChallenge] Obteniendo entorno para reto " + challengeID);
                 environment = Environment.getInstance("Grid"); 
+                System.out.println("[GRID][Main.startChallenge] Entorno obtenido; configurando reto");
                 environment.setChallenge(challengeID);
+                System.out.println("[GRID][Main.startChallenge] Iniciando reto en la API");
                 environment.startChallenge();
+                System.out.println("[GRID][Main.startChallenge] Inicio del reto terminado; consultando estado");
                 checkRunStatus();
+                System.out.println("[GRID][Main.startChallenge] Estado consultado; creando agente JADE");
                 
                 AgentController gridAgent = agentContainer.createNewAgent
                 ("Grid", AgentGrid.class.getName(), new Object[]{});
 
+                System.out.println("[GRID][Main.startChallenge] Agente creado; iniciando agente");
                 gridAgent.start();
+                System.out.println("[GRID][Main.startChallenge] Inicio del agente terminado");
                 System.out.println("Agente Grid lanzado");
                 
             }
         } 
         catch (Exception e){
-            printGUI("Error al inicializar la plataforma JADE:");
+            System.out.println("Error al inicializar la plataforma JADE:");
             e.printStackTrace();
         }
     }
@@ -92,14 +99,15 @@ public class Main {
     public static void closeRun(){       
         try{
             environment.closeRun();
-            printGUI("Cerrando la run manualmente...");
+            System.out.println("Cerrando la run manualmente...");
         }
         catch (Exception e){
-            printGUI("Error al intentar cerrar la run manualmente. " + e.getMessage());
+            System.out.println("Error al intentar cerrar la run manualmente. " + e.getMessage());
         }
     }
     
     public static void updateMap(ArrayList<ArrayList<CellType>> map){
+        System.out.println("[GRID][Main.updateMap] Inicio de actualización del mapa");
         if(map != null && !map.isEmpty()){
             Pair<Integer, Integer> agentPos = new Pair<>();
             boolean agentFound = false;
@@ -115,6 +123,7 @@ public class Main {
             }
 
             if(agentPos.getFirst() != null && agentPos.getSecond() != null){
+                System.out.println("[GRID][Main.updateMap] Agente encontrado en " + agentPos + "; preparando mapa visible");
                 int minColMainMap = agentPos.getFirst() - Main.MAP_COL/2;
                 int minRowMainMap = agentPos.getSecond() - Main.MAP_ROWS/2;
                 int currentRowMainMap = minRowMainMap;
@@ -140,7 +149,9 @@ public class Main {
                     currentRowMainMap ++;
                 }
 
+                System.out.println("[GRID][Main.updateMap] Enviando mapa visible a la GUI");
                 gui.updateMap(reducedMap);
+                System.out.println("[GRID][Main.updateMap] Mapa enviado a la GUI");
             }
         }
     }
@@ -149,41 +160,8 @@ public class Main {
         gui.updateInfo(info);
     }
     
-    private static ArrayList<ArrayList<CellType>> createTestMap(int rows, int cols) {
-        ArrayList<ArrayList<CellType>> map = new ArrayList<>(rows);
-
-        // 1. Inicializar mapa vacío con bordes de muros (WALL)
-        for (int i = 0; i < rows; i++) {
-            ArrayList<CellType> row = new ArrayList<>(cols);
-            for (int j = 0; j < cols; j++) {
-                if (i == 0 || i == rows - 1 || j == 0 || j == cols - 1) {
-                    row.add(CellType.WALL);
-                } else {
-                    row.add(CellType.FREE);
-                }
-            }
-            map.add(row);
-        }
-
-        // 2. Añadir obstáculos internos (si el mapa es suficientemente grande)
-        if (rows > 8 && cols > 8) {
-            map.get(2).set(5, CellType.WALL);
-            map.get(3).set(5, CellType.WALL);
-            map.get(4).set(5, CellType.WALL);
-            map.get(6).set(3, CellType.WALL);
-            map.get(6).set(4, CellType.WALL);
-        }
-
-        // 3. Colocar al agente (AGENT) y la meta (GOAL)
-        map.get(3).set(3, CellType.AGENT);
-        map.get(7).set(8, CellType.GOAL);
-
-        return map;
-    }
-    
     public static void main(String args[]){      
         gui = new GUI();
-        updateMap(createTestMap(10, 10));
         gui.updateInfo("Reto: 1 \nEnergía: 100 \nEstado: ACTIVO");
         gui.setVisible(true);
     }
