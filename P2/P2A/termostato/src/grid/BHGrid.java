@@ -30,16 +30,14 @@ public class BHGrid extends Behaviour {
     private Pair<Integer, Integer> optima = null;
     private int indice_optima = -1;
     private ArrayList<CellType> bumpers = new ArrayList<>();
-    private Boolean mano_derecha = false;
+    private boolean mano_derecha = false;
     Direction[] direcciones = {
         Direction.NORTH,
         Direction.EAST,
         Direction.SOUTH,
         Direction.WEST
     };
-    private Direction pared = null;
-    private Direction siguiente_move_pared = null;
-    
+    private Direction last_move = null;
     
 
     @Override
@@ -55,71 +53,34 @@ public class BHGrid extends Behaviour {
             
             if (grid.runStatus == RunStatus.ACTIVE) {
                 System.out.println("[GRID][BHGrid.action] Obteniendo posicion");
-                ((AgentGrid) myAgent).position = grid.getPos();
+                Pair<Integer, Integer> position = grid.getPos();
+                ((AgentGrid) myAgent).position = position;
                 Pair<Integer, Integer> objetivo = grid.getTargetPos();
                 System.out.println("[GRID][BHGrid.action] Consultando bumpers");
                 bumpers = grid.getBumpers();
                 System.out.println("[GRID][BHGrid.action] Bumpers recibidos (N, E, S, O): " + bumpers);
 
-                if (!mano_derecha) {
-                    System.out.println("[GRID][BHGrid.action] Comportamiento normal; consultando posición");
-                    // Comportamiento normal: acercarse al objetivo.
-                    ((AgentGrid) myAgent).position = grid.getPos();
-                    System.out.println("[GRID][BHGrid.action] Posición recibida: " + ((AgentGrid) myAgent).position + "; consultando objetivo");
-                    objetivo = grid.getTargetPos();
-                    System.out.println("[GRID][BHGrid.action] Objetivo recibido: " + objetivo);
+                calculateOptimalCell(position, objetivo);
+                CellType optimalCellType = bumpers.get(indice_optima);
+                System.out.println("[GRID][BHGrid.action] Óptima=" + optima
+                        + ", dirección=" + direcciones[indice_optima]
+                        + ", tipo=" + optimalCellType);
 
-                    int fila = ((AgentGrid) myAgent).position.getFirst();
-                    int columna = ((AgentGrid) myAgent).position.getSecond();
-
-                    casillas_adyacentes.clear();
-                    distancias.clear();
-                    System.out.println("[GRID][BHGrid.action] Calculando casillas adyacentes desde fila=" + fila + ", columna=" + columna);
-
-                    // Mismo orden que el array direcciones.
-                    casillas_adyacentes.add(new Pair<>(fila - 1, columna)); // Norte
-                    casillas_adyacentes.add(new Pair<>(fila, columna + 1)); // Este
-                    casillas_adyacentes.add(new Pair<>(fila + 1, columna)); // Sur
-                    casillas_adyacentes.add(new Pair<>(fila, columna - 1)); // Oeste
-                    System.out.println("[GRID][BHGrid.action] Casillas adyacentes: " + casillas_adyacentes);
-
-                    for (Pair<Integer, Integer> casilla : casillas_adyacentes) {
-                        double distancia
-                                = Math.abs(casilla.getFirst() - objetivo.getFirst())
-                                + Math.abs(casilla.getSecond() - objetivo.getSecond());
-
-                        distancias.add(distancia);
-                        System.out.println("[GRID][BHGrid.action] Casilla=" + casilla + ", distancia=" + distancia);
-                    }
-
-                    double minima = Collections.min(distancias);
-                    indice_optima = distancias.indexOf(minima);
-                    optima = casillas_adyacentes.get(indice_optima);
-                    System.out.println("[GRID][BHGrid.action] Óptima=" + optima + ", índice=" + indice_optima + ", dirección=" + direcciones[indice_optima] + ", bumper=" + bumpers.get(indice_optima));
-
-                    if (bumpers.get(indice_optima).equals(CellType.WALL)) {
-                        System.out.println("[GRID][BHGrid.action] Bumper equals(true); activando mano derecha");
-                        mano_derecha = true;
-                    } else if (bumpers.get(indice_optima).equals(CellType.FREE)) {
-                        System.out.println("[GRID][BHGrid.action] Bumper equals(false); preparando movimiento");
-                        direction = direcciones[indice_optima];
-                        System.out.println("[GRID][BHGrid.action] Llamando a move: " + direction);
-                        grid.move(direction);
-                        System.out.println("[GRID][BHGrid.action] Movimiento terminado; consultando posición");
-                        grid.getPos();
-                        System.out.println("[GRID][BHGrid.action] Consulta de posición tras movimiento terminada");
-                    }else if (bumpers.get(indice_optima).equals(CellType.UNKNOWN)){
-                        System.out.println("[GRID][BHGrid.action] La casilla es UNKNOWN");
-                    }
-                    
-                    System.out.println("[GRID][BHGrid.action] Fin de evaluación del bumper: " + bumpers.get(indice_optima) + "; mano_derecha=" + mano_derecha + ", dirección=" + direction);
-
+                if (mano_derecha && optimalCellType == CellType.FREE) {
+                    // La ruta preferida vuelve a estar despejada: salir y tomarla ahora.
+                    mano_derecha = false;
+                    move(direcciones[indice_optima]);
+                } else if (!mano_derecha && optimalCellType == CellType.FREE) {
+                    move(direcciones[indice_optima]);
+                } else if (!mano_derecha && optimalCellType == CellType.WALL) {
+                    // Se intentaba avanzar hacia la pared; úsese como orientación inicial.
+                    mano_derecha = true;
+                    last_move = direcciones[indice_optima];
+                    followRightWall();
+                } else if (mano_derecha) {
+                    followRightWall();
                 } else {
-                    System.out.println("[GRID][BHGrid.action] Rama de mano derecha pendiente de implementar");
-                    // TODO: implementar el comportamiento de mano derecha.
-                                        
-                    
-                    
+                    System.out.println("[GRID][BHGrid.action] La casilla óptima es UNKNOWN; no se mueve.");
                 }
 
             } else if (grid.runStatus == RunStatus.SUCCEEDED) {
@@ -138,6 +99,100 @@ public class BHGrid extends Behaviour {
             myAgent.doDelete();
         }
         System.out.println("[GRID][BHGrid.action] Fin de iteración; estado=" + grid.runStatus);
+    }
+
+    private void calculateOptimalCell(Pair<Integer, Integer> position,
+                                      Pair<Integer, Integer> target) {
+        int row = position.getFirst();
+        int col = position.getSecond();
+
+        casillas_adyacentes.clear();
+        distancias.clear();
+        // El orden coincide con bumpers y direcciones
+        casillas_adyacentes.add(new Pair<>(row - 1, col));
+        casillas_adyacentes.add(new Pair<>(row, col + 1));
+        casillas_adyacentes.add(new Pair<>(row + 1, col));
+        casillas_adyacentes.add(new Pair<>(row, col - 1));
+
+        for (Pair<Integer, Integer> cell : casillas_adyacentes) {
+            double distance = Math.abs(cell.getFirst() - target.getFirst())
+                    + Math.abs(cell.getSecond() - target.getSecond());
+            distancias.add(distance);
+        }
+
+        double minimum = Collections.min(distancias);
+        indice_optima = distancias.indexOf(minimum);
+        optima = casillas_adyacentes.get(indice_optima);
+    }
+
+    /** Sigue la pared por la derecha: derecha, recto, izquierda y atrás. */
+    private void followRightWall() {
+        if (last_move == null) {
+            // Por si acaso
+            last_move = direcciones[indice_optima];
+        }
+
+        Direction[] choices = {
+            turnRight(last_move),
+            last_move,
+            turnLeft(last_move),
+            opposite(last_move)
+        };
+
+        for (Direction choice : choices) {
+            if (bumperFor(choice) == CellType.FREE) {
+                move(choice);
+                return;
+            }
+        }
+
+        System.out.println("[GRID][BHGrid.action] Mano derecha: no hay movimiento libre conocido.");
+    }
+
+    private void move(Direction nextDirection) {
+        direction = nextDirection;
+        System.out.println("[GRID][BHGrid.action] Moviendo hacia " + direction);
+        grid.move(direction);
+        last_move = direction;
+    }
+
+    private CellType bumperFor(Direction requestedDirection) {
+        for (int i = 0; i < direcciones.length; i++) {
+            if (direcciones[i] == requestedDirection) {
+                return bumpers.get(i);
+            }
+        }
+        return CellType.UNKNOWN;
+    }
+
+    private Direction turnRight(Direction current) {
+        switch (current) {
+            case NORTH: return Direction.EAST;
+            case EAST: return Direction.SOUTH;
+            case SOUTH: return Direction.WEST;
+            case WEST: return Direction.NORTH;
+            default: throw new IllegalArgumentException("Dirección no válida: " + current);
+        }
+    }
+
+    private Direction turnLeft(Direction current) {
+        switch (current) {
+            case NORTH: return Direction.WEST;
+            case WEST: return Direction.SOUTH;
+            case SOUTH: return Direction.EAST;
+            case EAST: return Direction.NORTH;
+            default: throw new IllegalArgumentException("Dirección no válida: " + current);
+        }
+    }
+
+    private Direction opposite(Direction current) {
+        switch (current) {
+            case NORTH: return Direction.SOUTH;
+            case SOUTH: return Direction.NORTH;
+            case EAST: return Direction.WEST;
+            case WEST: return Direction.EAST;
+            default: throw new IllegalArgumentException("Dirección no válida: " + current);
+        }
     }
 
     @Override
