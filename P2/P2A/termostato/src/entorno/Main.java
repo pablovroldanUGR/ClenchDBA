@@ -25,7 +25,7 @@ public class Main {
             return environment.checkStatus();
         }
         catch (Exception e){
-            System.out.println("Error en el main al intentar leer el estado del entorno. " + e.getMessage());
+            Main.printGUI("[MAIN][ERROR] No se pudo consultar el estado de la run: " + e.getMessage());
         }
         
         return RunStatus.UNINITALIZED;
@@ -46,6 +46,7 @@ public class Main {
     }
     
     public static void startChallenge(int challengeID){
+        Main.printGUI("[MAIN][RUN] Iniciando reto " + challengeID);
         String name = challengeID==1? "termostato" : "grid";
         
         Runtime rt = Runtime.instance();
@@ -70,44 +71,33 @@ public class Main {
                 thermostatAgent.start();                
             }
             else{
-                System.out.println("[GRID][Main.startChallenge] Obteniendo entorno para reto " + challengeID);
                 environment = Environment.getInstance("Grid"); 
-                System.out.println("[GRID][Main.startChallenge] Entorno obtenido; configurando reto");
                 environment.setChallenge(challengeID);
-                System.out.println("[GRID][Main.startChallenge] Iniciando reto en la API");
                 environment.startChallenge();
-                System.out.println("[GRID][Main.startChallenge] Inicio del reto terminado; consultando estado");
                 checkRunStatus();
-                System.out.println("[GRID][Main.startChallenge] Estado consultado; creando agente JADE");
                 
                 AgentController gridAgent = agentContainer.createNewAgent
                 ("Grid", AgentGrid.class.getName(), new Object[]{});
 
-                System.out.println("[GRID][Main.startChallenge] Agente creado; iniciando agente");
                 gridAgent.start();
-                System.out.println("[GRID][Main.startChallenge] Inicio del agente terminado");
-                System.out.println("Agente Grid lanzado");
                 
             }
         } 
         catch (Exception e){
-            System.out.println("Error al inicializar la plataforma JADE:");
-            e.printStackTrace();
+            Main.printGUI("[MAIN][ERROR] No se pudo iniciar el agente: " + e.getMessage());
         }
     }
     
     public static void closeRun(){       
         try{
             environment.closeRun();
-            System.out.println("Cerrando la run manualmente...");
         }
         catch (Exception e){
-            System.out.println("Error al intentar cerrar la run manualmente. " + e.getMessage());
+            Main.printGUI("[MAIN][ERROR] No se pudo cerrar la run: " + e.getMessage());
         }
     }
     
     public static void updateMap(ArrayList<ArrayList<CellType>> map){
-        System.out.println("[GRID][Main.updateMap] Inicio de actualización del mapa");
         if(map != null && !map.isEmpty()){
             Pair<Integer, Integer> agentPos = new Pair<>();
             boolean agentFound = false;
@@ -123,7 +113,6 @@ public class Main {
             }
 
             if(agentPos.getFirst() != null && agentPos.getSecond() != null){
-                System.out.println("[GRID][Main.updateMap] Agente encontrado en " + agentPos + "; preparando mapa visible");
                 int minColMainMap = agentPos.getFirst() - Main.MAP_COL/2;
                 int minRowMainMap = agentPos.getSecond() - Main.MAP_ROWS/2;
                 int currentRowMainMap = minRowMainMap;
@@ -154,15 +143,15 @@ public class Main {
                     currentRowMainMap ++;
                 }
 
-                System.out.println("[GRID][Main.updateMap] Enviando mapa visible a la GUI");
                 gui.updateMap(reducedMap);
-                System.out.println("[GRID][Main.updateMap] Mapa enviado a la GUI");
             }
         }
     }
     
     public static void updateInfo(String info){
-        gui.updateInfo(info);
+        if (gui != null) {
+            gui.updateInfo(info);
+        }
     }
     
     public static void main(String args[]){      

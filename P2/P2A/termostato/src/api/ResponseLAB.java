@@ -5,6 +5,7 @@ import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
 import common.Pair;
+import entorno.Main;
 
 // Importante cargar datos nuevos al hacer una acción.
 public class ResponseLAB {
@@ -127,7 +128,7 @@ public class ResponseLAB {
                 this.reasonCodeAction = json.get("reasonCode").getAsString();
             }
         } catch (Exception e) {
-            System.err.println("Error al parsear el JSON de Control: " + e.getMessage());
+            Main.printGUI("[API][ERROR] No se pudo interpretar la respuesta: " + e.getMessage());
             return;
         }
     }

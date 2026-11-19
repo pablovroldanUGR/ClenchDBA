@@ -33,7 +33,7 @@ public class EnvironmentThermo extends Environment{
             }
         }
         else{
-            Main.printGUI("Error al intentar obtener los límites. RunID no inicailizado");
+            Main.printGUI("[THERMO][ERROR] No se pueden leer los límites: falta una run activa.");
         }
     }
     
@@ -57,7 +57,7 @@ public class EnvironmentThermo extends Environment{
             }
         }
         else{
-            Main.printGUI("Error al intentar obtener la temperatura. RunID no inicailizado");
+            Main.printGUI("[THERMO][ERROR] No se puede leer la temperatura: falta una run activa.");
         }
         
         return this.temperature;
@@ -73,7 +73,7 @@ public class EnvironmentThermo extends Environment{
             }
         }
         else{
-            Main.printGUI("Error al intentar obtener la temperatura objetivo. RunID no inicailizado");
+            Main.printGUI("[THERMO][ERROR] No se puede leer la temperatura objetivo: falta una run activa.");
         }
         
         return this.target;
@@ -88,7 +88,7 @@ public class EnvironmentThermo extends Environment{
             }
         }
         else{
-            Main.printGUI("Error al intentar activar la refrigeración. RunID no inicializado");
+            Main.printGUI("[THERMO][ERROR] No se puede activar la refrigeración: falta una run activa.");
         }
     }
     
@@ -101,7 +101,7 @@ public class EnvironmentThermo extends Environment{
             }
         }
         else{
-            Main.printGUI("Error al intentar desactivar la refrigeración. RunID no inicializado");
+            Main.printGUI("[THERMO][ERROR] No se puede desactivar la refrigeración: falta una run activa.");
         }
     }
 }

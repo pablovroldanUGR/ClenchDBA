@@ -96,7 +96,7 @@ public class GUI extends javax.swing.JFrame {
     
     public void updateMap(ArrayList<ArrayList<CellType>> data){
         if(data == null || data.size() != Main.MAP_ROWS || data.get(0).size() != Main.MAP_COL){
-            Main.printGUI("Error al actualizar el mapa: no coincide la dimensión del mapa a mostrar.");
+            Main.printGUI("[GUI][ERROR] El mapa recibido tiene dimensiones incorrectas.");
         }
         else{
             for(int i = 0; i < Main.MAP_ROWS; i++){
@@ -268,7 +268,7 @@ public class GUI extends javax.swing.JFrame {
             Main.startChallenge(this.challengeID);
         }
         else{
-            Main.printGUI("------ YA HAY UNA RUN ACTIVA (no se ha iniciado una nueva run) ------");
+            Main.printGUI("[GUI][WARN] Ya hay una run activa; no se inició otra.");
         }
     }//GEN-LAST:event_startButton1ActionPerformed
 
@@ -279,7 +279,7 @@ public class GUI extends javax.swing.JFrame {
             Main.closeRun();
         }
         else{
-            Main.printGUI("------ NO SE HA PARADO LA RUN (no hay una run activa) ------");
+            Main.printGUI("[GUI][WARN] No hay una run activa para detener.");
         }
     }//GEN-LAST:event_stopButtonActionPerformed
 
