@@ -225,7 +225,10 @@ public class EnvironmentGrid extends Environment {
             if (response != null) {
                 System.out.println("[GRID][getEnergyLeft] Datos=" + response.value + ", estado=" + response.runStatus);
                 this.runStatus = response.runStatus;
-                this.energy_left = Integer.valueOf(response.value.get(0).getSecond());
+                
+                if(response.value.get(0).getSecond().toString().equals("FINITE")){
+                    this.energy_left = Integer.valueOf(response.value.get(1).getSecond());
+                }
             } else {
                 System.out.println("Algo salio mal. Response = null (Grid.getEnergyLeft)");
             }

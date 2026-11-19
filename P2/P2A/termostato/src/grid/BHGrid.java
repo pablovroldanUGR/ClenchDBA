@@ -48,6 +48,8 @@ public class BHGrid extends Behaviour {
         System.out.println("[GRID][BHGrid.action] Entorno obtenido");
 
         try {
+            ((AgentGrid) myAgent).energy = grid.getEnergyLeft();
+            
             System.out.println("[GRID][BHGrid.action] Consultando estado de la run");
             grid.checkStatus();
             System.out.println("[GRID][BHGrid.action] Estado recibido: " + grid.runStatus);
@@ -168,7 +170,6 @@ public class BHGrid extends Behaviour {
         System.out.println("[GRID][BHGrid.action] Moviendo hacia " + direction);
         grid.move(direction);
         last_move = direction;
-        ((AgentGrid) myAgent).energy = grid.getEnergyLeft();
     }
 
     private CellType bumperFor(Direction requestedDirection) {
