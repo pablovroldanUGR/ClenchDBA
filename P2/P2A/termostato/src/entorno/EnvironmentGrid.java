@@ -206,20 +206,12 @@ public class EnvironmentGrid extends Environment {
             if (response != null) {
 
                 this.runStatus = response.runStatus;
-                String remaining = null;
-                for (Pair<String, String> value : response.value) {
-                    if ("remaining".equalsIgnoreCase(value.getFirst())) {
-                        remaining = value.getSecond();
-                        break;
-                    }
+                
+                if(response.value.get(0).getSecond().toString().equals("FINITE")){
+                    this.energy_left = Integer.valueOf(response.value.get(1).getSecond());
                 }
-                if (remaining != null) {
-                    this.energy_left = Integer.parseInt(remaining);
-                    Main.printGUI("[GRID][ENERGY] Energía restante: " + this.energy_left);
-                    Main.updateInfo(this.toString());
-                } else {
-                    Main.printGUI("[GRID][ERROR] La respuesta de energía no contiene 'remaining'.");
-                }
+            } else {
+                System.out.println("Algo salio mal. Response = null (Grid.getEnergyLeft)");
             }
         } else {
             Main.printGUI("[GRID][ERROR] No se puede leer la energía: no hay una run iniciada.");

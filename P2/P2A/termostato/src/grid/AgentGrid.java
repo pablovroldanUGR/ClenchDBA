@@ -30,6 +30,8 @@ public class AgentGrid extends Agent{
     protected void setup() {
         this.grid = (EnvironmentGrid) Environment.getInstance("Grid");
         
+        energy = grid.getEnergyLeft();
+        
         printMessage("Agente Grid Iniciado");
         addBehaviour(new BHGrid());
     }

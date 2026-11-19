@@ -48,7 +48,6 @@ public class BHGrid extends Behaviour {
 
 
         try {
-
             grid.checkStatus();
 
 
@@ -159,7 +158,6 @@ public class BHGrid extends Behaviour {
 
         grid.move(direction);
         last_move = direction;
-        ((AgentGrid) myAgent).energy = grid.getEnergyLeft();
     }
 
     private CellType bumperFor(Direction requestedDirection) {
