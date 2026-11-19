@@ -32,6 +32,11 @@ public class Pair<T, U> {
     public void setSecond(U second){
         this.second = second;
     }
+    
+    public void clear(){
+        this.first = null;
+        this.second = null;
+    }
 
     @Override
     public boolean equals(Object o) {

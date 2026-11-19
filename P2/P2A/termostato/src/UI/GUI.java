@@ -27,7 +27,7 @@ public class GUI extends javax.swing.JFrame {
     private static final Color UNKNOWN_CELL = new Color(27, 35, 47);
     private static final Color FREE_CELL = new Color(27, 100, 47);
     private static final Color WALL_CELL = new Color(100, 100, 100);
-    private static final Color AGENT_CELL = new Color(27, 35, 100);
+    private static final Color AGENT_CELL = new Color(100, 35, 47);
     private static final Color GOAL_CELL = new Color(255, 255, 47);
     
     private static final Color BACKGROUND = new Color(13, 17, 24);
@@ -263,7 +263,8 @@ public class GUI extends javax.swing.JFrame {
     private void startButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButton1ActionPerformed
         RunStatus runStatus = Main.getRunStatus();
         
-        if(runStatus != RunStatus.ACTIVE){            
+        if(runStatus != RunStatus.ACTIVE){        
+            initMap();
             Main.startChallenge(this.challengeID);
         }
         else{

@@ -66,7 +66,5 @@ public class AgentGrid extends Agent{
             System.out.println("[GRID][AgentGrid.takeDown] Excepción: " + e);
             Main.printGUI("Error al cerrar la conexión con la API. " + e.getMessage());
         }
-        System.out.println("[GRID][AgentGrid.takeDown] Saliendo del programa");
-        System.exit(0);
     }
 }

@@ -161,13 +161,12 @@ public class Main {
         }
     }
     
-    public void updateInfo(String info){
+    public static void updateInfo(String info){
         gui.updateInfo(info);
     }
     
     public static void main(String args[]){      
         gui = new GUI();
-        gui.updateInfo("Reto: 1 \nEnergía: 100 \nEstado: ACTIVO");
         gui.setVisible(true);
     }
 }

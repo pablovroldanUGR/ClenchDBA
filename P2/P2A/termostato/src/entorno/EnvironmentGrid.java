@@ -43,13 +43,25 @@ public class EnvironmentGrid extends Environment {
         System.out.println("[GRID][EnvironmentGrid] Entorno inicializado");
     }
 
+    protected void resetEnvironment(){
+        this.position.clear();
+        this.target_pos.clear();
+        
+        for (int i = 0; i < 4; i++) {
+            this.directions_status.set(i, CellType.UNKNOWN);
+        }
+        
+        this.energy_left = -1;
+        grid_map.clear();
+    }
+    
     private void updateGridMap(Pair<Integer, Integer> new_pos, CellType type) {
         System.out.println("[GRID][updateGridMap] Inicio; posición=" + new_pos + ", tipo=" + type + ", filas actuales=" + this.grid_map.size());
         
         int desiredRows = new_pos.getFirst() + 2;
         int desiredCols = new_pos.getSecond() + 2;
         
-        // El mapa esta vacio
+        // El mapa está vacío
         if (this.grid_map.isEmpty()) {
             System.out.println("[GRID][updateGridMap] Creando mapa inicial");
             for (int i = 0; i <= desiredRows; i++) {
@@ -62,6 +74,7 @@ public class EnvironmentGrid extends Environment {
             this.grid_map.get(new_pos.getFirst()).set(new_pos.getSecond(), type);
             System.out.println("[GRID][updateGridMap] Mapa inicial creado; fin");
             Main.updateMap(grid_map);
+            Main.updateInfo(this.toString());
             return;
         }
 
@@ -89,7 +102,6 @@ public class EnvironmentGrid extends Environment {
             System.out.println("[GRID][updateGridMap] Marcando agente en " + this.position);
             this.grid_map.get(this.position.getFirst()).set(this.position.getSecond(), type);
         }
-        
         else if(type == CellType.GOAL){
             System.out.println("[GRID][updateGridMap] Marcando objetivo en " + this.target_pos);
             this.grid_map.get(this.target_pos.getFirst()).set(this.target_pos.getSecond(), type);
@@ -99,6 +111,7 @@ public class EnvironmentGrid extends Environment {
         
         System.out.println("[GRID][updateGridMap] Enviando mapa a la GUI");
         Main.updateMap(grid_map);
+        Main.updateInfo(this.toString());
         System.out.println("[GRID][updateGridMap] Actualización de la GUI terminada");
     }
 

@@ -19,6 +19,9 @@ public abstract class Environment {
         this.runID = -1;
         this.challengeID = -1;
     }
+    
+    protected void resetEnvironment(){
+    }
 
     public static Environment getInstance(String name) {
         if (instance == null) {
@@ -41,7 +44,8 @@ public abstract class Environment {
     public void startChallenge() {
         if (this.challengeID != -1) {
             ResponseLAB responseInfo = api.startChallenge(this.challengeID);
-            if(responseInfo != null){
+            if(responseInfo != null && responseInfo.runId != -1){
+                resetEnvironment();
                 this.runID = responseInfo.runId;
                 this.runStatus = responseInfo.runStatus;
             }
