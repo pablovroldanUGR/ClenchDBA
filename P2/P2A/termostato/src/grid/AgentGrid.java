@@ -21,6 +21,7 @@ public class AgentGrid extends Agent{
     private String name = "[GRID]: ";
     private Direction direction = null;
     public Pair<Integer, Integer> position = new Pair();
+    public int energy = -1;
     
     // Conexion al entorno
     private EnvironmentGrid grid;
@@ -30,7 +31,7 @@ public class AgentGrid extends Agent{
         System.out.println("[GRID][AgentGrid.setup] Obteniendo entorno Grid");
         this.grid = (EnvironmentGrid) Environment.getInstance("Grid");
         System.out.println("[GRID][AgentGrid.setup] Entorno obtenido");
-
+        
         printMessage("Agente Grid Iniciado");
         System.out.println("[GRID][AgentGrid.setup] Añadiendo comportamiento BHGrid");
         addBehaviour(new BHGrid());

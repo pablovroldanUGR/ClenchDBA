@@ -71,13 +71,13 @@ public class BHGrid extends Behaviour {
                         + ", distancia al entrar en mano derecha=" + wallFollowStartDistance);
 
                 if (mano_derecha
-                        && optimalCellType == CellType.FREE
+                        && (optimalCellType == CellType.FREE || optimalCellType == CellType.GOAL)
                         && currentDistance < wallFollowStartDistance) {
                     // La ruta preferida está libre y ya hemos progresado desde el obstáculo.
                     mano_derecha = false;
                     wallFollowStartDistance = -1;
                     move(direcciones[indice_optima]);
-                } else if (!mano_derecha && optimalCellType == CellType.FREE) {
+                } else if (!mano_derecha && (optimalCellType == CellType.FREE || optimalCellType == CellType.GOAL)) {
                     move(direcciones[indice_optima]);
                 } else if (!mano_derecha && optimalCellType == CellType.WALL) {
                     // Orientarse en paralelo al muro para dejarlo a la derecha.
@@ -154,7 +154,7 @@ public class BHGrid extends Behaviour {
         };
 
         for (Direction choice : choices) {
-            if (bumperFor(choice) == CellType.FREE) {
+            if (bumperFor(choice) == CellType.FREE || bumperFor(choice) == CellType.GOAL) {
                 move(choice);
                 return;
             }
@@ -168,6 +168,7 @@ public class BHGrid extends Behaviour {
         System.out.println("[GRID][BHGrid.action] Moviendo hacia " + direction);
         grid.move(direction);
         last_move = direction;
+        ((AgentGrid) myAgent).energy = grid.getEnergyLeft();
     }
 
     private CellType bumperFor(Direction requestedDirection) {
@@ -212,14 +213,12 @@ public class BHGrid extends Behaviour {
     @Override
     public boolean done() {
         System.out.println("[GRID][BHGrid.done] Estado=" + grid.runStatus + ", done=" + !(grid.runStatus == RunStatus.ACTIVE));
-        // Si no esta activa la run, terminamos
-        System.out.println("RUN TERMINADA CON STATUS: " + grid.runStatus);
         return !(grid.runStatus == RunStatus.ACTIVE);
     }
 
     @Override
     public int onEnd() {
-        System.out.println("[GRID][BHGrid.onEnd] Eliminando agente; exitCode=" + this.exitCode);
+        Main.printGUI("RUN TERMINADA CON STATUS: " + grid.runStatus);
         myAgent.doDelete();
         System.out.println("[GRID][BHGrid.onEnd] Eliminación solicitada");
         return this.exitCode;
