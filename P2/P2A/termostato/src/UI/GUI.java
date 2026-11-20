@@ -31,6 +31,7 @@ public class GUI extends javax.swing.JFrame {
     private static final Color GOAL_CELL = new Color(255, 255, 47);
     
     private static final Color BACKGROUND = new Color(13, 17, 24);
+    private static final Color SURFACE = new Color(27, 35, 47);
     private static final Color TEXT = new Color(229, 236, 245);
     private static final Color GREEN = new Color(31, 160, 110);
     private static final Color RED = new Color(190, 65, 75);
@@ -66,6 +67,18 @@ public class GUI extends javax.swing.JFrame {
         infoText.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
         
         mapPanel.setBackground(MAP_BACKGROUND);
+
+        // Swing usa colores claros por defecto en el contenedor y los controles.
+        getContentPane().setBackground(BACKGROUND);
+
+        jScrollPane1.setBackground(BACKGROUND);
+        jScrollPane1.getViewport().setBackground(BACKGROUND);
+        jScrollPane2.setBackground(BACKGROUND);
+        jScrollPane2.getViewport().setBackground(BACKGROUND);
+
+        challengeSelector.setBackground(SURFACE);
+        challengeSelector.setForeground(TEXT);
+        jLabel1.setForeground(TEXT);
     }
     
     public void printText(String text){
