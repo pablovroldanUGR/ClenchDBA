@@ -59,7 +59,6 @@ public class BHGrid extends Behaviour {
 
                 bumpers = grid.getBumpers();
 
-
                 calculateOptimalCell(position, objetivo);
                 CellType optimalCellType = bumpers.get(indice_optima);
                 int currentDistance = manhattanDistance(position, objetivo);
@@ -72,16 +71,20 @@ public class BHGrid extends Behaviour {
                     mano_derecha = false;
                     wallFollowStartDistance = -1;
                     move(direcciones[indice_optima]);
+                    Main.printGUI("[COMPORTAMIENTO]: Se pasa de mano derecha a greedy");
                 } else if (!mano_derecha && (optimalCellType == CellType.FREE || optimalCellType == CellType.GOAL)) {
                     move(direcciones[indice_optima]);
+                    Main.printGUI("[COMPORTAMIENTO]: Greedy");
                 } else if (!mano_derecha && optimalCellType == CellType.WALL) {
                     // Orientarse en paralelo al muro para dejarlo a la derecha.
                     mano_derecha = true;
                     wallFollowStartDistance = currentDistance;
                     last_move = turnLeft(direcciones[indice_optima]);
                     followRightWall();
+                    Main.printGUI("[COMPORTAMIENTO]: Se pasa de greedy a mano derecha");
                 } else if (mano_derecha) {
                     followRightWall();
+                    Main.printGUI("[COMPORTAMIENTO]: Mano derecha");
                 } else {
 
                 }
@@ -155,7 +158,7 @@ public class BHGrid extends Behaviour {
 
     private void move(Direction nextDirection) {
         direction = nextDirection;
-
+        ((AgentGrid) myAgent).energy = grid.getEnergyLeft();
         grid.move(direction);
         last_move = direction;
     }

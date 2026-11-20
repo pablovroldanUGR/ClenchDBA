@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import grid.*;
 
 public class Main {
-    public static final int MAP_COL = 32;
-    public static final int MAP_ROWS = 32;
+    public static final int MAP_COL = 60;
+    public static final int MAP_ROWS = 60;
     
     private static Environment environment;
     private static GUI gui;

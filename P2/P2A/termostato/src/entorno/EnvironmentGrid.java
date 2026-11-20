@@ -257,11 +257,11 @@ public class EnvironmentGrid extends Environment {
 
             if (response != null) {
                 this.runStatus = response.runStatus;
-                Main.printGUI("[GRID][ACTION] El agente realiza acción " + dir
+                /*Main.printGUI("[GRID][ACTION] El agente realiza acción " + dir
                         + " — " + response.actionStatus
                         + (response.reasonCodeAction == null || response.reasonCodeAction.isBlank()
                                 ? ""
-                                : " (" + response.reasonCodeAction + ")"));
+                                : " (" + response.reasonCodeAction + ")"));*/
             }
 
             this.grid_map.get(this.position.getFirst()).set(this.position.getSecond(), CellType.FREE);

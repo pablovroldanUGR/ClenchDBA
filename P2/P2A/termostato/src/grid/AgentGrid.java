@@ -10,6 +10,7 @@ import entorno.EnvironmentGrid;
 import jade.core.Agent;
 import common.Direction;
 import common.Pair;
+import common.RunStatus;
 import entorno.Main;
 
 /**
@@ -51,7 +52,9 @@ public class AgentGrid extends Agent{
     @Override
     protected void takeDown(){
         try{
-            grid.closeRun();
+            if (grid.runStatus == RunStatus.ACTIVE) {
+                grid.closeRun();
+            }
             Main.printGUI("[GRID][AGENTE] Finalizado.");
         }
         catch (Exception e){
