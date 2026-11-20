@@ -184,7 +184,7 @@ public class BHGrid extends Behaviour {
         double newLeftToGoal = manhattanDistance(newLeftPos, objetivo);
         double newRightToGoal = manhattanDistance(newRightPos, objetivo);
         
-        return (newLeftToGoal <= newRightToGoal)? "right" : "left";
+        return (newRightToGoal <= newLeftToGoal)? "left" : "right";
     }
     
     private Pair<Integer, Integer> getPosByDirection(Direction direction){

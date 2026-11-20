@@ -306,7 +306,7 @@ public class EnvironmentGrid extends Environment {
 
     public String toString() {
 
-        return "Posición Agente: [ " + this.position.getFirst() + " ][ " + this.position.getSecond() + " ]\n"
+        return "Challenge:" + this.challengeID + "\n" + "Posición Agente: [ " + this.position.getFirst() + " ][ " + this.position.getSecond() + " ]\n"
                 + "Posición Objetivo : [ " + this.target_pos.getFirst() + " ][ " + this.target_pos.getSecond() + " ]\n"
                 + "Energía: " + this.energy_left;
     }
