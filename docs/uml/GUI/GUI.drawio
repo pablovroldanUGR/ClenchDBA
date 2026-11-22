@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" pages="1">
+  <diagram id="diagram-1" name="GUI">
+    <mxGraphModel dx="760" dy="1044" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="760" pageHeight="1044" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="pkg-UI" value="«package» UI" style="shape=folder;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;rounded=0;whiteSpace=wrap;align=center;verticalAlign=middle;spacing=0;fontStyle=1;fontSize=21;fontFamily=Arial;fontColor=#000000;tabWidth=179;tabHeight=40;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="720.0" height="1004.0" as="geometry" />
+        </mxCell>
+        <mxCell id="GUI" value="" style="container=1;collapsible=0;rounded=0;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="pkg-UI">
+          <mxGeometry x="30" y="70" width="660" height="894" as="geometry" />
+        </mxCell>
+        <mxCell id="GUI-header" value="" style="rounded=0;fillColor=#FFFFFF;strokeColor=#000000;" vertex="1" parent="GUI">
+          <mxGeometry x="0" y="0" width="660" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-11" value="GUI" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;" vertex="1" parent="GUI">
+          <mxGeometry x="306.0" y="9" width="48.0" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-12" value="- logger : Logger {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=4;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="48" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-13" value="- MAP_BACKGROUND : Color {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=4;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="70" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-14" value="- BORDER_MAP_CELL : Color {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=4;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="92" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-15" value="- UNKNOWN_CELL : Color {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=4;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="114" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-16" value="- FREE_CELL : Color {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=4;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="136" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-17" value="- WALL_CELL : Color {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=4;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="158" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-18" value="- AGENT_CELL : Color {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=4;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="180" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-19" value="- GOAL_CELL : Color {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=4;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="202" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-20" value="- BACKGROUND : Color {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=4;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="224" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-21" value="- SURFACE : Color {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=4;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="246" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-22" value="- TEXT : Color {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=4;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="268" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-23" value="- GREEN : Color {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=4;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="290" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-24" value="- RED : Color {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=4;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="312" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-25" value="- MUTED : Color {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=4;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="334" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-26" value="- ACCENT : Color {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=4;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="356" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-27" value="- challengeID : int" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="378" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-28" value="- mapCells : JPanel[][] {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="400" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-29" value="- challengeSelector : JComboBox&amp;lt;String&amp;gt;" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="422" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-30" value="- infoText : JTextArea" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="444" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-31" value="- jLabel1 : JLabel" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="466" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-32" value="- jScrollPane1 : JScrollPane" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="488" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-33" value="- jScrollPane2 : JScrollPane" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="510" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-34" value="- mapPanel : JPanel" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="532" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-35" value="- startButton : JButton" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="554" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-36" value="- stopButton : JButton" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="576" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-37" value="- terminalText : JTextArea" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="598" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-38" value="" style="fillColor=#000000;strokeColor=none;" vertex="1" parent="GUI">
+          <mxGeometry x="0" y="634" width="660" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-39" value="- initComponentsCustom() : void" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="638" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-40" value="+ printText(text : String) : void" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="660" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-41" value="- initMap() : void" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="682" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-42" value="+ updateMap(data : ArrayList&amp;lt;ArrayList&amp;lt;CellType&amp;gt;&amp;gt;) : void" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="704" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-43" value="+ updateInfo(info : String) : void" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="726" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-44" value="+ GUI()" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="748" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-45" value="- initComponents() : void" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="770" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-46" value="- challengeSelectorActionPerformed(evt : ActionEvent) : void" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="792" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-47" value="- startButton1ActionPerformed(evt : ActionEvent) : void" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="814" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-48" value="- stopButtonActionPerformed(evt : ActionEvent) : void" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="836" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-49" value="+ main(args : String[]) : void" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=4;" vertex="1" parent="GUI">
+          <mxGeometry x="12" y="858" width="636" height="22" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

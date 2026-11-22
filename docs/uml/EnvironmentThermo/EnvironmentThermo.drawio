@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" pages="1">
+  <diagram id="diagram-1" name="EnvironmentThermo">
+    <mxGraphModel dx="750" dy="604" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="750" pageHeight="604" math="0" shadow="0" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="pkg-entorno" value="«package» entorno" style="shape=folder;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;rounded=0;whiteSpace=wrap;align=center;verticalAlign=middle;spacing=0;fontStyle=1;fontSize=21;fontFamily=Arial;fontColor=#000000;tabWidth=239;tabHeight=40;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.4;" vertex="1" parent="1">
+          <mxGeometry x="20" y="20" width="710.0" height="564.0" as="geometry" />
+        </mxCell>
+        <mxCell id="EnvironmentThermo" value="" style="container=1;collapsible=0;rounded=0;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="pkg-entorno">
+          <mxGeometry x="30" y="70" width="650" height="454" as="geometry" />
+        </mxCell>
+        <mxCell id="EnvironmentThermo-header" value="" style="rounded=0;fillColor=#FFFFFF;strokeColor=#000000;" vertex="1" parent="EnvironmentThermo">
+          <mxGeometry x="0" y="0" width="650" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-86" value="EnvironmentThermo" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;" vertex="1" parent="EnvironmentThermo">
+          <mxGeometry x="189.0" y="9" width="272.0" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-87" value="- ENV_TYPE : String {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="EnvironmentThermo">
+          <mxGeometry x="12" y="48" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-88" value="- SENSOR_TEMP : String {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="EnvironmentThermo">
+          <mxGeometry x="12" y="70" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-89" value="- SENSOR_LIMITS : String {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="EnvironmentThermo">
+          <mxGeometry x="12" y="92" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-90" value="- SENSOR_TARGET : String {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="EnvironmentThermo">
+          <mxGeometry x="12" y="114" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-91" value="- ACTION_ON : String {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="EnvironmentThermo">
+          <mxGeometry x="12" y="136" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-92" value="- ACTION_OFF : String {readOnly}" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="EnvironmentThermo">
+          <mxGeometry x="12" y="158" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-93" value="- temperature : double" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="EnvironmentThermo">
+          <mxGeometry x="12" y="180" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-94" value="- limits : Pair&amp;lt;Double, Double&amp;gt;" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="EnvironmentThermo">
+          <mxGeometry x="12" y="202" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-95" value="- target : double" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="EnvironmentThermo">
+          <mxGeometry x="12" y="224" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-96" value="" style="fillColor=#000000;strokeColor=none;" vertex="1" parent="EnvironmentThermo">
+          <mxGeometry x="0" y="260" width="650" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-97" value="# EnvironmentThermo()" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="EnvironmentThermo">
+          <mxGeometry x="12" y="264" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-98" value="- getLimits() : void" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="EnvironmentThermo">
+          <mxGeometry x="12" y="286" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-99" value="+ getMinimumLimit() : double" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="EnvironmentThermo">
+          <mxGeometry x="12" y="308" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-100" value="+ getMaximumLimit() : double" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="EnvironmentThermo">
+          <mxGeometry x="12" y="330" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-101" value="+ getTemperature() : double" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="EnvironmentThermo">
+          <mxGeometry x="12" y="352" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-102" value="+ getTargetTemperature() : double" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="EnvironmentThermo">
+          <mxGeometry x="12" y="374" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-103" value="+ activateRefrigeration() : void" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="EnvironmentThermo">
+          <mxGeometry x="12" y="396" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-104" value="+ disableRefrigeration() : void" style="text;html=1;strokeColor=none;fillColor=none;labelBackgroundColor=none;labelBorderColor=none;whiteSpace=wrap;overflow=visible;noLabel=0;labelPosition=center;verticalLabelPosition=middle;spacing=0;spacingTop=0;spacingBottom=0;fontFamily=Arial;fontColor=#000000;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;" vertex="1" parent="EnvironmentThermo">
+          <mxGeometry x="12" y="418" width="626" height="22" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

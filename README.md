@@ -8,6 +8,8 @@ Equipo de clenches para asignatura DBA
 
 La documentación UML está en [docs/uml](docs/uml/README.md).
 
-- [Editar en draw.io](docs/uml/DIAGRAMA_CLASES.drawio).
-- [Abrir SVG ampliable](docs/uml/DIAGRAMA_CLASES.svg).
-- [Abrir PDF](docs/uml/DIAGRAMA_CLASES.pdf).
+- [Diagrama general de relaciones](docs/uml/general/DIAGRAMA_GENERAL.drawio).
+- [Diagramas individuales por clase](docs/uml/README.md#diagramas-individuales).
+- [Diagrama completo en draw.io](docs/uml/completo/DIAGRAMA_CLASES.drawio).
+- [Abrir SVG ampliable](docs/uml/completo/DIAGRAMA_CLASES.svg).
+- [Abrir PDF](docs/uml/completo/DIAGRAMA_CLASES.pdf).
