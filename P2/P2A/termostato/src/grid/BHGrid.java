@@ -25,15 +25,15 @@ public class BHGrid extends Behaviour {
     private Direction direction = null;
 
     //orden: norte, este, sur, oeste
-    private ArrayList<Double> distancias = new ArrayList<>();
-    private ArrayList<Pair<Integer, Integer>> casillas_adyacentes = new ArrayList<>();
-    private Pair<Integer, Integer> optima = null;
-    private int indice_optima = -1;
+    private ArrayList<Double> distances = new ArrayList<>();
+    private ArrayList<Pair<Integer, Integer>> adjacentCells = new ArrayList<>();
+    private Pair<Integer, Integer> optimalCell = null;
+    private int optimalIndex = -1;
     private ArrayList<CellType> bumpers = new ArrayList<>();
     private boolean active_hand = false;
     private String hand_decision = "";
     private int wallFollowStartDistance = -1;
-    Direction[] direcciones = {
+    Direction[] directions = {
         Direction.NORTH,
         Direction.EAST,
         Direction.SOUTH,
@@ -61,7 +61,7 @@ public class BHGrid extends Behaviour {
                 bumpers = grid.getBumpers();
 
                 calculateOptimalCell(position, objetivo);
-                CellType optimalCellType = bumpers.get(indice_optima);
+                CellType optimalCellType = bumpers.get(optimalIndex);
                 int currentDistance = manhattanDistance(position, objetivo);
 
 
@@ -71,10 +71,10 @@ public class BHGrid extends Behaviour {
                     // La ruta preferida está libre y ya hemos progresado desde el obstáculo.
                     active_hand = false;
                     wallFollowStartDistance = -1;
-                    move(direcciones[indice_optima]);
+                    move(directions[optimalIndex]);
                     Main.printGUI("[COMPORTAMIENTO]: Se pasa de mano derecha a greedy");
                 } else if (!active_hand && (optimalCellType == CellType.FREE || optimalCellType == CellType.GOAL)) {
-                    move(direcciones[indice_optima]);
+                    move(directions[optimalIndex]);
                     Main.printGUI("[COMPORTAMIENTO]: Greedy");
                 } else if (!active_hand && optimalCellType == CellType.WALL) {
                     // Orientarse en paralelo al muro para dejarlo a la derecha.
@@ -82,7 +82,7 @@ public class BHGrid extends Behaviour {
                     wallFollowStartDistance = currentDistance;
                     
                     hand_decision = getOptimalHandType(objetivo); 
-                    last_move = (hand_decision.equals("right"))? turnLeft(direcciones[indice_optima]): turnRight(direcciones[indice_optima]);
+                    last_move = (hand_decision.equals("right"))? turnLeft(directions[optimalIndex]): turnRight(directions[optimalIndex]);
                     followWall(hand_decision);
                     Main.printGUI("[COMPORTAMIENTO]: Se pasa de greedy a mano " + hand_decision);
                 } else if (active_hand) {
@@ -110,22 +110,22 @@ public class BHGrid extends Behaviour {
         int row = position.getFirst();
         int col = position.getSecond();
 
-        casillas_adyacentes.clear();
-        distancias.clear();
+        adjacentCells.clear();
+        distances.clear();
         // El orden coincide con bumpers y direcciones
-        casillas_adyacentes.add(new Pair<>(row - 1, col));
-        casillas_adyacentes.add(new Pair<>(row, col + 1));
-        casillas_adyacentes.add(new Pair<>(row + 1, col));
-        casillas_adyacentes.add(new Pair<>(row, col - 1));
+        adjacentCells.add(new Pair<>(row - 1, col));
+        adjacentCells.add(new Pair<>(row, col + 1));
+        adjacentCells.add(new Pair<>(row + 1, col));
+        adjacentCells.add(new Pair<>(row, col - 1));
 
-        for (Pair<Integer, Integer> cell : casillas_adyacentes) {
+        for (Pair<Integer, Integer> cell : adjacentCells) {
             double distance = manhattanDistance(cell, target);
-            distancias.add(distance);
+            distances.add(distance);
         }
 
-        double minimum = Collections.min(distancias);
-        indice_optima = distancias.indexOf(minimum);
-        optima = casillas_adyacentes.get(indice_optima);
+        double minimum = Collections.min(distances);
+        optimalIndex = distances.indexOf(minimum);
+        optimalCell = adjacentCells.get(optimalIndex);
     }
 
     private int manhattanDistance(Pair<Integer, Integer> from,
@@ -138,7 +138,7 @@ public class BHGrid extends Behaviour {
     private void followWall(String hand) {
         if (last_move == null) {
             // Por si acaso
-            last_move = direcciones[indice_optima];
+            last_move = directions[optimalIndex];
         }
         
         Direction[] choices = new Direction[4];
@@ -167,7 +167,7 @@ public class BHGrid extends Behaviour {
         // Partimos de casillas_adyacentes (Norte, Este, Sur, Oeste)
         // Tenemos que mapear casillas adyacentes a delante, atrás, izquierda, derecha a orientación
         // Primero obtenemos como dirección de referencia el frente y a partir de ella sacamos los demás
-        Direction frontDir = direcciones[indice_optima];
+        Direction frontDir = directions[optimalIndex];
         Direction leftDir = getDirectionByOrientation("left", frontDir);
         Direction rightDir = getDirectionByOrientation("right", frontDir);
         Direction backDir = getDirectionByOrientation("back", frontDir);
@@ -188,9 +188,9 @@ public class BHGrid extends Behaviour {
     }
     
     private Pair<Integer, Integer> getPosByDirection(Direction direction){
-        for (int i = 0; i < direcciones.length; i++) {
-            if (direcciones[i] == direction) {
-                return casillas_adyacentes.get(i);
+        for (int i = 0; i < directions.length; i++) {
+            if (directions[i] == direction) {
+                return adjacentCells.get(i);
             }
         }
         
@@ -199,7 +199,7 @@ public class BHGrid extends Behaviour {
     
     private Direction getDirectionByOrientation(String orientation, Direction referenceDir){
         if (referenceDir == null) {
-            return direcciones[indice_optima];
+            return directions[optimalIndex];
         }
 
         switch (orientation.toLowerCase()) {
@@ -224,8 +224,8 @@ public class BHGrid extends Behaviour {
     }
 
     private CellType bumperFor(Direction requestedDirection) {
-        for (int i = 0; i < direcciones.length; i++) {
-            if (direcciones[i] == requestedDirection) {
+        for (int i = 0; i < directions.length; i++) {
+            if (directions[i] == requestedDirection) {
                 return bumpers.get(i);
             }
         }
