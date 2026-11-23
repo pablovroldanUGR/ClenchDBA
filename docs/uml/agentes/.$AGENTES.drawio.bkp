@@ -1,0 +1,427 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.1.2 Chrome/138.0.7204.243 Electron/37.4.0 Safari/537.36" version="28.1.2" pages="1">
+  <diagram id="uml-agentes" name="Agentes">
+    <mxGraphModel dx="3100" dy="1920" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3100" pageHeight="1920" background="#1E1E1E" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="EnvironmentThermo" value="" style="swimlane;whiteSpace=wrap;html=1;startSize=44;horizontal=1;container=1;collapsible=0;fillColor=#292929;strokeColor=#A6A6A6;strokeWidth=1;" parent="1" vertex="1">
+          <mxGeometry x="390" y="890.0" width="650" height="454" as="geometry" />
+        </mxCell>
+        <mxCell id="EnvironmentThermo-header" value="" style="fillColor=none;strokeColor=none;" parent="EnvironmentThermo" vertex="1">
+          <mxGeometry width="650" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-100" value="EnvironmentThermo" style="text;html=0;whiteSpace=wrap;overflow=visible;align=center;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=20;fontColor=#F0F0F0;fontStyle=1;" parent="EnvironmentThermo" vertex="1">
+          <mxGeometry x="189" y="9" width="272" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-101" value="- ENV_TYPE : String {readOnly}" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentThermo" vertex="1">
+          <mxGeometry x="12" y="48" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-102" value="- SENSOR_TEMP : String {readOnly}" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentThermo" vertex="1">
+          <mxGeometry x="12" y="70" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-103" value="- SENSOR_LIMITS : String {readOnly}" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentThermo" vertex="1">
+          <mxGeometry x="12" y="92" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-104" value="- SENSOR_TARGET : String {readOnly}" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentThermo" vertex="1">
+          <mxGeometry x="12" y="114" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-105" value="- ACTION_ON : String {readOnly}" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentThermo" vertex="1">
+          <mxGeometry x="12" y="136" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-106" value="- ACTION_OFF : String {readOnly}" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentThermo" vertex="1">
+          <mxGeometry x="12" y="158" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-107" value="- temperature : double" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentThermo" vertex="1">
+          <mxGeometry x="12" y="180" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-108" value="- limits : Pair&lt;Double, Double&gt;" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentThermo" vertex="1">
+          <mxGeometry x="12" y="202" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-109" value="- target : double" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentThermo" vertex="1">
+          <mxGeometry x="12" y="224" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-110" value="" style="fillColor=#000000;strokeColor=none;" parent="EnvironmentThermo" vertex="1">
+          <mxGeometry y="260" width="650" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-111" value="# EnvironmentThermo()" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentThermo" vertex="1">
+          <mxGeometry x="12" y="264" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-112" value="- getLimits() : void" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentThermo" vertex="1">
+          <mxGeometry x="12" y="286" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-113" value="+ getMinimumLimit() : double" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentThermo" vertex="1">
+          <mxGeometry x="12" y="308" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-114" value="+ getMaximumLimit() : double" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentThermo" vertex="1">
+          <mxGeometry x="12" y="330" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-115" value="+ getTemperature() : double" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentThermo" vertex="1">
+          <mxGeometry x="12" y="352" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-116" value="+ getTargetTemperature() : double" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentThermo" vertex="1">
+          <mxGeometry x="12" y="374" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-117" value="+ activateRefrigeration() : void" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentThermo" vertex="1">
+          <mxGeometry x="12" y="396" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-118" value="+ disableRefrigeration() : void" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentThermo" vertex="1">
+          <mxGeometry x="12" y="418" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="EnvironmentGrid" value="" style="swimlane;whiteSpace=wrap;html=1;startSize=44;horizontal=1;container=1;collapsible=0;fillColor=#292929;strokeColor=#A6A6A6;strokeWidth=1;" parent="1" vertex="1">
+          <mxGeometry x="1760" y="1160.0" width="690" height="674" as="geometry" />
+        </mxCell>
+        <mxCell id="EnvironmentGrid-header" value="" style="fillColor=none;strokeColor=none;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry width="690" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-121" value="EnvironmentGrid" style="text;html=0;whiteSpace=wrap;overflow=visible;align=center;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=20;fontColor=#F0F0F0;fontStyle=1;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="225" y="9" width="240" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-122" value="- ENV_TYPE : String {readOnly}" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="48" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-123" value="- SENSOR_POSITION : String {readOnly}" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="70" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-124" value="- SENSOR_BUMPERS : String {readOnly}" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="92" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-125" value="- SENSOR_TAGET_POS : String {readOnly}" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="114" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-126" value="- SENSOR_ENERGY : String {readOnly}" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="136" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-127" value="- ACTION_MOVE_NORTH : String {readOnly}" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="158" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-128" value="- ACTION_MOVE_EAST : String {readOnly}" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="180" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-129" value="- ACTION_MOVE_WEST : String {readOnly}" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="202" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-130" value="- ACTION_MOVE_SOUTH : String {readOnly}" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="224" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-131" value="- position : Pair&lt;Integer, Integer&gt;" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="246" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-132" value="- directions_status : ArrayList&lt;CellType&gt;" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="268" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-133" value="- target_pos : Pair&lt;Integer, Integer&gt;" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="290" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-134" value="- energy_left : int" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="312" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-135" value="- grid_map : ArrayList&lt;ArrayList&lt;CellType&gt;&gt;" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="334" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-136" value="" style="fillColor=#000000;strokeColor=none;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry y="370" width="690" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-137" value="# EnvironmentGrid()" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="374" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-138" value="# resetEnvironment() : void" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="396" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-139" value="- initGridMap(new_pos : Pair&lt;Integer, Integer&gt;, type : CellType, rows : int, cols :" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="418" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-140" value="int) : void" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="440" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-141" value="- updateGridMap(new_pos : Pair&lt;Integer, Integer&gt;, type : CellType) : void" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="462" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-142" value="+ getPos() : Pair&lt;Integer, Integer&gt;" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="484" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-143" value="+ getBumpers() : ArrayList&lt;CellType&gt;" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="506" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-144" value="+ getTargetPos() : Pair&lt;Integer, Integer&gt;" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="528" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-145" value="+ getEnergyLeft() : int" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="550" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-146" value="+ move(dir : Direction) : void" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="572" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-147" value="+ getPosGrid(pos : Pair&lt;Integer, Integer&gt;) : Pair&lt;Integer, Integer&gt;" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="594" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-148" value="- isValidGridPos(pos : Pair&lt;Integer, Integer&gt;) : boolean" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="616" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-149" value="+ toString() : String" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="EnvironmentGrid" vertex="1">
+          <mxGeometry x="12" y="638" width="666" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="AgentTemp" value="" style="swimlane;whiteSpace=wrap;html=1;startSize=44;horizontal=1;container=1;collapsible=0;fillColor=#292929;strokeColor=#A6A6A6;strokeWidth=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="350.0" width="650" height="212" as="geometry" />
+        </mxCell>
+        <mxCell id="AgentTemp-header" value="" style="fillColor=none;strokeColor=none;" parent="AgentTemp" vertex="1">
+          <mxGeometry width="650" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-224" value="AgentTemp" style="text;html=0;whiteSpace=wrap;overflow=visible;align=center;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=20;fontColor=#F0F0F0;fontStyle=1;" parent="AgentTemp" vertex="1">
+          <mxGeometry x="253" y="9" width="144" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-225" value="- name : String" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="AgentTemp" vertex="1">
+          <mxGeometry x="12" y="48" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-226" value="- thermo : EnvironmentThermo" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="AgentTemp" vertex="1">
+          <mxGeometry x="12" y="70" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-227" value="" style="fillColor=#000000;strokeColor=none;" parent="AgentTemp" vertex="1">
+          <mxGeometry y="106" width="650" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-228" value="# setup() : void" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="AgentTemp" vertex="1">
+          <mxGeometry x="12" y="110" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-229" value="+ printMessage(msg : String) : void" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="AgentTemp" vertex="1">
+          <mxGeometry x="12" y="132" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-230" value="+ getEnvironment() : EnvironmentThermo" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="AgentTemp" vertex="1">
+          <mxGeometry x="12" y="154" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-231" value="# takeDown() : void" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="AgentTemp" vertex="1">
+          <mxGeometry x="12" y="176" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="BHThermo" value="" style="swimlane;whiteSpace=wrap;html=1;startSize=44;horizontal=1;container=1;collapsible=0;fillColor=#292929;strokeColor=#A6A6A6;strokeWidth=1;" parent="1" vertex="1">
+          <mxGeometry x="760" y="350.0" width="660" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="BHThermo-header" value="" style="fillColor=none;strokeColor=none;" parent="BHThermo" vertex="1">
+          <mxGeometry width="660" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-234" value="BHThermo" style="text;html=0;whiteSpace=wrap;overflow=visible;align=center;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=20;fontColor=#F0F0F0;fontStyle=1;" parent="BHThermo" vertex="1">
+          <mxGeometry x="266" y="9" width="128" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-235" value="- exitCode : int" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHThermo" vertex="1">
+          <mxGeometry x="12" y="48" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-236" value="- thermo : EnvironmentThermo" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHThermo" vertex="1">
+          <mxGeometry x="12" y="70" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-237" value="" style="fillColor=#000000;strokeColor=none;" parent="BHThermo" vertex="1">
+          <mxGeometry y="106" width="660" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-238" value="+ action() : void" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHThermo" vertex="1">
+          <mxGeometry x="12" y="110" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-239" value="+ done() : boolean" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHThermo" vertex="1">
+          <mxGeometry x="12" y="132" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-240" value="+ onEnd() : int" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHThermo" vertex="1">
+          <mxGeometry x="12" y="154" width="636" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="AgentGrid" value="" style="swimlane;whiteSpace=wrap;html=1;startSize=44;horizontal=1;container=1;collapsible=0;fillColor=#292929;strokeColor=#A6A6A6;strokeWidth=1;" parent="1" vertex="1">
+          <mxGeometry x="1450" y="350.0" width="650" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="AgentGrid-header" value="" style="fillColor=none;strokeColor=none;" parent="AgentGrid" vertex="1">
+          <mxGeometry width="650" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-243" value="AgentGrid" style="text;html=0;whiteSpace=wrap;overflow=visible;align=center;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=20;fontColor=#F0F0F0;fontStyle=1;" parent="AgentGrid" vertex="1">
+          <mxGeometry x="253" y="9" width="144" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-244" value="- name : String" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="AgentGrid" vertex="1">
+          <mxGeometry x="12" y="48" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-245" value="- direction : Direction" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="AgentGrid" vertex="1">
+          <mxGeometry x="12" y="70" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-246" value="+ position : Pair&lt;Integer, Integer&gt;" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="AgentGrid" vertex="1">
+          <mxGeometry x="12" y="92" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-247" value="+ energy : int" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="AgentGrid" vertex="1">
+          <mxGeometry x="12" y="114" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-248" value="- grid : EnvironmentGrid" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="AgentGrid" vertex="1">
+          <mxGeometry x="12" y="136" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-249" value="" style="fillColor=#000000;strokeColor=none;" parent="AgentGrid" vertex="1">
+          <mxGeometry y="172" width="650" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-250" value="# setup() : void" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="AgentGrid" vertex="1">
+          <mxGeometry x="12" y="176" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-251" value="+ printMessage(msg : String) : void" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="AgentGrid" vertex="1">
+          <mxGeometry x="12" y="198" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-252" value="+ getEnvironment() : EnvironmentGrid" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="AgentGrid" vertex="1">
+          <mxGeometry x="12" y="220" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-253" value="+ getDirection() : Direction" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="AgentGrid" vertex="1">
+          <mxGeometry x="12" y="242" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-254" value="# takeDown() : void" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="AgentGrid" vertex="1">
+          <mxGeometry x="12" y="264" width="626" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="BHGrid" value="" style="swimlane;whiteSpace=wrap;html=1;startSize=44;horizontal=1;container=1;collapsible=0;fillColor=#292929;strokeColor=#A6A6A6;strokeWidth=1;" parent="1" vertex="1">
+          <mxGeometry x="2150" y="350.0" width="860" height="674" as="geometry" />
+        </mxCell>
+        <mxCell id="BHGrid-header" value="" style="fillColor=none;strokeColor=none;" parent="BHGrid" vertex="1">
+          <mxGeometry width="860" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-257" value="BHGrid" style="text;html=0;whiteSpace=wrap;overflow=visible;align=center;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=20;fontColor=#F0F0F0;fontStyle=1;" parent="BHGrid" vertex="1">
+          <mxGeometry x="382" y="9" width="96" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-258" value="- exitCode : int" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="48" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-259" value="- grid : EnvironmentGrid" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="70" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-260" value="- direction : Direction" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="92" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-261" value="- distances : ArrayList&lt;Double&gt;" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="114" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-262" value="- adjacentCells : ArrayList&lt;Pair&lt;Integer, Integer&gt;&gt;" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="136" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-263" value="- optimalCell : Pair&lt;Integer, Integer&gt;" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="158" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-264" value="- optimalIndex : int" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="180" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-265" value="- bumpers : ArrayList&lt;CellType&gt;" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="202" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-266" value="- active_hand : boolean" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="224" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-267" value="- hand_decision : String" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="246" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-268" value="- wallFollowStartDistance : int" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="268" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-269" value="~ directions : Direction[]" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="290" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-270" value="- last_move : Direction" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="312" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-271" value="" style="fillColor=#000000;strokeColor=none;" parent="BHGrid" vertex="1">
+          <mxGeometry y="348" width="860" height="1" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-272" value="+ action() : void" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="352" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-273" value="- calculateOptimalCell(position : Pair&lt;Integer, Integer&gt;, target : Pair&lt;Integer, Integer&gt;) : void" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="374" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-274" value="- manhattanDistance(from : Pair&lt;Integer, Integer&gt;, to : Pair&lt;Integer, Integer&gt;) : int" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="396" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-275" value="- followWall(hand : String) : void" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="418" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-276" value="- getOptimalHandType(objetivo : Pair&lt;Integer, Integer&gt;) : String" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="440" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-277" value="- getPosByDirection(direction : Direction) : Pair&lt;Integer, Integer&gt;" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="462" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-278" value="- getDirectionByOrientation(orientation : String, referenceDir : Direction) : Direction" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="484" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-279" value="- move(nextDirection : Direction) : void" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="506" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-280" value="- bumperFor(requestedDirection : Direction) : CellType" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="528" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-281" value="- turnRight(current : Direction) : Direction" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="550" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-282" value="- turnLeft(current : Direction) : Direction" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="572" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-283" value="- opposite(current : Direction) : Direction" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="594" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-284" value="+ done() : boolean" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="616" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-285" value="+ onEnd() : int" style="text;html=0;whiteSpace=wrap;overflow=hidden;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=16;fontStyle=0;fontColor=#F0F0F0;" parent="BHGrid" vertex="1">
+          <mxGeometry x="12" y="638" width="836" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="Agent-T" value="" style="swimlane;whiteSpace=wrap;html=1;startSize=65;horizontal=1;container=1;collapsible=0;fillColor=#292929;strokeColor=#A6A6A6;strokeWidth=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="190.0" width="650" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="Agent-T-header" value="" style="fillColor=none;strokeColor=none;" parent="Agent-T" vertex="1">
+          <mxGeometry width="650" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-292" value="«external»" style="text;html=0;whiteSpace=wrap;overflow=visible;align=center;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=13;fontColor=#B8B8B8;fontStyle=0;" parent="Agent-T" vertex="1">
+          <mxGeometry x="273" y="8" width="104" height="21" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-293" value="jade.core.Agent" style="text;html=0;whiteSpace=wrap;overflow=visible;align=center;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=20;fontColor=#F0F0F0;fontStyle=1;" parent="Agent-T" vertex="1">
+          <mxGeometry x="205" y="30" width="240" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Behaviour-T" value="" style="swimlane;whiteSpace=wrap;html=1;startSize=65;horizontal=1;container=1;collapsible=0;fillColor=#292929;strokeColor=#A6A6A6;strokeWidth=1;" parent="1" vertex="1">
+          <mxGeometry x="760" y="190.0" width="660" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="Behaviour-T-header" value="" style="fillColor=none;strokeColor=none;" parent="Behaviour-T" vertex="1">
+          <mxGeometry width="660" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-296" value="«external · abstract»" style="text;html=0;whiteSpace=wrap;overflow=visible;align=center;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=13;fontColor=#B8B8B8;fontStyle=0;" parent="Behaviour-T" vertex="1">
+          <mxGeometry x="220.79999999999995" y="8" width="218.4" height="21" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-297" value="jade.core.behaviours.Behaviour" style="text;html=0;whiteSpace=wrap;overflow=visible;align=center;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=20;fontColor=#F0F0F0;fontStyle=3;" parent="Behaviour-T" vertex="1">
+          <mxGeometry x="90" y="30" width="480" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Agent-G" value="" style="swimlane;whiteSpace=wrap;html=1;startSize=65;horizontal=1;container=1;collapsible=0;fillColor=#292929;strokeColor=#A6A6A6;strokeWidth=1;" parent="1" vertex="1">
+          <mxGeometry x="1450" y="190.0" width="650" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="Agent-G-header" value="" style="fillColor=none;strokeColor=none;" parent="Agent-G" vertex="1">
+          <mxGeometry width="650" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-300" value="«external»" style="text;html=0;whiteSpace=wrap;overflow=visible;align=center;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=13;fontColor=#B8B8B8;fontStyle=0;" parent="Agent-G" vertex="1">
+          <mxGeometry x="273" y="8" width="104" height="21" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-301" value="jade.core.Agent" style="text;html=0;whiteSpace=wrap;overflow=visible;align=center;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=20;fontColor=#F0F0F0;fontStyle=1;" parent="Agent-G" vertex="1">
+          <mxGeometry x="205" y="30" width="240" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="Behaviour-G" value="" style="swimlane;whiteSpace=wrap;html=1;startSize=65;horizontal=1;container=1;collapsible=0;fillColor=#292929;strokeColor=#A6A6A6;strokeWidth=1;" parent="1" vertex="1">
+          <mxGeometry x="2150" y="190.0" width="860" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="Behaviour-G-header" value="" style="fillColor=none;strokeColor=none;" parent="Behaviour-G" vertex="1">
+          <mxGeometry width="860" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-304" value="«external · abstract»" style="text;html=0;whiteSpace=wrap;overflow=visible;align=center;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=13;fontColor=#B8B8B8;fontStyle=0;" parent="Behaviour-G" vertex="1">
+          <mxGeometry x="320.8000000000002" y="8" width="218.4" height="21" as="geometry" />
+        </mxCell>
+        <mxCell id="cell-305" value="jade.core.behaviours.Behaviour" style="text;html=0;whiteSpace=wrap;overflow=visible;align=center;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=20;fontColor=#F0F0F0;fontStyle=3;" parent="Behaviour-G" vertex="1">
+          <mxGeometry x="190" y="30" width="480" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-324" value="" style="html=0;rounded=0;strokeColor=#A6A6A6;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;exitX=0.5;exitY=0.0;exitPerimeter=0;entryX=0.5;entryY=1.0;entryPerimeter=0;" parent="1" source="AgentTemp" target="Agent-T" edge="1">
+          <mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="edge-325" value="" style="html=0;rounded=0;strokeColor=#A6A6A6;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;exitX=0.5;exitY=0.0;exitPerimeter=0;entryX=0.5;entryY=1.0;entryPerimeter=0;" parent="1" source="BHThermo" target="Behaviour-T" edge="1">
+          <mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="edge-326" value="" style="html=0;rounded=0;strokeColor=#A6A6A6;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;exitX=0.5;exitY=0.0;exitPerimeter=0;entryX=0.5;entryY=1.0;entryPerimeter=0;" parent="1" source="AgentGrid" target="Agent-G" edge="1">
+          <mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="edge-327" value="" style="html=0;rounded=0;strokeColor=#A6A6A6;strokeWidth=1.7;endArrow=block;endFill=0;endSize=14;exitX=0.5;exitY=0.0;exitPerimeter=0;entryX=0.5;entryY=1.0;entryPerimeter=0;" parent="1" source="BHGrid" target="Behaviour-G" edge="1">
+          <mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="edge-329" value="«create»" style="html=0;rounded=0;strokeColor=#888888;strokeWidth=1.7;endArrow=open;endFill=0;dashed=1;exitX=1.0;exitY=0.5;exitPerimeter=0;entryX=0.0;entryY=0.5;entryPerimeter=0;" parent="1" source="AgentTemp" target="BHThermo" edge="1">
+          <mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="edge-331" value="«create»" style="html=0;rounded=0;strokeColor=#888888;strokeWidth=1.7;endArrow=open;endFill=0;dashed=1;exitX=1.0;exitY=0.5;exitPerimeter=0;entryX=0.0;entryY=0.20000000000000026;entryPerimeter=0;" parent="1" source="AgentGrid" target="BHGrid" edge="1">
+          <mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="edge-333" value="thermo · 0..1" style="html=0;rounded=0;strokeColor=#A6A6A6;strokeWidth=1.7;endArrow=open;endFill=0;exitX=1.0;exitY=0.25;exitPerimeter=0;entryX=0.2;entryY=1.0;entryPerimeter=0;" parent="1" source="AgentTemp" target="EnvironmentThermo" edge="1">
+          <mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="edge-335" value="thermo · 0..1" style="html=0;rounded=0;strokeColor=#A6A6A6;strokeWidth=1.7;endArrow=open;endFill=0;exitX=1.0;exitY=0.5;exitPerimeter=0;entryX=0.85;entryY=1.0;entryPerimeter=0;" parent="1" source="BHThermo" target="EnvironmentThermo" edge="1">
+          <mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="edge-337" value="grid · 0..1" style="html=0;rounded=0;strokeColor=#A6A6A6;strokeWidth=1.7;endArrow=open;endFill=0;exitX=0.0;exitY=0.5;exitPerimeter=0;entryX=0.25;entryY=1.0;entryPerimeter=0;" parent="1" source="AgentGrid" target="EnvironmentGrid" edge="1">
+          <mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="edge-339" value="grid · 0..1" style="html=0;rounded=0;strokeColor=#A6A6A6;strokeWidth=1.7;endArrow=open;endFill=0;exitX=0.0;exitY=0.5;exitPerimeter=0;entryX=0.85;entryY=1.0;entryPerimeter=0;" parent="1" source="BHGrid" target="EnvironmentGrid" edge="1">
+          <mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="view-title" value="Agentes" style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=30;fontColor=#F0F0F0;fontStyle=1;" parent="1" vertex="1"><mxGeometry x="60" y="25" width="1300" height="45" as="geometry" /></mxCell><mxCell id="view-subtitle" value="Agentes, comportamientos JADE, clases base y entornos con los que colaboran." style="text;html=0;whiteSpace=wrap;overflow=visible;align=left;verticalAlign=middle;fontFamily=DejaVu Sans;fontSize=17;fontColor=#B8B8B8;fontStyle=0;" parent="1" vertex="1"><mxGeometry x="60" y="75" width="2100" height="30" as="geometry" /></mxCell></root>
+    </mxGraphModel>
+  </diagram>
+  </mxfile>
