@@ -1,0 +1,879 @@
+1
+00:00:05,950 --> 00:00:07,700
+Buenos días clenches,
+
+2
+00:00:07,701 --> 00:00:08,900
+vamos a presentaros al
+
+3
+00:00:08,900 --> 00:00:10,099
+mejor agente que habéis
+
+4
+00:00:10,100 --> 00:00:10,820
+visto en vuestra
+
+5
+00:00:10,820 --> 00:00:11,779
+p**a vida y que
+
+6
+00:00:11,780 --> 00:00:12,580
+probablemente os
+
+7
+00:00:12,580 --> 00:00:13,779
+quite el trabajo.
+
+8
+00:00:13,780 --> 00:00:14,740
+Básicamente,
+
+9
+00:00:14,740 --> 00:00:16,339
+este tío es manco.
+
+10
+00:00:16,341 --> 00:00:17,859
+Es tan inútil que no sabe
+
+11
+00:00:17,861 --> 00:00:18,579
+llegar a la casa de
+
+12
+00:00:18,580 --> 00:00:20,100
+la 10/10 usando su
+
+13
+00:00:20,101 --> 00:00:21,140
+mano derecha y tiene
+
+14
+00:00:21,141 --> 00:00:22,260
+que usar la izquierda
+
+15
+00:00:22,261 --> 00:00:23,460
+para conseguirlo.
+
+16
+00:00:23,461 --> 00:00:24,500
+Tal vez se le ha
+
+17
+00:00:24,501 --> 00:00:25,620
+quedado inutilizada de
+
+18
+00:00:25,621 --> 00:00:27,699
+tanto Scroll y GTA6.
+
+19
+00:00:27,701 --> 00:00:28,980
+Ya en serio.
+
+20
+00:00:28,981 --> 00:00:30,500
+El colega está programado
+
+21
+00:00:30,501 --> 00:00:32,020
+para acercarse al objetivo
+
+22
+00:00:32,021 --> 00:00:33,460
+con un algoritmo greedy,
+
+23
+00:00:33,460 --> 00:00:34,869
+y al encontrarse una pared,
+
+24
+00:00:35,009 --> 00:00:36,119
+usar el algoritmo de
+
+25
+00:00:36,120 --> 00:00:37,399
+la mano izquierda,
+
+26
+00:00:37,400 --> 00:00:38,679
+con posibilidad de usar
+
+27
+00:00:38,680 --> 00:00:40,039
+la derecha, eligiendo
+
+28
+00:00:40,040 --> 00:00:41,079
+según la que esté más
+
+29
+00:00:41,080 --> 00:00:42,679
+pegadita al objetivo.
+
+30
+00:00:42,680 --> 00:00:43,799
+Para explicar el
+
+31
+00:00:43,800 --> 00:00:45,079
+funcionamiento podríamos
+
+32
+00:00:45,080 --> 00:00:46,039
+ver este diagrama
+
+33
+00:00:46,040 --> 00:00:46,679
+pequeñico,
+
+34
+00:00:46,680 --> 00:00:48,119
+pero aquí no hacemos eso,
+
+35
+00:00:48,120 --> 00:00:49,159
+clenches.
+
+36
+00:00:49,160 --> 00:00:50,359
+Vamos por partes
+
+37
+00:00:50,360 --> 00:00:52,119
+explicando lo importante.
+
+38
+00:00:52,120 --> 00:00:53,479
+Si nuestra práctica se
+
+39
+00:00:53,480 --> 00:00:54,759
+sostiene de alguna manera
+
+40
+00:00:54,760 --> 00:00:56,200
+es gracias al poderosísimo
+
+41
+00:00:56,201 --> 00:00:57,880
+y mamadísimo
+
+42
+00:00:57,881 --> 00:00:58,840
+MVC.
+
+43
+00:00:58,841 --> 00:01:00,520
+Nuestra vista es la GUI,
+
+44
+00:01:00,521 --> 00:01:01,799
+encargada de enseñarnos
+
+45
+00:01:01,800 --> 00:01:02,759
+el progreso de nuestro
+
+46
+00:01:02,760 --> 00:01:04,090
+apollardado agente.
+
+47
+00:01:04,340 --> 00:01:05,609
+El controlador es nuestro
+
+48
+00:01:05,611 --> 00:01:07,290
+main, conectando la vista
+
+49
+00:01:07,291 --> 00:01:08,090
+con el modelo,
+
+50
+00:01:08,091 --> 00:01:09,290
+siendo este último
+
+51
+00:01:09,291 --> 00:01:10,010
+el resto del
+
+52
+00:01:10,011 --> 00:01:10,730
+programa.
+
+53
+00:01:10,731 --> 00:01:12,170
+El modelo lo separamos
+
+54
+00:01:12,171 --> 00:01:13,450
+en tres partes.
+
+55
+00:01:13,451 --> 00:01:14,810
+Conexión a la API,
+
+56
+00:01:14,811 --> 00:01:16,409
+entornos y agentes.
+
+57
+00:01:16,411 --> 00:01:17,849
+La conexión a la API se
+
+58
+00:01:17,850 --> 00:01:19,689
+conecta a la API de DBA_LAB,
+
+59
+00:01:19,691 --> 00:01:21,049
+el entorno formatea los
+
+60
+00:01:21,051 --> 00:01:22,250
+datos que obtiene para el
+
+61
+00:01:22,251 --> 00:01:23,209
+agente y el agente
+
+62
+00:01:23,210 --> 00:01:24,810
+toma las decisiones.
+
+63
+00:01:24,811 --> 00:01:26,250
+El agente no conoce el
+
+64
+00:01:26,251 --> 00:01:27,370
+módulo de conexión de la
+
+65
+00:01:27,371 --> 00:01:28,730
+API ya que de esto se
+
+66
+00:01:28,731 --> 00:01:30,329
+encargan los entornos.
+
+67
+00:01:30,331 --> 00:01:31,849
+Tenemos dos entornos,
+
+68
+00:01:31,850 --> 00:01:32,810
+el del grid y el
+
+69
+00:01:32,811 --> 00:01:33,819
+del termostato.
+
+70
+00:01:34,030 --> 00:01:35,540
+Para evitar que se rompa
+
+71
+00:01:35,541 --> 00:01:36,819
+el espacio-tiempo hemos
+
+72
+00:01:36,820 --> 00:01:38,099
+aplicado el patrón
+
+73
+00:01:38,100 --> 00:01:38,739
+Singleton,
+
+74
+00:01:38,740 --> 00:01:39,700
+para que solo pueda
+
+75
+00:01:39,701 --> 00:01:40,659
+existir uno al
+
+76
+00:01:40,661 --> 00:01:41,620
+mismo tiempo.
+
+77
+00:01:41,621 --> 00:01:42,980
+Como no somos fans del
+
+78
+00:01:42,981 --> 00:01:44,500
+código espagueti y de
+
+79
+00:01:44,501 --> 00:01:46,019
+hardcodear ciertas partes,
+
+80
+00:01:46,021 --> 00:01:46,980
+hemos aplicado una
+
+81
+00:01:46,981 --> 00:01:48,260
+herencia para juntar
+
+82
+00:01:48,261 --> 00:01:49,540
+todas las funcionalidades
+
+83
+00:01:49,541 --> 00:01:50,260
+comunes de los
+
+84
+00:01:50,261 --> 00:01:51,780
+entornos en el padre.
+
+85
+00:01:51,781 --> 00:01:53,060
+Para garantizar que se
+
+86
+00:01:53,061 --> 00:01:54,180
+aplique el patrón,
+
+87
+00:01:54,181 --> 00:01:55,379
+tenemos un método en el
+
+88
+00:01:55,381 --> 00:01:56,819
+padre, que se encargará
+
+89
+00:01:56,820 --> 00:01:57,780
+de crear el tipo de
+
+90
+00:01:57,781 --> 00:01:59,540
+entorno que queramos usar.
+
+91
+00:01:59,541 --> 00:02:00,819
+Hemos hecho una interfaz
+
+92
+00:02:00,820 --> 00:02:02,900
+muy bonica muy bonica, 100%
+
+93
+00:02:02,901 --> 00:02:03,859
+handmade, 0%
+
+94
+00:02:03,861 --> 00:02:05,049
+IA en la que
+
+95
+00:02:05,051 --> 00:02:06,170
+hay un mapa de lo que va
+
+96
+00:02:06,171 --> 00:02:07,530
+descubriendo el agente,
+
+97
+00:02:07,531 --> 00:02:09,050
+una terminal y un panel de
+
+98
+00:02:09,051 --> 00:02:09,930
+información.
+
+99
+00:02:09,931 --> 00:02:11,530
+En la terminal chiquitina
+
+100
+00:02:11,531 --> 00:02:12,569
+es donde se verá el
+
+101
+00:02:12,570 --> 00:02:13,210
+comportamiento
+
+102
+00:02:13,211 --> 00:02:14,490
+del termostato.
+
+103
+00:02:14,491 --> 00:02:15,849
+El agente solo enciende
+
+104
+00:02:15,850 --> 00:02:17,289
+y apaga la refrigeración
+
+105
+00:02:17,290 --> 00:02:18,090
+en función de la
+
+106
+00:02:18,091 --> 00:02:19,849
+temperatura orientativa.
+
+107
+00:02:19,850 --> 00:02:21,370
+En el mapa, el agente es
+
+108
+00:02:21,371 --> 00:02:22,569
+el cuadrado rojo y el
+
+109
+00:02:22,570 --> 00:02:24,090
+objetivo el amarillo.
+
+110
+00:02:24,091 --> 00:02:25,689
+Los muros son grises y las
+
+111
+00:02:25,691 --> 00:02:26,889
+casillas por las que el
+
+112
+00:02:26,890 --> 00:02:28,810
+agente puede ir son verdes.
+
+113
+00:02:28,811 --> 00:02:30,409
+Tenemos un desplegable para
+
+114
+00:02:30,411 --> 00:02:31,689
+elegir el challenge,
+
+115
+00:02:31,691 --> 00:02:32,330
+dos botones,
+
+116
+00:02:32,331 --> 00:02:32,960
+uno para iniciar
+
+117
+00:02:32,961 --> 00:02:33,909
+y otro
+
+118
+00:02:33,911 --> 00:02:35,030
+para parar run.
+
+119
+00:02:35,031 --> 00:02:36,229
+En el panel lateral
+
+120
+00:02:36,230 --> 00:02:37,669
+encontramos la energía,
+
+121
+00:02:37,670 --> 00:02:38,710
+posición y posición
+
+122
+00:02:38,711 --> 00:02:39,830
+del objetivo.
+
+123
+00:02:39,831 --> 00:02:40,870
+Vamos ahora con el
+
+124
+00:02:40,871 --> 00:02:42,710
+algoritmo del agente grid.
+
+125
+00:02:42,711 --> 00:02:43,990
+Un agente en un entorno
+
+126
+00:02:43,991 --> 00:02:45,349
+se rige por su capacidad
+
+127
+00:02:45,350 --> 00:02:47,030
+...
+
+128
+00:02:47,031 --> 00:02:48,789
+...
+
+129
+00:02:48,790 --> 00:02:49,830
+Ey, ey, ey echa el
+
+130
+00:02:49,831 --> 00:02:51,030
+freno magdaleno.
+
+131
+00:02:51,031 --> 00:02:52,389
+Menudo larpeo te
+
+132
+00:02:52,390 --> 00:02:53,349
+estás pegando.
+
+133
+00:02:53,350 --> 00:02:54,550
+Ahora en serio.
+
+134
+00:02:54,551 --> 00:02:55,430
+El agente no se
+
+135
+00:02:55,431 --> 00:02:56,870
+entera ni del clima.
+
+136
+00:02:56,871 --> 00:02:57,909
+No tiene ni idea de lo
+
+137
+00:02:57,911 --> 00:02:59,110
+que tiene alrededor y
+
+138
+00:02:59,111 --> 00:03:00,310
+solo se entera de unas
+
+139
+00:03:00,311 --> 00:03:01,479
+casillas cercanas.
+
+140
+00:03:01,960 --> 00:03:03,150
+Cuando cree que tiene el
+
+141
+00:03:03,151 --> 00:03:04,750
+camino despejado utiliza un
+
+142
+00:03:04,751 --> 00:03:06,110
+algoritmo greedy en el que
+
+143
+00:03:06,111 --> 00:03:07,710
+está como perro 10/10 de
+
+144
+00:03:07,711 --> 00:03:09,550
+ganas buscando el objetivo.
+
+145
+00:03:09,551 --> 00:03:11,150
+Empieza a tirarle hacia el
+
+146
+00:03:11,151 --> 00:03:12,270
+objetivo por el ruta
+
+147
+00:03:12,271 --> 00:03:13,469
+calculada como pollo
+
+148
+00:03:13,471 --> 00:03:14,349
+sin cabeza hasta
+
+149
+00:03:14,350 --> 00:03:15,469
+que se come un muro
+
+150
+00:03:15,471 --> 00:03:16,270
+de frente.
+
+151
+00:03:16,271 --> 00:03:17,469
+En esta situación,
+
+152
+00:03:17,471 --> 00:03:19,150
+el colega elige la casilla
+
+153
+00:03:19,151 --> 00:03:20,509
+adyacente más cercana a
+
+154
+00:03:20,510 --> 00:03:21,949
+la meta, que no sea una
+
+155
+00:03:21,950 --> 00:03:23,069
+pared, y aplica
+
+156
+00:03:23,070 --> 00:03:24,189
+la mano derecha.
+
+157
+00:03:24,191 --> 00:03:26,030
+Nuestro colega el clanker
+
+158
+00:03:26,031 --> 00:03:27,389
+considera oportuno dejar
+
+159
+00:03:27,390 --> 00:03:28,509
+de rodear el muro
+
+160
+00:03:28,510 --> 00:03:29,389
+cuando la casilla
+
+161
+00:03:29,390 --> 00:03:30,110
+óptima está
+
+162
+00:03:30,111 --> 00:03:30,909
+libre y además
+
+163
+00:03:30,911 --> 00:03:31,729
+está más cerca
+
+164
+00:03:31,730 --> 00:03:33,000
+del objetivo que cuando
+
+165
+00:03:33,001 --> 00:03:34,199
+empezó a rodear,
+
+166
+00:03:34,200 --> 00:03:35,800
+así el payaso no se sale
+
+167
+00:03:35,801 --> 00:03:36,599
+antes de tiempo
+
+168
+00:03:36,600 --> 00:03:37,319
+y se queda en
+
+169
+00:03:37,320 --> 00:03:38,360
+bucle sin pasar
+
+170
+00:03:38,361 --> 00:03:39,370
+página como tú.
+
+171
+00:03:40,120 --> 00:03:41,389
+Este algoritmo en la
+
+172
+00:03:41,390 --> 00:03:42,509
+teoría está bien,
+
+173
+00:03:42,510 --> 00:03:43,710
+pero nos ha llegado un
+
+174
+00:03:43,711 --> 00:03:44,750
+vídeo en el que el muy
+
+175
+00:03:44,751 --> 00:03:46,030
+inútil ha sido visto por
+
+176
+00:03:46,031 --> 00:03:47,069
+testigos haciendo
+
+177
+00:03:47,070 --> 00:03:48,069
+lo siguiente.
+
+178
+00:03:48,729 --> 00:03:49,599
+...
+
+179
+00:03:49,600 --> 00:03:50,689
+...
+
+180
+00:03:51,830 --> 00:03:53,259
+Para solucionarlo,
+
+181
+00:03:53,260 --> 00:03:54,939
+mejoramos nuestro clanker
+
+182
+00:03:54,941 --> 00:03:56,060
+permitiéndole elegir
+
+183
+00:03:56,061 --> 00:03:57,580
+el sentido del rodeo.
+
+184
+00:03:57,581 --> 00:03:59,259
+Si se choca, empieza a
+
+185
+00:03:59,260 --> 00:04:00,699
+rodear el obstáculo con la
+
+186
+00:04:00,700 --> 00:04:01,900
+mano izquierda si la
+
+187
+00:04:01,901 --> 00:04:02,860
+casilla derecha
+
+188
+00:04:02,861 --> 00:04:03,580
+está más cerca
+
+189
+00:04:03,581 --> 00:04:04,539
+del objetivo,
+
+190
+00:04:04,540 --> 00:04:05,819
+en caso contrario,
+
+191
+00:04:05,820 --> 00:04:07,419
+lo hará con la derecha.
+
+192
+00:04:07,420 --> 00:04:09,180
+Para terminar, os traigo
+
+193
+00:04:09,181 --> 00:04:10,139
+una presentación que
+
+194
+00:04:10,140 --> 00:04:11,180
+resume bastante los
+
+195
+00:04:11,181 --> 00:04:12,669
+percances que hemos tenido.
+
+196
+00:04:13,080 --> 00:04:14,349
+Top cinco problemas
+
+197
+00:04:14,350 --> 00:04:15,349
+del proyecto
+
+198
+00:04:15,550 --> 00:04:16,579
+...
+
+199
+00:04:16,579 --> 00:04:17,910
+...
+
+200
+00:04:18,870 --> 00:04:19,870
+...
+
+201
+00:04:20,588 --> 00:04:21,709
+...
+
+202
+00:04:21,709 --> 00:04:23,230
+...
+
+203
+00:04:23,230 --> 00:04:24,230
+...
+
+204
+00:04:26,069 --> 00:04:27,100
+...
+
+205
+00:04:27,100 --> 00:04:27,980
+...
+
+206
+00:04:27,980 --> 00:04:29,069
+...
+
+207
+00:04:32,829 --> 00:04:33,699
+...
+
+208
+00:04:33,700 --> 00:04:35,269
+...
+
+209
+00:04:39,990 --> 00:04:40,939
+...
+
+210
+00:04:40,940 --> 00:04:42,670
+...
+
+211
+00:04:46,939 --> 00:04:48,529
+En fin, eso ha sido
+
+212
+00:04:48,530 --> 00:04:49,250
+todo lo que os
+
+213
+00:04:49,250 --> 00:04:50,689
+teníamos que contar.
+
+214
+00:04:50,690 --> 00:04:52,050
+Esperamos que os haya
+
+215
+00:04:52,050 --> 00:04:53,170
+gustado, porque a nuestro
+
+216
+00:04:53,170 --> 00:04:54,449
+cuero cabelludo desde
+
+217
+00:04:54,450 --> 00:04:55,250
+luego que no,
+
+218
+00:04:55,250 --> 00:04:56,529
+entre los cuatro tenemos
+
+219
+00:04:56,530 --> 00:04:57,730
+menos pelos en la cabeza
+
+220
+00:04:57,730 --> 00:04:59,379
+que el CEO de XVox.
