@@ -14,6 +14,14 @@ import common.Pair;
 import entorno.Main;
 
 public class ConexAPI {
+    
+    /* --------------------------------------------
+    RESUMEN FUNCIONAMIENTO METODOS API:
+    1. Crear la peticion tal y como sale en la guia
+    2. Esperar respuesta y obtienes String de dicha respuesta
+    3. Pasas dicho String a ResponseLAB y lo devuelves
+    *. Se valida respuesta con try - catch y comprobando el codigo de respuesta
+       -------------------------------------------- */
     public ArrayList<Pair<Integer, String>> getChallenges(){
         HttpClient http = HttpClient.newHttpClient();
         String api = System.getenv("DBA_LAB_URL") + "/api/v1";
